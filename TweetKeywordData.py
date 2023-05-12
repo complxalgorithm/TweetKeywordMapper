@@ -410,7 +410,7 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
             csvwriter = csv.writer(csv_write, delimiter=',')
             csvwriter.writerow(data)
 
-        #
+        # return to the parent function
         return
     
     # read contents of csv file using pandas module
@@ -533,7 +533,7 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
                 #
                 user_keyword = ''
         
-        # run this code if function parameters indicates to not consider keyword
+        # run this code if function parameters indicate to not filter by keyword
         else:
             # add data values/object of state_field and id_field (without keyword filtering) to respective list
             state_data.append(contents[state_field])
@@ -552,7 +552,7 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
             for tweet in ob:
                 ids.append(tweet)
         
-        # return states and ids to parent function
+        # return states, ids, and user_keyword to parent function
         return states, ids, user_keyword
 
 
@@ -562,7 +562,11 @@ def TweetKeywordSearch(ws, default, states, cities):
     # import necessary Tweepy library and OAuthHandler
     import tweepy
     from tweepy import OAuthHandler
-
+    
+    """
+    # authorize access to Twitter API by using your project's key, tokens, and secrets
+    """
+    
     # authorization to access Twitter API
     client = tweepy.Client(cons.bearer_token)
     consumer_key = cons.consumer_key
@@ -579,7 +583,8 @@ def TweetKeywordSearch(ws, default, states, cities):
     api = tweepy.API(auth)
 
     """
-    # get data directly from a search using Twitter's API
+    # get data directly from a search query using Twitter's API
+    # the data will be a list of states, and list of Tweet IDs, a dictionary of Tweet counts per state, and the keyword
     """
     
     # ask user to enter a keyword of interest
@@ -642,5 +647,5 @@ def TweetKeywordSearch(ws, default, states, cities):
                 else:
                     print(f'Data for {tweet_id} is already in {user_file}.')
     
-    # return ids, places, and state_counts results
+    # return places, ids, and state_counts results as well as the keyword
     return places, ids, state_counts, keyword

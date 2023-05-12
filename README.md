@@ -65,6 +65,8 @@ I will be updating the program in the future so that this is not the required la
 ## To-Do List
 - [ ] When writing data to a csv, organize each row's data based on the location of their respective field in the file.
 - [ ] Recognize coordinate location values and get state using them.
+- [ ] Allow user to search Tweets in other languages.
+- [ ] Allow user to search Tweets from different countries.
 - [ ] Organize the code into objects/classes.
 
 ## Contributing
