@@ -33,7 +33,7 @@ cities = cons.cities
 
 # define TweetKeywordMapper() function - main function
 def TweetKeywordMapper(ws, states):
-    # determine if tweepy is downloaded
+    # try loading the tweepy module as a way to check if it's installed
     tweepy_loader = importlib.util.find_spec('tweepy')
 
     # check to see if a path to the ArcGIS Pro executable is present on the system
@@ -102,10 +102,12 @@ def TweetKeywordMapper(ws, states):
         if platform.system() != 'Windows':
             # tell user that they can't map since they are not using Windows
             print('You are not using Windows, so you can not map your data.')
+            
         elif platform.system() == 'Windows' and pro is None:
             # tell user they can't map because ArcGIS Pro is not installed
             print('You are using Windows, but ArcGIS Pro is not installed.')
             print('Please install ArcGIS Pro if you would like to map.')
+            
         else:
             # run TweetKeywordArcPro function in order to map state Tweet counts
             # if user is using Windows and ArcGIS Pro is installed
