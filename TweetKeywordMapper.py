@@ -8,10 +8,6 @@
               be displayed and the user will have the option to map the data using ArcGIS Pro.
 @Requirements: Python3, TweetKeywordConstants, TweetKeywordData, TweetKeywordArcPro
 
-============ TO-DO LIST ============
-[ ] - When writing data to csv, organize each row's data based on the location of their respective field in the file
-[ ] - Recognize coordinate location values and get state using them
-
 """
 
 # import modules/libraries
