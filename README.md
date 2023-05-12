@@ -34,7 +34,9 @@ In order to run this program to its fullest extent, you will need to install the
 You can download the program in a couple ways. Download a zip file of this repository by clicking this link: https://github.com/complxalgorithm/TweetKeywordMapper/archive/refs/heads/master.zip
 
 You can also use git to clone the repo by running the following in your terminal:
-    git clone https://github.com/complxalgorithm/TweetKeywordMapper.git
+```
+git clone https://github.com/complxalgorithm/TweetKeywordMapper.git
+```
 
 Once all of the requirements are met and the program is downloaded, you can run the code based on how your operating system runs Python scripts. Change your directory using the <em>cd</em> command to the TweetKeywordMapper directory, then run
 ```
