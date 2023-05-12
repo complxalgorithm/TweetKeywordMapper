@@ -63,7 +63,7 @@ Tweet IDS  |  Keyword  |  State
 I will be updating the program in the future so that this is not the required layout (see To-Do List).
 
 ## To-Do List
-- [ ] When writing data to a csv file, organize each row's data based on the location of their respective field in the file.
+- [ ] When writing data to a csv, organize each row's data based on the location of their respective field in the file.
 - [ ] Recognize coordinate location values and get state using them.
 - [ ] Organize the code into objects/classes.
 
