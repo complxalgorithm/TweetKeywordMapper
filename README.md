@@ -38,17 +38,17 @@ You can also use git to clone the repo by running the following in your terminal
 
 Once all of the requirements are met and the program is downloaded, you can run the code based on how your operating system runs Python scripts. Change your directory using the <em>cd</em> command to the TweetKeywordMapper directory, then run
 ```
-python3 TweetKeywordMapper.py
-```
-Or, if on Windows, run
-```
 py TweetKeywordMapper.py
+```
+Or, if on a non-Windows operating system, run
+```
+python3 TweetKeywordMapper.py
 ```
 
 You can also run this program in an IDE, such as [PyCharm](https://www.jetbrains.com/pycharm/).
 
 # Disclaimers
-This program is not an official Twitter or Esri project. This is a project that I made for a college course and is not affiliated <em>in any way</em> with Twitter/X Inc. or Esri. If you represent either of these companies and have an issue with this project, feel free to reach out to me at any time. Regardless, please do not sue me.
+This program is not an official Twitter or Esri project. This is a project that I made for a college course and is not affiliated <em>in any way</em> with Twitter/X Corp. or Esri. If you represent either of these companies and have an issue with this project, feel free to reach out to me at any time. Regardless, please do not sue me.
 
 Unfortunately, due to how the code is written, the program assumes a particular csv layout when writing data to a csv file. In order to get the most ideal outcome when writing your results to a csv file, your csv file should be organized so that there are only three (3) fields in this particular order:
 ```
