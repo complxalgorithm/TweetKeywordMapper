@@ -37,6 +37,7 @@ You can also use git to clone the repo by running the following in your terminal
 ```
 git clone https://github.com/complxalgorithm/TweetKeywordMapper.git
 ```
+Next, set the workspace of your project (i.e., your ArcGIS Pro project). It can either be within the TweetKeywordMapper directory that you downloaded, or in a different directory. You then need to set the name of the default csv file. This file should be located within the TweetKeywordMapper directory. If no file with the set name exists, the program will create a blank csv file with the appropriate fields.
 
 Once all of the requirements are met and the program is downloaded, you can run the code based on how your operating system runs Python scripts. In your terminal, change your current working directory to the TweetKeywordMapper directory, then run
 ```
@@ -52,6 +53,8 @@ You can also run this program in an IDE, such as [PyCharm](https://www.jetbrains
 ## Disclaimers
 This program is not an official Twitter or Esri project. This is a project that I made for a college course and is not affiliated <em>in any way</em> with Twitter/X Corp. or Esri. If you represent either of these companies and have an issue with this project, feel free to reach out to me at any time. Regardless, please do not sue me.
 
+There may be times when you specify a higher number of expected results, but the program doesn't reach it. That is because Twitter has a set limit of 100 results for each search query. This program will only counts Tweets from which it is able to extract a state of origin towards your specified number of search results.
+
 Unfortunately, due to how the code is written, the program assumes a particular csv layout when writing data to a csv file. In order to get the most ideal outcome when writing your results to a csv file, your csv file should be organized so that there are only three (3) fields in this particular order:
 ```
 Tweet IDS  |  Keyword  |  State
@@ -60,9 +63,9 @@ Tweet IDS  |  Keyword  |  State
 I will be updating the program in the future so that this is not the required layout (see To-Do List).
 
 ## To-Do List
-- [ ] - When writing data to a csv file, organize each row's data based on the location of their respective field in the file.
-- [ ] - Recognize coordinate location values and get state using them.
-- [ ] - Organize the code into objects/classes.
+- [ ] When writing data to a csv file, organize each row's data based on the location of their respective field in the file.
+- [ ] Recognize coordinate location values and get state using them.
+- [ ] Organize the code into objects/classes.
 
 ## Contributing
 Contributions to this program are more than welcome. Simply make a pull request for my review. If there are any issues with or any suggestions for the program that you have, create an issue for my review.
