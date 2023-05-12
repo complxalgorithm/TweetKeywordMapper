@@ -1,13 +1,18 @@
 # Tweet Keyword Mapper
-Search Twitter for Tweets containing a particular keyword or read Tweet data from a csv file, then write results to a csv file and/or map the results using ArcGIS Pro.
+Search Twitter for Tweets containing a particular keyword or read Tweet data from a csv file, then write results to a csv file and/or map the results using ArcGIS Pro or GeoPandas.
 
 ## Requirements
 1. Python 3 - get the latest release [here](https://www.python.org/downloads).
 2. Pandas - learn how to install [here](https://pandas.pydata.org/docs/getting_started/install.html).
-3. Tweepy - learn how to install [here](https://docs.tweepy.org/en/stable/install.html).
+    - This is only required if you want to map your results using GeoPandas.
+3. GeoPandas - learn how to install [here](https://geopandas.org/en/stable/getting_started/install.html).
+    - This is only required if you want to map your results using GeoPandas.
+4. matplotlib - learn how to install [here](https://matplotlib.org/stable/users/installing/index.html).
+    - This is only required if you want to map your results using GeoPandas.
+5. Tweepy - learn how to install [here](https://docs.tweepy.org/en/stable/install.html).
     - This is only required if you do not want to use the search capabilities and instead already have a csv file containing Tweet data.
-4. ArcPy - learn how to download and install ArcGIS Pro [here](https://pro.arcgis.com/en/pro-app/latest/get-started/download-arcgis-pro.htm).
-    - This is only required if you want to map your results.
+6. ArcPy - learn how to download and install ArcGIS Pro [here](https://pro.arcgis.com/en/pro-app/latest/get-started/download-arcgis-pro.htm).
+    - This is only required if you want to map your results using ArcGIS Pro.
 
 ## Set Up & Run
 In order to run this program to its fullest extent, you will need to install the Tweepy library and ArcGIS Pro. Using the Tweepy library requires setting up a Twitter Developer account. Using ArcGIS Pro requires the Windows operating system and a paid license to use.
@@ -64,7 +69,8 @@ I will be updating the program in the future so that this is not the required la
 
 ## To-Do List
 - [ ] When writing data to a csv, organize each row's data based on the location of their respective field in the file.
-- [ ] Recognize coordinate location values and get state using them.
+- [ ] Add support for mapping using PyQGIS
+- [X] Add support for mapping using GeoPandas
 - [ ] Allow user to search Tweets in other languages.
 - [ ] Allow user to search Tweets from different countries.
 - [ ] Organize the code into objects/classes.

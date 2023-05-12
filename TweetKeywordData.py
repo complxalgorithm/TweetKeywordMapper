@@ -14,7 +14,6 @@ import csv
 import os
 import time
 import TweetKeywordConstants as cons
-##from geopy.geocoders import Nominatim
 ##from sys import platform
 ##import random
 
@@ -203,8 +202,8 @@ def get_state(s, u, states, cities):
     # if the pl value has not been returned to its parent function, then there are other situations
     # that will need to be handled. it will first be compared to the below cities dict. if it is not
     # within the cities dict as a key, then the program will attempt to split the pl value using a
-    # space, a / symbol, a | symbol, or a • symbol as a delimiter. it will then iterate through each
-    # resulting word of each delimited string and compare them to many different string alterations involving
+    # space, a / symbol, a | symbol, a • symbol, a comma without a space as a delimiter. it will then iterate through
+    # each resulting word of each delimited string and compare them to many different string alterations involving
     # the pl value (e.g., pl.upper(), pl.title(), etc.). if these all fail, it will return an empty string.
     """
     
@@ -222,17 +221,19 @@ def get_state(s, u, states, cities):
     
     # run this code if pl value is not a key/value in states dict, nor is it in cities dict
     elif (pl not in states) and (pl not in states.values()):
-        # split pl value by four different delimiters: a space, a /, a |, and a •
+        # split pl value by four different delimiters: a space, a /, a |, a •, and a comma without a space
         elements_space = pl.split(' ')
         elements_slash = pl.split('/')
         elements_bar = pl.split('|')
         elements_dot = pl.split('•')
+        elements_comma = pl.split(',')
         
         # display the results of splitting the string
         print(f'Split by Space: {elements_space}')
         print(f'Split by /: {elements_slash}')
         print(f'Split by |: {elements_bar}')
         print(f'Split by Dot: {elements_dot}\n')
+        print(f'Split by ,: {elements_comma}')
         
         """
         # check the length of each resulting list.
@@ -324,6 +325,27 @@ def get_state(s, u, states, cities):
             # return empty string if state value hasn't been returned
             return ''
         
+        # split by a comma without the space
+        elif len(elements_comma) > 1:
+            for wrd in elements_dot:
+                if wrd.upper() in states:
+                    return states[wrd.upper()]
+                elif wrd in states.values():
+                    return wrd
+                elif wrd.capitalize() in states.values():
+                    return wrd.capitalize()
+                elif wrd.title() in states.values():
+                    return wrd.title()
+                elif wrd in cities:
+                    return cities[wrd]
+                elif wrd.title() in cities:
+                    return cities[wrd.title()]
+                elif wrd.upper() in cities:
+                    return cities[wrd.upper()]
+            
+            # return empty string if state value hasn't been returned
+            return ''
+        
         # return an empty string after going through each element
         else:
             return ''
@@ -386,6 +408,125 @@ def get_user_csv_file(default):
     
     # return the file to the parent function
     return user_file
+
+
+# define get_shp_directory() function - asks user to specify which directory within workspace contains shapefile
+def get_shp_directory(ws):
+    # create empty dirs_list to hold all directories in project
+    dirs_list = []
+    
+    # go through every file/dir that is within the workspace
+    for file in os.listdir(ws):
+        # set path to current file/dir
+        path = os.path.join(ws, file)
+        
+        # try to split the path using a period in order to identify which ones have a file extension
+        try_dir = path.split('.')
+        
+        # run this if file path was not split
+        if len(try_dir) == 1:
+            # make sure file is a directory
+            if os.path.isdir(path) == True:
+                # make sure directory doesn't end with an underscore
+                if path[-1] != '_':
+                    # add this path to dirs_list
+                    dirs_list.append(path)
+    
+    # append workspace to dirs_list
+    dirs_list.append(ws)
+    
+    # generate key values for each dir in dir_list to add to dirs dict
+    nums = [str(i) for i in range(1, len(dirs_list)+1)]
+    
+    # create dictionary of keyed directory values
+    dirs = dict(zip(nums, dirs_list))
+    
+    # display menu of possible directories
+    print()
+    for d in dirs:
+        print(f'{d}: {dirs[d]}')
+    print()
+    
+    # ask user to choose which directory their US states shapefile is in
+    user_dir = input('Enter which directory your shapefile is in using its number: ')
+    
+    # validate that user_dir exists
+    while user_dir not in dirs:
+        # display an error, then pause program for half a second
+        print('That is not a directory in your project.')
+        time.sleep(0.5)
+        
+        # ask user again to choose which directory their US states shapefile is in
+        user_dir = input('Choose which directory your shapefile is in using its number: ')
+    
+    # set valid user_dir
+    return dirs[user_dir]
+
+
+# definte get_shapefile() function - returns shapefile to be used by GeoPandas to map each state's Tweet counts
+def get_shapefile(ws):
+    # get directory that contains US states shapefile
+    user_dir = get_shp_directory(ws)
+    
+    # create empty shp_list to hold all shapefiles in user_dir
+    shp_list = []
+    
+    # go through every file/dir that is within user_dir
+    for file in os.listdir(user_dir):
+        # set path to current file/dir
+        path = os.path.join(user_dir, file)
+        
+        # append current file to shp_list if file has a .shp extension
+        if file.split('.')[-1] == 'shp':
+            shp_list.append(path)
+    
+    # validate that the directory contains shapefiles
+    while len(shp_list) == 0:
+        # tell user the directory they picked doesn't have any shapefiles,
+        # then pause program for half a second
+        print(f'{user_dir} has no shapefiles. Please choose a different directory.')
+        time.sleep(0.5)
+        
+        # ask user for another directory
+        user_dir = get_shp_directory(ws)
+        
+        # create empty shp_list to hold all shapefiles in user_dir
+        shp_list = []
+    
+        # go through every file/dir that is within user_dir
+        for file in os.listdir(user_dir):
+            # set path to current file/dir
+            path = os.path.join(user_dir, file)
+        
+            # append current file to shp_list if file has a .shp extension
+            if file.split('.')[-1] == 'shp':
+                shp_list.append(path)
+    
+    # generate key values for each shp in shp_list to add to dirs dict
+    nums = [str(i) for i in range(1, len(shp_list)+1)]
+    
+    # create dictionary of keyed shapefile values
+    shps = dict(zip(nums, shp_list))
+    
+    # display menu of shapefiles
+    print()
+    for s in shps:
+        print(f'{s}: {shps[s]}')
+    print()
+    
+    # ask user to choose which directory their US states shapefile is in
+    user_shp = input('Choose your US states shapefile using its number: ')
+    
+    # validate that user_dir exists
+    while user_shp not in shps:
+        # display an error
+        print('That is not a shapefile.')
+        
+        # ask user again to choose which directory their US states shapefile is in
+        user_shp = input('Choose your US states shapefile using its number: ')
+    
+    # set valid user_dir
+    return shps[user_shp], user_dir
 
 
 # define csv_interact() function - 
@@ -556,7 +697,7 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
         return states, ids, user_keyword
 
 
-# define TweetKeywordSearch() function - searches for Tweet result using a specified keyword and
+# define TweetKeywordSearch() function - searches for Tweets using a specified keyword and
 # returns the found states, the Tweet IDs, state counts, and keyword used.
 def TweetKeywordSearch(ws, default, states, cities):
     # import necessary Tweepy library and OAuthHandler
