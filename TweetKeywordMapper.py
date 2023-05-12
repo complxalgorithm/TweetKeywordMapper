@@ -122,8 +122,8 @@ def TweetKeywordMapper(ws, states):
     # display results
     print(f'\nKeyword: {keyword}\n\nIDS: {tweet_ids}\n\nPlaces: {places}\n\nCounts: {state_counts}\n')
 
-    # ask user if they would like to map the results using ArcGIS Pro
-    ifMap = input('Would you like to map the results using ArcGIS Pro? (Y or N) ')
+    # ask user if they would like to map the results
+    ifMap = input('Would you like to map the results? (Y or N) ')
 
     # validate that ifMap input is valid
     while ifMap.title() != 'Yes' and ifMap.upper() != 'Y' and ifMap.title() != 'No' and ifMap.upper() != 'N':

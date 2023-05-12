@@ -232,8 +232,8 @@ def get_state(s, u, states, cities):
         print(f'Split by Space: {elements_space}')
         print(f'Split by /: {elements_slash}')
         print(f'Split by |: {elements_bar}')
-        print(f'Split by Dot: {elements_dot}\n')
-        print(f'Split by ,: {elements_comma}')
+        print(f'Split by Dot: {elements_dot}')
+        print(f'Split by ,: {elements_comma}\n')
         
         """
         # check the length of each resulting list.
@@ -244,9 +244,7 @@ def get_state(s, u, states, cities):
         # split by space
         if len(elements_space) > 1:
             for wrd in elements_space:
-                if wrd in states: # not upper(), since 2-letter words between spaces are typically words (e.g., me, in)
-                    return states[wrd]
-                elif wrd in states.values():
+                if wrd in states.values():
                     return wrd
                 elif wrd.capitalize() in states.values():
                     return wrd.capitalize()
@@ -258,6 +256,8 @@ def get_state(s, u, states, cities):
                     return cities[wrd.title()]
                 elif wrd.upper() in cities:
                     return cities[wrd.upper()]
+                elif wrd in states: # not upper(), since 2-letter words between spaces are typically words (e.g., me, in)
+                    return states[wrd]
             
             # return empty string if state value hasn't been returned
             return ''
@@ -265,7 +265,7 @@ def get_state(s, u, states, cities):
         # split by /
         elif len(elements_slash) > 1:
             for wrd in elements_slash:
-                if wrd.upper() in states:
+                if wrd in states:
                     return states[wrd.upper()]
                 elif wrd in states.values():
                     return wrd
