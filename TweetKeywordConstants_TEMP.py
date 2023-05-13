@@ -90,6 +90,7 @@ cities = {
     'San Francisco': 'California',
     'San Fran': 'California',
     'Bay Area': 'California',
+    'SoCal': 'California',
     'Chicago': 'Illinois',
     'Chi': 'Illinois',
     'Houston': 'Texas',
