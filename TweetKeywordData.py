@@ -185,6 +185,10 @@ def get_state(s, u, states, cities):
             # if a value in states dict, return try_split value
             elif wrd in states.values():
                 return wrd
+            
+            # if a value in cities dict, return respective value in cities dict
+            elif wrd in cities:
+                return cities[wrd]
         
         # if pl value hasn't been returned and is not blank, set pl to the original place value
         # if it is blank then return an empty string

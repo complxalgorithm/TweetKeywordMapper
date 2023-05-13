@@ -79,6 +79,7 @@ states = {
 cities = {
     'NYC': 'New York',
     'New York City': 'New York',
+    'Calif': 'California',
     'LA': 'California',
     'L.A.': 'California',
     'Los Angeles': 'California',
@@ -111,5 +112,5 @@ cities = {
     'Seattle': 'Washington',
     'Miami': 'Florida',
     'Orlando': 'Florida',
-    'New Orleans': 'Louisiana'
+    'New Orleans': 'Louisiana',
 }
