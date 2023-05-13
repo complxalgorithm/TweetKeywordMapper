@@ -112,5 +112,5 @@ cities = {
     'Seattle': 'Washington',
     'Miami': 'Florida',
     'Orlando': 'Florida',
-    'New Orleans': 'Louisiana',
+    'New Orleans': 'Louisiana'
 }
