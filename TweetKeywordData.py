@@ -269,7 +269,7 @@ def get_state(s, u, states, cities):
         # split by /
         elif len(elements_slash) > 1:
             for wrd in elements_slash:
-                if wrd in states:
+                if wrd.upper() in states:
                     return states[wrd.upper()]
                 elif wrd in states.values():
                     return wrd

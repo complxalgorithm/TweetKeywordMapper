@@ -75,11 +75,11 @@ def TweetKeywordMapper(ws, states):
 
     # check to see if a path to the ArcGIS Pro executable is present on the system
     pro = shutil.which('ArcGISPro')
-
-    # create the default csv file if it does not already exist within the workspace
+    
+    # create the csv file if it does not already exist within the workspace
     # add first row to file containing headers Tweet_ID and State
     if not os.path.exists(default_csv):
-        data.csv_interact(('Tweet_ID', 'Keyword', 'State'), default_csv)
+        data.csv_interact(('Tweet_ID', 'Keyword', 'State'), default_csv, ws)
 
         # display that default file was successfully create
         print(f'Default file created called: {default_csv}')

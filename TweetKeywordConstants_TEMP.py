@@ -106,6 +106,7 @@ cities = {
     'DC.': 'District of Columbia',
     'Honolulu': 'Hawaii',
     'Hawai\'i': 'Hawaii',
+    'Hawaiian': 'Hawaii',
     'Baltimore': 'Maryland',
     'Atlanta': 'Georgia',
     'ATL': 'Georgia',
