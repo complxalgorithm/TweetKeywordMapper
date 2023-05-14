@@ -116,8 +116,10 @@ def TweetKeywordMapper(ws, states):
         # display how many search results were returned
         if num_results == 0:
             print(f'Reading from {user_file} returned no results.')
+            time.sleep(0.5) # pause program for half a second
         else:
             print(f'Reading from {user_file} returned {num_results} results.\n')
+            time.sleep(0.5) # pause program for half a second
 
     # display results
     print(f'\nKeyword: {keyword}\n\nIDS: {tweet_ids}\n\nPlaces: {places}\n\nCounts: {state_counts}\n')
