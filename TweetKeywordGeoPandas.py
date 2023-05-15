@@ -63,11 +63,15 @@ def TweetKeywordGeoPandas(ws, counts, keyword):
             key_str = '_'.join(words)   # join the separate words with a _ in between each word
             new_field = key_str
             new_field = f'{new_field}_Tweet_Count'
-            
+
         # name if the keyword only had one word    
         else:
             new_field = f'{keyword}_Tweet_Count'
     
+    # set title of map based on field name
+    map_title = new_field.split('_')
+    map_title = ' '.join(map_title)
+	
     # go through each value in the states abbreviations field in the states shapefile
     for num, state in states_df[user_field].items():
         # iterate through each state and count value in counts dict
@@ -121,7 +125,7 @@ def TweetKeywordGeoPandas(ws, counts, keyword):
     ax = usa.plot()
     
     # plot states shapefiles using above axes and plot_field, setting color scheme to red
-    # and including a legend
+    # and including a legend	
     states_df.plot(ax=ax, column=plot_field, cmap='OrRd', legend=True)
     
     # get min/max x and min/max y values from usa dataset
@@ -130,6 +134,9 @@ def TweetKeywordGeoPandas(ws, counts, keyword):
     # set x and y limits using above values
     ax.set_xlim(minx-5, maxx+5)
     ax.set_ylim(miny-5, maxy+5)
+    
+    # set title of plot using map_title value
+    ax.set_title(map_title)
     
     # show map in new window
     plt.show()
