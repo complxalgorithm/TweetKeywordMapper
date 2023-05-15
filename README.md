@@ -46,10 +46,6 @@ Next, set the workspace of your project (i.e., your ArcGIS Pro project). It can 
 
 Once all of the requirements are met and the program is downloaded, you can run the code based on how your operating system runs Python scripts. In your terminal, change your current working directory to the TweetKeywordMapper directory, then run
 ```
-py TweetKeywordMapper.py
-```
-Or, if on a non-Windows operating system, run
-```
 python3 TweetKeywordMapper.py
 ```
 
