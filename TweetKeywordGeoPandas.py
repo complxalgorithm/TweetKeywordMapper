@@ -67,10 +67,6 @@ def TweetKeywordGeoPandas(ws, counts, keyword):
         # name if the keyword only had one word    
         else:
             new_field = f'{keyword}_Tweet_Count'
-    
-    # set title of map based on field name
-    map_title = new_field.split('_')
-    map_title = ' '.join(map_title)
 	
     # go through each value in the states abbreviations field in the states shapefile
     for num, state in states_df[user_field].items():
@@ -114,6 +110,14 @@ def TweetKeywordGeoPandas(ws, counts, keyword):
     # generate map of the states shapefile using the plot_field as the column to plot
     # sets axes using layer from gpd naturalearth_lowres
     """
+    # get the keyword from the plot_field
+    kw = plot_field.split('_')[0]
+    
+    # set title of map using the keyword
+    if kw == 'Tweet':
+        map_title = 'Tweet Count'
+    else:
+        map_title = f'{kw} Tweet Count'
     
     # get low resolution map of world from datasets
     world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
