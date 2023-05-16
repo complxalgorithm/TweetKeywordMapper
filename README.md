@@ -33,7 +33,8 @@ In order to run this program to its fullest extent, you will need to install the
 1. Assuming you are on Windows, purchase a use license [here](https://www.esri.com/en-us/arcgis/products/arcgis-pro/buy#for-individuals).
 2. Follow the instructions that are on Esri's website on how to successfully install the software.
 
-<em>In order to run this program, ArcGIS Pro **cannot** be open at the same time that you execute the program.</em>
+<em>You will need to create a new ArcGIS Pro project using the map template before running the program.</em>
+<em>Additionally, ArcGIS Pro **cannot** be open at the same time that you execute the program.</em>
 
 ### Run
 You can download the program in a couple ways. Download a zip file of this repository by clicking this link: https://github.com/complxalgorithm/TweetKeywordMapper/archive/refs/heads/master.zip
