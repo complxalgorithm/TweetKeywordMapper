@@ -119,5 +119,6 @@ cities = {
     'Omaha': 'Nebraska',
     'Las Vegas': 'Nevada',
     'L.V.': 'Nevada',
-    'LV': 'Nevada'
+    'LV': 'Nevada',
+    'Charlotte': 'North Carolina'
 }
