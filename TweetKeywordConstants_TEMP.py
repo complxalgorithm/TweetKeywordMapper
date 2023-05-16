@@ -116,5 +116,8 @@ cities = {
     'Orlando': 'Florida',
     'New Orleans': 'Louisiana',
     'Minneapolis': 'Minnesota',
-    'Omaha': 'Nebraska'
+    'Omaha': 'Nebraska',
+    'Las Vegas': 'Nevada',
+    'L.V.': 'Nevada',
+    'LV': 'Nevada'
 }

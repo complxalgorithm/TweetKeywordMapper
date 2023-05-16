@@ -547,7 +547,7 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
         # this code makes sure that a file in append mode will append the first line to a newline
         # CREDIT: tdelaney from stack overflow
         # -> <https://stackoverflow.com/questions/64921222/csv-writer-adds-the-first-line-to-the-last-cell>
-        if mode == 'a':
+        if mode == 'a' and os.path.exists(file):
             with open(file, 'a+b') as f:
                 f.seek(-1, 2)
                 
