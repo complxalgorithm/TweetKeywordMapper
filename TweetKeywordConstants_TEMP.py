@@ -98,6 +98,7 @@ cities = {
     'S.A.': 'Texas',
     'San Antonio': 'Texas',
     'Dallas': 'Texas',
+    'Frisco': 'Texas',
     'Phoenix': 'Arizona',
     'Philly': 'Pennsylvania',
     'Philadelphia': 'Pennsylvania',
