@@ -21,16 +21,6 @@ import time
 import platform
 import shutil
 
-# set workspace
-ws = cons.workspace
-
-# set default csv file
-default_csv = cons.default_csv
-
-# get states and cities dictionary from TweetKeywordConstants module
-states = cons.states
-cities = cons.cities
-
 
 # define get_map_service() function - allows user to specify which mapping service they'd like to use
 # in order to map their results
@@ -60,7 +50,17 @@ def get_map_service():
     
 
 # define TweetKeywordMapper() function - main function
-def TweetKeywordMapper(ws, states):
+def TweetKeywordMapper():
+    # set workspace
+    ws = cons.workspace
+
+    # set default csv file
+    default_csv = cons.default_csv
+
+    # get states and cities dictionary from TweetKeywordConstants module
+    states = cons.states
+    cities = cons.cities
+    
     # try loading the tweepy module as a way to check if it's installed
     tweepy_loader = importlib.util.find_spec('tweepy')
     
@@ -181,4 +181,4 @@ def TweetKeywordMapper(ws, states):
 
 # run the program
 if __name__ == '__main__':
-    TweetKeywordMapper(ws, states)
+    TweetKeywordMapper()

@@ -181,6 +181,10 @@ def get_state(s, u, states, cities):
             if wrd in states:
                 # if a key in states dict, return respective value
                 return states[wrd]
+            
+            # if uppercase version of element is a key in states dict, return respective value
+            elif wrd.upper() in states:
+                return states[wrd.upper()]
         
             # if a value in states dict, return try_split value
             elif wrd in states.values():
