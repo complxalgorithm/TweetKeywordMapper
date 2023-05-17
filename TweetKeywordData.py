@@ -545,6 +545,7 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
     # write to or append data to file using csv module
     if mode == 'a' or mode == 'w':
         # this code makes sure that a file in append mode will append the first line to a newline
+        # it will only run if the csv file already exists
         # CREDIT: tdelaney from stack overflow
         # -> <https://stackoverflow.com/questions/64921222/csv-writer-adds-the-first-line-to-the-last-cell>
         if mode == 'a' and os.path.exists(file):
@@ -586,9 +587,13 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
         
         # validate that both fields are in fields list
         while state_field not in fields or id_field not in fields:
-            # display an error, then pause program for half a second
-            print('One of those fields does not exist. Please try again.')
-            time.sleep(0.5)
+            # tell user if state field isn't in the fields list
+            if state_field not in fields:
+                print(f'{state_field} does not exist.')
+            
+            # tell user if id field isn't in the fields list
+            if id_field not in fields:
+                print(f'{id_field} does not exist.')
             
             # tell user to enter the fields again
             state_field = input('Enter the field that contains the names of states: ')
@@ -645,6 +650,7 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
                 # iterate through each keyword result object and add unique values to keyword list
                 for ob in keyword_data:
                     for word in ob:
+                        # add keyword to keywords list if it isn't already in it
                         if word not in keywords:
                             keywords.append(word)
             
@@ -679,7 +685,7 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
                 state_data.append(contents[state_field])
                 id_data.append(contents[id_field])
 
-                #
+                # set user keyword to an empty list
                 user_keyword = ''
         
         # run this code if function parameters indicate to not filter by keyword
@@ -688,7 +694,7 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
             state_data.append(contents[state_field])
             id_data.append(contents[id_field])
 
-            #
+            # set user keyword to an empty list
             user_keyword = ''
             
         # iterate through each state result object and add the state value to the states list
