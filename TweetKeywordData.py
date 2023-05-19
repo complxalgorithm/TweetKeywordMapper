@@ -252,7 +252,9 @@ def get_state(s, u, states, cities):
         # split by space
         if len(elements_space) > 1:
             for wrd in elements_space:
-                if wrd in states.values():
+                if wrd in states: # not upper(), since 2-letter words between spaces are typically words (e.g., me, in)
+                    return states[wrd]
+                elif wrd in states.values():
                     return wrd
                 elif wrd.capitalize() in states.values():
                     return wrd.capitalize()
@@ -264,8 +266,6 @@ def get_state(s, u, states, cities):
                     return cities[wrd.title()]
                 elif wrd.upper() in cities:
                     return cities[wrd.upper()]
-                elif wrd in states: # not upper(), since 2-letter words between spaces are typically words (e.g., me, in)
-                    return states[wrd]
             
             # return empty string if state value hasn't been returned
             return ''
@@ -471,7 +471,7 @@ def get_shp_directory(ws):
     return dirs[user_dir]
 
 
-# definte get_shapefile() function - returns shapefile to be used by GeoPandas to map each state's Tweet counts
+# define get_shapefile() function - returns shapefile to be used by GeoPandas to map each state's Tweet counts
 def get_shapefile(ws):
     # get directory that contains US states shapefile
     user_dir = get_shp_directory(ws)
