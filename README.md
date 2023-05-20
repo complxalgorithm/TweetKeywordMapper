@@ -82,4 +82,4 @@ Contributions to this program are more than welcome. Simply make a pull request 
 My only requirement is that you thoroughly comment your code so that others and I can follow along with what you are doing, and can learn from what you added.
 
 ## Copyright
-&copy; 2023 [Stephen C. Sanders](https://stephensanders.me). Licensed under the <a href="https://github.com/complxalgorithm/TweetKeywordMapper/blob/master/LICENSE">MIT License</a>.
+&copy; 2023 [Stephen C. Sanders](https://stephensanders.me). Licensed under the <a href="https://github.com/complxalgorithm/TweetKeywordMapper/blob/master/LICENSE">MIT License</a>. Credit would be appreciated.
