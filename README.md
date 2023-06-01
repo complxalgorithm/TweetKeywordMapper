@@ -67,7 +67,7 @@ Tweet IDS  |  Keyword  |  State
 I will be updating the program in the future so that this is not the required layout (see To-Do List).
 
 ## To-Do List
-- [ ] When writing data to a csv, organize each row's data based on the location of their respective field in the file.
+- [X] When writing data to a csv, organize each row's data based on the location of their respective field in the file.
 - [ ] If place from a Tweet is a set of X,Y coordinates, use those to determine state.
 - [ ] Get state from Tweet where user's location has something like "NY -> FL".
 - [ ] Add support for mapping using PyQGIS.
