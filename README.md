@@ -63,6 +63,7 @@ Unfortunately, due to how the code is written, you may run into issues with CSV 
 - [X] When writing data to a csv, organize each row's data based on the location of their respective field in the file.
 - [ ] If place from a Tweet is a set of X,Y coordinates, use those to determine state.
 - [ ] Get state from Tweet where user's location has something like "NY -> FL".
+- [ ] Allow user to interact with Excel files.
 - [ ] Add support for mapping using PyQGIS.
 - [X] Add support for mapping using GeoPandas.
 - [ ] Allow user to search Tweets in other languages.
