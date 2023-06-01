@@ -818,7 +818,7 @@ def TweetKeywordSearch(ws, default, states, cities):
     auth.set_access_token(access_token, access_secret)
 
     # create Tweepy API instance
-    api = tweepy.API(auth)
+    api = tweepy.API(auth, wait_on_rate_limit=True)
 
     """
     # get data directly from a search query using Twitter's API
