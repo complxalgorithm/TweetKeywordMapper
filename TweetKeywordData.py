@@ -548,6 +548,7 @@ def get_shapefile(ws):
 #   - checkKeyword -> default to False
 def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
 """
+def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
     # write to or append data to file using csv module
     if mode == 'a' or mode == 'w':
         # this code makes sure that a file in append mode will append the first line to a newline
