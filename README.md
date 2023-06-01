@@ -61,8 +61,6 @@ If you decide to map your results using ArcGIS Pro and you have mapped results f
 
 Unfortunately, due to how the code is written, you may run into issues with CSV files that have more than three fields. The program will add the data that was found by searching Twitter using the field indexes of the Tweet IDs, states, and keywords fields. I do not know if it still will work successfully with CSV files that contain more than three (3) fields.
 
-I will be updating the program in the future so that this is not the required layout (see To-Do List).
-
 ## To-Do List
 - [X] When writing data to a csv, organize each row's data based on the location of their respective field in the file.
 - [ ] If place from a Tweet is a set of X,Y coordinates, use those to determine state.
