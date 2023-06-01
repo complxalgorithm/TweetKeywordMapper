@@ -761,7 +761,7 @@ def get_field_indexes_tweet_ids(contents):
         id_field = input('Enter the field that contains Tweet IDs: ')
     
     # ask user to enter field that contains keywords
-    keyword_field = input('Enter the field that contains keywords from menu: ')
+    keyword_field = input('Enter the field that contains keywords: ')
     
     # validate that specified keywords field is in fields list and is not the same as states or ids fields
     while keyword_field not in fields or keyword_field == state_field or keyword_field == id_field:
@@ -778,7 +778,7 @@ def get_field_indexes_tweet_ids(contents):
             print(f'That is the same as {id_field}.')
         
         # tell user to enter the ids field again
-        id_field = input('Enter the field that contains Tweet IDs: ')
+        keyword_field = input('Enter the field that contains keywords: ')
     
     # get list of tweet ids from csv file using user id_field
     tweets = contents[id_field].tolist()
