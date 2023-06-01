@@ -537,7 +537,7 @@ def get_shapefile(ws):
     return shps[user_shp], user_dir
 
 
-# define csv_interact() function - 
+# define csv_interact() function - appends, writes, or reads contents of user's csv file
 # optional parameters:
 #   - mode         -> default to append
 #   - checkKeyword -> default to False
@@ -711,6 +711,78 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
         return states, ids, user_keyword
 
 
+# define get_field_indexes_tweet_ids() function - determines the location of each relevant field using the user's input
+# also generates a list of Tweet IDs that are in the csv file to make sure duplicate Tweets aren't being added to the file
+# returns the list of Tweet IDs and the indexes of the state, tweet_id, and keyword fields
+def get_field_indexes_tweet_ids(contents):
+    # get fields from csv file
+    fields = [f for f in contents]
+
+    # display menu of fields that were found in csv file
+    print()
+    for i, field in enumerate(fields, start=1):
+        print(f'{i}. {field}')
+    print()
+    
+    # ask user to enter field that has states
+    state_field = input('Enter the field that contains names of states: ')
+    
+    # validate that specified state field is in fields list
+    while state_field not in fields:
+        # tell user that state field isn't in the fields list
+        print(f'{state_field} does not exist.')
+
+        # tell user to enter the states field again
+        state_field = input('Enter the field that contains the names of states: ')
+    
+    # ask user to enter field that has Tweet IDs
+    id_field = input('Enter the field that contains Tweet IDs: ')
+    
+    # validate that specified ids field is in fields list and is not the same as states field
+    while id_field not in fields or id_field == state_field:
+        # tell user if field does not exist
+        if id_field not in fields:
+            print(f'{id_field} does not exist.')
+        
+        # tell user if field is the same as state field
+        if id_field == state_field:
+            print(f'That is the same as {state_field}.')
+        
+        # tell user to enter the ids field again
+        id_field = input('Enter the field that contains Tweet IDs: ')
+    
+    # ask user to enter field that contains keywords
+    keyword_field = input('Enter the field that contains keywords from menu: ')
+    
+    # validate that specified keywords field is in fields list and is not the same as states or ids fields
+    while keyword_field not in fields or keyword_field == state_field or keyword_field == id_field:
+        # tell user if field does not exist
+        if keyword_field not in fields:
+            print(f'{id_field} does not exist.')
+        
+        # tell user if field is the same as state field
+        if keyword_field == state_field:
+            print(f'That is the same as {state_field}.')
+        
+        # tell user if field is the same as id field
+        if keyword_field == id_field:
+            print(f'That is the same as {id_field}.')
+        
+        # tell user to enter the ids field again
+        id_field = input('Enter the field that contains Tweet IDs: ')
+    
+    # get list of tweet ids from csv file using user id_field
+    tweets = contents[id_field].tolist()
+    
+    # determine indexes of each of the specified fields in the fields list
+    state_index = fields.index(state_field)
+    id_index = fields.index(id_field)
+    keyword_index = fields.index(keyword_field)
+    
+    # return indexes to parent function
+    return tweets, state_index, id_index, keyword_index
+
+    
 # define TweetKeywordSearch() function - searches for Tweets using a specified keyword and
 # returns the found states, the Tweet IDs, state counts, and keyword used.
 def TweetKeywordSearch(ws, default, states, cities):
@@ -779,19 +851,28 @@ def TweetKeywordSearch(ws, default, states, cities):
             # get csv file to write to from user
             user_file = get_user_csv_file(default)
             
+            # read contents of user csv file into contents
+            contents = pd.read_csv(user_file, header=0)
+            
             # create tweet_data dict using ids and places lists
             tweet_data = dict(zip(ids, places))
             
-            # read contents of user_file for use in making sure duplicate Tweets aren't written to the file
-            # reading a file necessitates setting 2 variables; if it didn't, then this would just be ids
-            locations, tweets, word = csv_interact((), user_file, ws, mode='r')
+            # create empty data list with 3 indexes
+            data = [None] * 3
+            
+            # get locations of data Tweet IDs, states, and keywords in the csv file using their indexes
+            # in the user's csv file
+            # also get a list of Tweet IDs that are already in the user's csv file
+            tweets, state_index, id_index, keyword_index = get_field_indexes_tweet_ids(contents)
             
             # iterate through tweet_data dict to write each tweet to the csv file
             for tweet_id in tweet_data:
                 # append Tweet data to file if the Tweet ID is not already in the file
                 if tweet_id not in tweets:
-                    # create data set for each tweet
-                    data = (tweet_id, keyword, tweet_data[tweet_id])
+                    # add the relevant data to the correct index in the data list to write it to new line in user's csv file
+                    data[state_index] = tweet_data[tweet_id]
+                    data[id_index] = tweet_id
+                    data[keyword_index] = keyword
         
                     # append this data to default csv file
                     csv_interact(data, user_file, ws)
