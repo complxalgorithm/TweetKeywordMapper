@@ -7,12 +7,15 @@
 
 """
 
+
 # import libraries
 import os
 import sys
 
 
+"""
 # define TweetKeywordArcPro() function - maps the state counts using ArcGIS Pro
+"""
 def TweetKeywordArcPro(ws, counts, keyword):
     # import arcpy library
     import arcpy
@@ -76,8 +79,7 @@ def TweetKeywordArcPro(ws, counts, keyword):
         # name if results were filtered using a keyword
         if len(words) > 1:
             # name if keyword had more than 1 word
-            key_str = '_'.join(words)   # join the separate words with a _ in between each word
-            new_field = key_str
+            new_field = '_'.join(words)   # join the separate words with a _ in between each word
             new_field = f'{new_field}_Tweet_Count'
             
         # name if the keyword only had one word    

@@ -8,12 +8,16 @@
 
 """
 
+
 # import libraries
 import TweetKeywordData as data
 import os
 import warnings
 
-# define TweetKeywordGeoPandas.py function - 
+
+"""
+# define TweetKeywordGeoPandas.py function - maps the state counts using the GeoPandas library
+"""
 def TweetKeywordGeoPandas(ws, counts, keyword):
     # ignore all warnings that GeoPandas may output
     warnings.filterwarnings("ignore")

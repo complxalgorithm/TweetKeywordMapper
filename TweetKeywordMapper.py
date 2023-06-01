@@ -10,6 +10,7 @@
 
 """
 
+
 # import modules/libraries
 import TweetKeywordConstants as cons
 import TweetKeywordData as data
@@ -22,8 +23,10 @@ import platform
 import shutil
 
 
+"""
 # define get_map_service() function - allows user to specify which mapping service they'd like to use
 # in order to map their results
+"""
 def get_map_service():
     # set services list populated with name of each supported mapping service
     services = ['ArcPro', 'GeoPandas']
@@ -49,7 +52,9 @@ def get_map_service():
     return user_service
     
 
+"""
 # define TweetKeywordMapper() function - main function
+"""
 def TweetKeywordMapper():
     # set workspace
     ws = cons.workspace
@@ -179,6 +184,8 @@ def TweetKeywordMapper():
     print('Thank you for using Tweet Keyword Mapper!')
 
 
-# run the program
+"""
+# execute the program
+"""
 if __name__ == '__main__':
     TweetKeywordMapper()

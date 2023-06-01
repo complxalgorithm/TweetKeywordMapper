@@ -8,30 +8,20 @@
 @Requirements: tweepy, pandas
 
 """
+
+
 # import libraries
 import pandas as pd
 import csv
 import os
 import time
 import TweetKeywordConstants as cons
-##from sys import platform
-##import random
+
 
 """
-# define set_path_to_file() function - 
-def set_path_to_file(ws, file):
-    # set path depending on operating system
-    if platform == 'win32':
-        path_to_file = ws + '\\' + file
-    else:
-        path_to_file = ws + '/' + file
-    
-    # return path to file to parent function
-    return path_to_file
+# define where_data() function - gets user's method of getting Tweet data: by searching Twitter
+# using the Twitter API, or by importing the data from a CSV file
 """
-
-
-# define where_data() function - 
 def where_data():
     # create options dict to display
     options = {'1': 'Search Twitter', '2': 'Import from CSV'}
@@ -51,12 +41,14 @@ def where_data():
         # ask where user would like to get data from
         where = input('Choose how you would like to get Tweet count data using the option\'s number: ')
     
-    # return key value to main() function
+    # return key value to parent function
     return where
 
 
+"""
 # define ifWrite() function - allow user to signal whether or not they want to write search results
 # to a csv file
+"""
 def ifWrite():
     # ask user for input
     answer = input('Would you like to write Tweet ID and State data to a CSV file? (Y or N): ')
@@ -69,12 +61,14 @@ def ifWrite():
         # ask user for input again
         answer = input('Would you like to write Tweet ID and State data to a CSV file? (Y or N): ')
     
-    # return answer to main() function
+    # return answer to parent function
     return answer
 
 
+"""
 # define get_states_from_results() function - uses search results to populate places list with
 # full name of the state that each of the tweets with geolocation info was tweeted from
+"""
 def get_states_ids_from_results(results, api, states, cities, num):
     # initialize tweet ids list to store ids of tweets
     tweet_ids = []
@@ -130,11 +124,13 @@ def get_states_ids_from_results(results, api, states, cities, num):
             if count == num:
                 break
     
-    # return places list to main() function
+    # return places list to parent function
     return places, tweet_ids
 
 
+"""
 # define get_state() function - extracts the state from each tweet using either the Status or User model
+"""
 def get_state(s, u, states, cities):
     # run this code if there is a place object in status model for the tweet
     if s.place is not None:
@@ -362,9 +358,11 @@ def get_state(s, u, states, cities):
     else:
         return ''
 
-    
+
+"""
 # define get_state_counts() function - uses places list to count total number of tweets from
 # each state in the search results
+"""
 def get_state_counts(places, states):
     # initialize counts dictionary
     counts = {}
@@ -383,11 +381,13 @@ def get_state_counts(places, states):
         # add current state key and its count as the next key/value combo in counts dict
         counts[key] = count
     
-    # return counts dict to main() function
+    # return counts dict to parent function
     return counts
 
 
+"""
 # define get_user_csv_file() function - get a csv file from the user
+"""
 def get_user_csv_file(default):
     # ask user to enter their file, or use the default csv file
     user_file = input('Enter csv file from your current directory, or hit enter to use default file: ') or default
@@ -418,7 +418,9 @@ def get_user_csv_file(default):
     return user_file
 
 
+"""
 # define get_shp_directory() function - asks user to specify which directory within workspace contains shapefile
+"""
 def get_shp_directory(ws):
     # create empty dirs_list to hold all directories in project
     dirs_list = []
@@ -467,11 +469,13 @@ def get_shp_directory(ws):
         # ask user again to choose which directory their US states shapefile is in
         user_dir = input('Choose which directory your shapefile is in using its number: ')
     
-    # set valid user_dir
+    # return directory to parent function
     return dirs[user_dir]
 
 
+"""
 # define get_shapefile() function - returns shapefile to be used by GeoPandas to map each state's Tweet counts
+"""
 def get_shapefile(ws):
     # get directory that contains US states shapefile
     user_dir = get_shp_directory(ws)
@@ -533,15 +537,17 @@ def get_shapefile(ws):
         # ask user again to choose which directory their US states shapefile is in
         user_shp = input('Choose your US states shapefile using its number: ')
     
-    # set valid user_dir
+    # return the shapefile and directory to the parent function
     return shps[user_shp], user_dir
 
 
+"""
 # define csv_interact() function - appends, writes, or reads contents of user's csv file
 # optional parameters:
 #   - mode         -> default to append
 #   - checkKeyword -> default to False
 def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
+"""
     # write to or append data to file using csv module
     if mode == 'a' or mode == 'w':
         # this code makes sure that a file in append mode will append the first line to a newline
@@ -711,9 +717,11 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
         return states, ids, user_keyword
 
 
+"""
 # define get_field_indexes_tweet_ids() function - determines the location of each relevant field using the user's input
 # also generates a list of Tweet IDs that are in the csv file to make sure duplicate Tweets aren't being added to the file
 # returns the list of Tweet IDs and the indexes of the state, tweet_id, and keyword fields
+"""
 def get_field_indexes_tweet_ids(contents):
     # get fields from csv file
     fields = [f for f in contents]
@@ -779,12 +787,14 @@ def get_field_indexes_tweet_ids(contents):
     id_index = fields.index(id_field)
     keyword_index = fields.index(keyword_field)
     
-    # return indexes to parent function
+    # return Tweet IDs list and indexes to parent function
     return tweets, state_index, id_index, keyword_index
 
-    
+
+"""
 # define TweetKeywordSearch() function - searches for Tweets using a specified keyword and
 # returns the found states, the Tweet IDs, state counts, and keyword used.
+"""
 def TweetKeywordSearch(ws, default, states, cities):
     # import necessary Tweepy library and OAuthHandler
     import tweepy
