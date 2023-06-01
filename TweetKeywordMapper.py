@@ -176,9 +176,9 @@ def TweetKeywordMapper():
                 if geopandas_loader is None:
                     print('The GeoPandas library is not installed on your machine, so you cannot map using GeoPandas.')
                 
-                # tell user that pandas isn't installed
+                # tell user that matplotlib isn't installed
                 if matplotlib_loader is None:
-                    print('The matplotlib library is not installed on your machine, so you cannot map using GeoPandas.')                
+                    print('The Matplotlib library is not installed on your machine, so you cannot map using GeoPandas.')                
 
     # display goodbye
     print('Thank you for using Tweet Keyword Mapper!')
