@@ -59,10 +59,7 @@ There may be times when you specify a higher number of expected results, but the
 
 If you decide to map your results using ArcGIS Pro and you have mapped results for the same keyword using ArcGIS Pro, the program will overwrite field names that are already on the target US states shapefile (i.e., there will not be duplicate fields of the same name). The full field name should be added to ArcGIS Pro, as well. Mapping using GeoPandas will <em>not</em> overwrite duplicate fields, and will simply create a new field with a number appended to it. The field names in this case will have a limit of ten (10) characters, so the full name of the field will not appear (i.e., "Tweet_Count" would be "Tweet_Coun").
 
-Unfortunately, due to how the code is written, the program assumes a particular csv layout when writing data to a csv file. In order to get the most ideal outcome when writing your results to a csv file, your csv file should be organized so that there are only three (3) fields in this particular order:
-```
-Tweet IDS  |  Keyword  |  State
-```
+Unfortunately, due to how the code is written, you may run into issues with CSV files that have more than three fields. The program will add the data that was found by searching Twitter using the field indexes of the Tweet IDs, states, and keywords fields. I do not know if it still will work successfully with CSV files that contain more than three (3) fields.
 
 I will be updating the program in the future so that this is not the required layout (see To-Do List).
 
