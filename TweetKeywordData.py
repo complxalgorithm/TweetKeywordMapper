@@ -546,7 +546,6 @@ def get_shapefile(ws):
 # optional parameters:
 #   - mode         -> default to append
 #   - checkKeyword -> default to False
-def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
 """
 def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
     # write to or append data to file using csv module
@@ -837,7 +836,7 @@ def TweetKeywordSearch(ws, default, states, cities):
     # get 100 search results using query
     search_results = tweepy.Cursor(api.search_tweets, q=query, count=100).items()
             
-    # get lists of places and tweet ids that tweets in search results came from
+    # get lists of places and tweet ids from search results
     places, ids = get_states_ids_from_results(search_results, api, states, cities, num_res)
             
     # get dictionary of counts for each state
@@ -874,12 +873,12 @@ def TweetKeywordSearch(ws, default, states, cities):
             # get locations of data Tweet IDs, states, and keywords in the csv file using their indexes
             # in the user's csv file
             # also get a list of Tweet IDs that are already in the user's csv file
-            tweets, state_index, id_index, keyword_index = get_field_indexes_tweet_ids(contents)
+            csv_tweets, state_index, id_index, keyword_index = get_field_indexes_tweet_ids(contents)
             
             # iterate through tweet_data dict to write each tweet to the csv file
             for tweet_id in tweet_data:
                 # append Tweet data to file if the Tweet ID is not already in the file
-                if tweet_id not in tweets:
+                if tweet_id not in csv_tweets:
                     # add the relevant data to the correct index in the data list to write it to new line in user's csv file
                     data[state_index] = tweet_data[tweet_id]
                     data[id_index] = tweet_id
