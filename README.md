@@ -63,9 +63,9 @@ Unfortunately, due to how the code is written, you may run into issues with CSV 
 - [ ] Clean up state extraction algorithm
 - [X] When writing data to a csv, organize each row's data based on the location of their respective field in the file.
 - [ ] Find instance of a state's name in place values like "New York and the World" and return the appropriate state value.
-- [ ] If place from a Tweet is a set of X,Y coordinates, use those to determine state.
 - [ ] Get state from Tweet where user's location has something like "NY -> FL".
 - [ ] Get state from Tweet where user's location has something like "Florida via New York"
+- [ ] If place from a Tweet is a set of X,Y coordinates, use those to determine state.
 - [ ] Allow user to interact with Excel files.
 - [ ] Add support for mapping using PyQGIS.
 - [X] Add support for mapping using GeoPandas.
