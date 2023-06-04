@@ -91,13 +91,15 @@ def get_states_ids_from_results(results, api, states, cities, num):
         print(f'Tweet ID: {tweet_id}\n')
         #print(f'Screen Name: {screen_name}')
         
-        # get status data using the tweet id
-        # get user data using the screen name
+        # try to get status data using the tweet id
+        # try to get user data using the screen name
         try:
             stat = api.get_status(tweet_id)
             user = api.get_user(screen_name=f'{screen_name}')
         except Exception:
-            place = ''
+            # tell user when data can't be pulled for either the status or the user
+            print('Data for {tweet_id} cannot be pulled at this time.')
+            time.sleep(1)   # pause program for a second
         else:
             # get the state from which the tweet was sent
             place = get_state(stat, user, states, cities)
