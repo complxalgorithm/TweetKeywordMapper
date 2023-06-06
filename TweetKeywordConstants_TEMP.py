@@ -79,7 +79,12 @@ states = {
 cities = {
     'NYC': 'New York',
     'New York City': 'New York',
+    'Brooklyn': 'New York',
+    'Manhattan': 'New York',
+    'Buffalo': 'New York',
+    'WNY': 'New York',
     'Calif': 'California',
+    'Cal': 'California',
     'LA': 'California',
     'L.A.': 'California',
     'Los Angeles': 'California',
@@ -100,6 +105,7 @@ cities = {
     'Dallas': 'Texas',
     'Frisco': 'Texas',
     'Phoenix': 'Arizona',
+    'Tuscon': 'Arizona',
     'Philly': 'Pennsylvania',
     'Philadelphia': 'Pennsylvania',
     'Washington DC': 'District of Columbia',
@@ -121,5 +127,6 @@ cities = {
     'Las Vegas': 'Nevada',
     'L.V.': 'Nevada',
     'LV': 'Nevada',
-    'Charlotte': 'North Carolina'
+    'Charlotte': 'North Carolina',
+    'Tuscaloosa': 'Alabama'
 }
