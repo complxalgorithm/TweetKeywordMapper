@@ -129,5 +129,6 @@ cities = {
     'L.V.': 'Nevada',
     'LV': 'Nevada',
     'Charlotte': 'North Carolina',
-    'Tuscaloosa': 'Alabama'
+    'Tuscaloosa': 'Alabama',
+    'Milwaukee': 'Wisconsin'
 }
