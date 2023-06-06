@@ -105,7 +105,7 @@ cities = {
     'Dallas': 'Texas',
     'Frisco': 'Texas',
     'Phoenix': 'Arizona',
-    'Tuscon': 'Arizona',
+    'Tucson': 'Arizona',
     'Philly': 'Pennsylvania',
     'Philadelphia': 'Pennsylvania',
     'Washington DC': 'District of Columbia',
@@ -119,6 +119,7 @@ cities = {
     'ATL': 'Georgia',
     'Boston': 'Massachusetts',
     'Seattle': 'Washington',
+    'Sea': 'Washington',
     'Miami': 'Florida',
     'Orlando': 'Florida',
     'Tampa Bay': 'Florida',
@@ -130,5 +131,6 @@ cities = {
     'LV': 'Nevada',
     'Charlotte': 'North Carolina',
     'Tuscaloosa': 'Alabama',
-    'Milwaukee': 'Wisconsin'
+    'Milwaukee': 'Wisconsin',
+    'Memphis': 'Tennessee'
 }
