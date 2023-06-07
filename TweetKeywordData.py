@@ -15,6 +15,8 @@ import pandas as pd
 import csv
 import os
 import time
+import re
+import numpy as np
 import TweetKeywordConstants as cons
 
 
@@ -98,8 +100,8 @@ def get_states_ids_from_results(results, api, states, cities, num):
             user = api.get_user(screen_name=f'{screen_name}')
         except Exception:
             # tell user when data can't be pulled for either the status or the user
-            print('Data for {tweet_id} cannot be pulled at this time.')
-            time.sleep(1)   # pause program for a second
+            print(f'Data for {tweet_id} cannot be pulled at this time.\n')
+            time.sleep(1.5)   # pause program for a second
         else:
             # get the state from which the tweet was sent
             place = get_state(stat, user, states, cities)
@@ -120,7 +122,7 @@ def get_states_ids_from_results(results, api, states, cities, num):
             
                 # add 1 to counter
                 count += 1
-                print(count)
+                print(f'{count}\n')
         
             # break from the loop once the user-inputted results number is reached
             if count == num:
@@ -191,6 +193,10 @@ def get_state(s, u, states, cities):
             # if a value in cities dict, return respective value in cities dict
             elif wrd in cities:
                 return cities[wrd]
+            
+            # if titled version of value in cities dict, return respective value in cities dict
+            elif wrd.title() in cities:
+                return cities[wrd.title()]
         
         # if pl value hasn't been returned and is not blank, set pl to the original place value
         # if it is blank then return an empty string
@@ -205,15 +211,13 @@ def get_state(s, u, states, cities):
         return ''
     
     """
-    # if the pl value has not been returned to its parent function, then there are other situations
-    # that will need to be handled. it will first be compared to the below cities dict. if it is not
-    # within the cities dict as a key, then the program will attempt to split the pl value using a
-    # space, a / symbol, a | symbol, a • symbol, a comma without a space as a delimiter. it will then iterate through
-    # each resulting word of each delimited string and compare them to many different string alterations involving
-    # the pl value (e.g., pl.upper(), pl.title(), etc.). if these all fail, it will return an empty string.
+    # if the pl value has not been returned to its parent function, then the place value is
+    # either from a different country or is most likely not in the proper <Municipality>, <State>
+    # format. a city or state will need to be searched for within the unreturned place value.
+    # a few other tests will need to be ran before doing that.
     """
     
-    # return its respective value in the cities dict if it shows up as a key
+    # return its respective value in the cities dictionary if it shows up as a key
     if pl in cities:
         return cities[pl]
     
@@ -221,144 +225,295 @@ def get_state(s, u, states, cities):
     elif pl.title() in cities:
         return cities[pl.title()]
     
+    # return its respective value in the states dictionary if it shows up as a key
+    elif pl in states:
+        return states[pl]
+    
+    # return state value if its uppercased version is a key in the states dictionary
+    elif pl.upper() in states:
+        return states[pl.upper()]
+    
+    # return value if it is a value within the states dictionary
+    elif pl in states.values():
+        return pl
+    
     # return titled version of value if it shows up as a value in states dict
     elif pl.title() in states.values():
         return pl.title()
     
-    # run this code if pl value is not a key/value in states dict, nor is it in cities dict
-    elif (pl not in states) and (pl not in states.values()):
-        # split pl value by four different delimiters: a space, a /, a |, a •, and a comma without a space
-        elements_space = pl.split(' ')
-        elements_slash = pl.split('/')
-        elements_bar = pl.split('|')
-        elements_dot = pl.split('•')
-        elements_comma = pl.split(',')
-        
-        # display the results of splitting the string
-        print(f'Split by Space: {elements_space}')
-        print(f'Split by /: {elements_slash}')
-        print(f'Split by |: {elements_bar}')
-        print(f'Split by Dot: {elements_dot}')
-        print(f'Split by ,: {elements_comma}\n')
-        
-        """
-        # check the length of each resulting list.
-        # if any of them have more than 1 element, iterate through multiple tests and return the state
-        # if any of the elements (using string methods) are in the states dictionary or cities dictionary.
-        # return an empty string if the place value doesn't pass any of these tests.
-        """
-        # split by space
-        if len(elements_space) > 1:
-            for wrd in elements_space:
-                if wrd in states: # not upper(), since 2-letter words between spaces are typically words (e.g., me, in)
-                    return states[wrd]
-                elif wrd in states.values():
-                    return wrd
-                elif wrd.capitalize() in states.values():
-                    return wrd.capitalize()
-                elif wrd.title() in states.values():
-                    return wrd.title()
-                elif wrd in cities:
-                    return cities[wrd]
-                elif wrd.title() in cities:
-                    return cities[wrd.title()]
-                elif wrd.upper() in cities:
-                    return cities[wrd.upper()]
-            
-            # return empty string if state value hasn't been returned
-            return ''
-        
-        # split by /
-        elif len(elements_slash) > 1:
-            for wrd in elements_slash:
-                if wrd.upper() in states:
-                    return states[wrd.upper()]
-                elif wrd in states.values():
-                    return wrd
-                elif wrd.capitalize() in states.values():
-                    return wrd.capitalize()
-                elif wrd.title() in states.values():
-                    return wrd.title()
-                elif wrd in cities:
-                    return cities[wrd]
-                elif wrd.title() in cities:
-                    return cities[wrd.title()]
-                elif wrd.upper() in cities:
-                    return cities[wrd.upper()]
-            
-            # return empty string if state value hasn't been returned
-            return ''
-        
-        # split by |
-        elif len(elements_bar) > 1:
-            for wrd in elements_bar:
-                if wrd.upper() in states:
-                    return states[wrd.upper()]
-                elif wrd in states.values():
-                    return wrd
-                elif wrd.capitalize() in states.values():
-                    return wrd.capitalize()
-                elif wrd.title() in states.values():
-                    return wrd.title()
-                elif wrd in cities:
-                    return cities[wrd]
-                elif wrd.title() in cities:
-                    return cities[wrd.title()]
-                elif wrd.upper() in cities:
-                    return cities[wrd.upper()]
-            
-            # return empty string if state value hasn't been returned
-            return ''
-        
-        # split by •
-        elif len(elements_dot) > 1:
-            for wrd in elements_dot:
-                if wrd.upper() in states:
-                    return states[wrd.upper()]
-                elif wrd in states.values():
-                    return wrd
-                elif wrd.capitalize() in states.values():
-                    return wrd.capitalize()
-                elif wrd.title() in states.values():
-                    return wrd.title()
-                elif wrd in cities:
-                    return cities[wrd]
-                elif wrd.title() in cities:
-                    return cities[wrd.title()]
-                elif wrd.upper() in cities:
-                    return cities[wrd.upper()]
-            
-            # return empty string if state value hasn't been returned
-            return ''
-        
-        # split by a comma without the space
-        elif len(elements_comma) > 1:
-            for wrd in elements_dot:
-                if wrd.upper() in states:
-                    return states[wrd.upper()]
-                elif wrd in states.values():
-                    return wrd
-                elif wrd.capitalize() in states.values():
-                    return wrd.capitalize()
-                elif wrd.title() in states.values():
-                    return wrd.title()
-                elif wrd in cities:
-                    return cities[wrd]
-                elif wrd.title() in cities:
-                    return cities[wrd.title()]
-                elif wrd.upper() in cities:
-                    return cities[wrd.upper()]
-            
-            # return empty string if state value hasn't been returned
-            return ''
-        
-        # return an empty string after going through each element
-        else:
-            return ''
-                
-    # return an empty string when all other checks fail
+    # get the state depending on the presence of certain keywords
+    # after it fails all the above tests
     else:
+        if pl.find('via') == -1 and pl.find('from') == -1:
+            return find_state_in_place_value(pl, states, cities)
+        elif pl.find('via') != -1:
+            return find_state_in_place_value(pl, states, cities, word='via')
+        else:
+            return find_state_in_place_value(pl, states, cities, word='from')
+
+
+"""
+# define search_for_state() function - looks for instance of a state abbreviation or name of a city
+# within the place value and returns an object if an instance is found
+# CREDIT: Hugh Bothwell
+# https://stackoverflow.com/questions/5319922/check-if-a-word-is-in-a-string-in-python
+"""
+def search_for_state_city(p):
+    return re.compile(r'\b({0})\b'.format(p), flags=re.IGNORECASE).search
+
+
+"""
+# define find_state_in_place_value() function - searches for any mention of a state or city and returns the state value
+# that is most likely to be the state of origin of the Tweet
+"""
+def find_state_in_place_value(place, states, cities, word=''):
+    # initialize num_found_states variable to keep track of how many states could be pulled
+    # from the place value
+    num_found_states = 0
+    
+    # initialize found_states_indexes dictionary to store found states and where
+    # they are located within the place value string
+    found_states_indexes = {}
+    
+    # iterate through each city in the cities dictionary
+    for c in cities:
+        # run this code if a city mention is within the place value
+        if search_for_state_city(c)(place.upper()) is not None or search_for_state_city(c)(place.title()) is not None:
+            # do this if mention of city is found within uppercased version of place value
+            if search_for_state_city(c)(place.upper()) is not None:
+                # attempt to get index/location of mention within place value
+                try:
+                    place.upper().index(c)
+                
+                # move on if nothing was found
+                except ValueError:
+                    pass
+                
+                # run this if index/location of mention within place value was found
+                else:
+                    # display the city value that was found
+                    # this could also include other names or abbreviations of states
+                    print(f'City Found: {c}')
+                    
+                    # get result object of value that was found
+                    result = search_for_state_city(c)(place)
+                    
+                    # make sure the result is not a common word
+                    if result.group(1) not in ('la', 'La'):
+                        # only add to found states counter if it isn't in the found_states_indexes dictionary
+                        if cities[c] not in found_states_indexes:
+                            num_found_states += 1
+            
+                        else:
+                            print(f'{cities[c]} has already been found.')
+                        
+                        # add the state and its index within the place value to the found_states_indexes dictionary
+                        # if the index is not already in the dictionary
+                        if place.upper().index(c) not in found_states_indexes.values():
+                            found_states_indexes[cities[c]] = place.upper().index(c)
+                    
+                        else:
+                            print(f'A state has already been found at {place.title().index(c)}.')
+                    
+                    # tell user if the result may be a common word, and don't include it
+                    else:
+                        print('Probably doesn\'t refer to a city.')
+            
+            # move on if this fails
+            else:
+                pass
+            
+            # do this if mention of city is found within titled version of place value
+            if search_for_state_city(c)(place.title()) is not None:
+                # attempt to get index/location of mention within place value
+                try:
+                    place.title().index(c)
+                
+                # move on if nothing was found
+                except ValueError:
+                    pass
+                
+                # run this if index/location of mention within place value was found
+                else:
+                    # display the city value that was found
+                    # this could also include other names or abbreviations for states
+                    print(f'City Found: {c}')
+                    
+                    # get result object of value that was found
+                    result = search_for_state_city(c)(place)
+                    
+                    # make sure the result is not a common word
+                    if result.group(1) not in ('la', 'La'):
+                        # only add to found states counter if it isn't in the found_states_indexes dictionary
+                        if cities[c] not in found_states_indexes:
+                            num_found_states += 1
+            
+                        else:
+                            print(f'{cities[c]} has already been found.')
+                        
+                        # add the state and its index within the place value to the found_states_indexes dictionary
+                        # if the index is not already in the dictionary
+                        if place.title().index(c) not in found_states_indexes.values():
+                            found_states_indexes[cities[c]] = place.title().index(c)
+                    
+                        else:
+                            print(f'A state has already been found at {place.title().index(c)}.')
+                    
+                    # tell user if the result may be a common word, and don't include it
+                    else:
+                        print('Probably doesn\'t refer to a city.')
+            
+            # move on if this fails
+            else:
+                pass
+        
+        # move on if a city could not be found
+        else:
+            pass
+    
+    # iterate through each state in the states dictionary
+    for s in states:
+        # run this code if a state mention is within the place value
+        if search_for_state_city(s)(place.upper()) is not None or search_for_state_city(states[s])(place.title()) is not None:
+            # do this if mention of state's abbreviation is found within uppercased version of place value
+            if search_for_state_city(s)(place.upper()) is not None:
+                # display the state abbreviation that was found
+                print(f'State Found: {s}')
+
+                # attempt to find the index of a mention of the current state in a uppercased version of the place value
+                try:
+                    place.upper().index(s)
+
+                # move on if nothing was found
+                except ValueError:
+                    pass
+
+                # the index/location of a mention of the state was found in the place value
+                else:
+                    # set the resulting search object to result variable
+                    result = search_for_state_city(s)(place)
+
+                    # make sure the result is not a common word
+                    if result.group(1) not in ('in', 'In', 'me', 'Me', 'de', 'la', 'La', 'or', 'Or', 'Ca', 'Mt', 'Co', 'co', 'oh', 'Oh'):
+                        # only add to found states counter if it isn't in the found_states_indexes dictionary
+                        if states[s] not in found_states_indexes:
+                            num_found_states += 1
+
+                        else:
+                            print(f'{states[s]} has already been found.')
+                        
+                        # add the state and its index within the place value to the found_states_indexes dictionary
+                        # if the index is not already in the dictionary
+                        if place.upper().index(s) not in found_states_indexes.values():
+                            found_states_indexes[states[s]] = place.upper().index(s)
+                            
+                        else:
+                            print(f'A state has already been found at {place.upper().index(s)}.')
+                        
+
+                    # run if the result is not a common word
+                    else:
+                        # had to add this because I was getting the location of the foreign place that had 'Ca' in the name
+                        # and was preceded by 'Au'
+                        if (search_for_state_city('AU')(place.upper()) is None) and (result.group(1) not in ('in', 'In', 'me', 'Me', 'de', 'la', 'La', 'or', 'Or', 'Ca', 'Mt', 'Co', 'co', 'oh', 'Oh')):
+                            # only add to found states counter if it isn't in the found_states_indexes dictionary
+                            if states[s] not in found_states_indexes:
+                                num_found_states += 1
+
+                            else:
+                                print(f'{states[s]} has already been found.')
+                            
+                            # add the state and its index within the place value to the found_states_indexes dictionary
+                            # if the index is not already in the dictionary
+                            if place.upper().index(s) not in found_states_indexes.values():
+                                found_states_indexes[states[s]] = place.upper().index(s)
+
+                            # tell user when a state has already been found at that index
+                            else:
+                                print(f'A state has already been found at {place.upper().index(s)}.')
+
+                        # tell user when the found result may not refer to a state
+                        else:
+                            print(f'Probably doesn\'t refer to a state.\n')
+
+            # do this if mention of state's name is found within titled version of place value
+            elif search_for_state_city(states[s])(place.title()) is not None:
+                # display the state name that was found
+                print(f'State Found: {states[s]}')
+
+                # attempt to find the index of a mention of the current state in a titled version of the place value
+                try:
+                    place.title().index(states[s])
+                
+                # move on if nothing was found
+                except ValueError:
+                    pass
+                
+                # the index/location of a mention of the state was found in the place value
+                else:
+                    # only add to found states counter if it isn't in the found_states_indexes dictionary
+                    if states[s] not in found_states_indexes:
+                        num_found_states += 1
+
+                    else:
+                        print(f'{states[s]} has already been found.')
+                    
+                    # add the state and its index within the place value to the found_states_indexes dictionary
+                    # if the index is not already in the dictionary
+                    if place.title().index(states[s]) not in found_states_indexes.values():
+                        found_states_indexes[states[s]] = place.title().index(states[s])
+                    
+                    else:
+                        print(f'A state has already been found at {place.title().index(states[s])}.')
+                    
+
+            # move on if a state abbreviation or name could not be found
+            else:
+                pass
+        
+        # move on if a state abbreviation or name could not be found
+        else:
+            pass
+    
+    # display the number of states found and which states were found and the location
+    # of each found state
+    print(f'Number of Found States: {num_found_states}')
+    print(f'States and Locations in Place: {found_states_indexes}\n')
+    time.sleep(0.5)     # pause program for half a second
+    
+    # return an empty string if no states could be extracted from the place value
+    if num_found_states == 0 or len(list(found_states_indexes.keys())) == 0:
         return ''
+    else:
+        # get list of found states
+        found = list(found_states_indexes.keys())
+        
+        # get list of found indexes
+        indexes = list(found_states_indexes.values())
+        
+        # sort index values from first to last
+        sorted_values = np.argsort(indexes)
+        
+        # recreate sorted found_states_indexes dictionary
+        found_states_indexes = {found[s]: indexes[s] for s in sorted_values}   
+        
+        # return the first state that was found if the place value contains 'via' or 'from'
+        # as long as there was more than 1 state found
+        if word == 'via' or word == 'from':
+            if num_found_states > 1:
+                return found[indexes.index(min(found_states_indexes.values()))]
+            
+            else:
+                return found[0]
+        
+        # return the last state that was found if the place value doesn't contain 'via' or 'from'
+        # as long as there was more than 1 state found
+        else:
+            if num_found_states > 1:
+                return found[indexes.index(max(found_states_indexes.values()))]
+            
+            else:
+                return found[0]
 
 
 """
