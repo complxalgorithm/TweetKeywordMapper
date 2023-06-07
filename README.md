@@ -7,11 +7,14 @@ Search Twitter for Tweets containing a particular keyword from the command line,
     - This is only required if you want to map your results using GeoPandas.
 3. GeoPandas - learn how to install [here](https://geopandas.org/en/stable/getting_started/install.html).
     - This is only required if you want to map your results using GeoPandas.
-4. matplotlib - learn how to install [here](https://matplotlib.org/stable/users/installing/index.html).
+4. Matplotlib - learn how to install [here](https://matplotlib.org/stable/users/installing/index.html).
     - This is only required if you want to map your results using GeoPandas.
-5. Tweepy - learn how to install [here](https://docs.tweepy.org/en/stable/install.html).
-    - This is only required if you do not want to use the search capabilities and instead already have a csv file containing Tweet data.
-6. ArcPy - learn how to download and install ArcGIS Pro [here](https://pro.arcgis.com/en/pro-app/latest/get-started/download-arcgis-pro.htm).
+5. Numpy - learn how to install [here](https://numpy.org/install/).
+    - Only used in a single line in the state extraction algorithm.
+    - This is only required if you want to use the search capabilities.
+6. Tweepy - learn how to install [here](https://docs.tweepy.org/en/stable/install.html).
+    - This is only required if you want to use the search capabilities.
+7. ArcPy - learn how to download and install ArcGIS Pro [here](https://pro.arcgis.com/en/pro-app/latest/get-started/download-arcgis-pro.htm).
     - This is only required if you want to map your results using ArcGIS Pro.
 
 ## Set Up & Run
@@ -53,6 +56,8 @@ python3 TweetKeywordMapper.py
 ## Disclaimers
 This program is not an official Twitter or Esri project. This is a project that I made for a college course and is not affiliated <em>in any way</em> with Twitter/X Corp. or Esri. If you represent either of these companies and have an issue with this project, feel free to reach out to me at any time. Regardless, please do not sue me.
 
+Sometimes, a Tweet will be missed that should have been counted. I tried to limit as many mistakes as possible. To me, it is better to exclude Tweets that should have been included than it is to include Tweets that should have been excluded.
+
 There may be times when you specify a higher number of expected results, but the program doesn't reach it. That is because Twitter has a set limit of 100 results for each search query. This program will only count Tweets from which it is able to extract a state of origin towards your specified number of search results.
 
 If you decide to map your results using ArcGIS Pro and you have mapped results for the same keyword using ArcGIS Pro, the program will overwrite field names that are already on the target US states shapefile (i.e., there will not be duplicate fields of the same name). The full field name should be added to ArcGIS Pro, as well. Mapping using GeoPandas will <em>not</em> overwrite duplicate fields, and will simply create a new field with a number appended to it. The field names in this case will have a limit of ten (10) characters, so the full name of the field will not appear (i.e., "Tweet_Count" would be "Tweet_Coun").
@@ -60,12 +65,12 @@ If you decide to map your results using ArcGIS Pro and you have mapped results f
 Unfortunately, due to how the code is written, you may run into issues with CSV files that have more than three fields. The program will add the data that was found by searching Twitter using the field indexes of the Tweet IDs, states, and keywords fields. I do not know if it still will work successfully with CSV files that contain more than three (3) fields.
 
 ## To-Do List
-- [ ] Clean up state extraction algorithm
-- [X] When writing data to a csv, organize each row's data based on the location of their respective field in the file.
-- [ ] Find instance of a state's name in place values like "New York and the World" and return the appropriate state value.
-- [ ] Get state from Tweet where user's location has something like "NY -> FL".
-- [ ] Get state from Tweet where user's location has something like "Florida via New York"
+- [X] Clean up state extraction algorithm
+- [X] Find instance of a state's name in place values like "New York and the World" and return the appropriate state value.
+- [X] Get state from Tweet where user's location has something like "NY -> FL".
+- [X] Get state from Tweet where user's location has something like "Florida via New York"
 - [ ] If place from a Tweet is a set of X,Y coordinates, use those to determine state.
+- [X] When writing data to a csv, organize each row's data based on the location of their respective field in the file.
 - [ ] Allow user to interact with Excel files.
 - [ ] Add support for mapping using PyQGIS.
 - [X] Add support for mapping using GeoPandas.
