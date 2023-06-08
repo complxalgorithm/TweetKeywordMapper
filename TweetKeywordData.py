@@ -5,7 +5,7 @@
 @Description: Contains most functions that are imperative to running the program. This includes
               the algorithm used to determine the state of origin of each Tweet result, 
               as well as the csv_interact() and TweetKeywordSearch() functions.
-@Requirements: tweepy, pandas
+@Requirements: tweepy, pandas, numpy
 
 """
 
