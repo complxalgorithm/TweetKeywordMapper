@@ -985,8 +985,19 @@ def TweetKeywordSearch(ws, default, states, cities):
     keyword = input('Enter the keyword: ')
 
     # ask user how many results they would like
-    num_res = int(input('How many results would you like to get? '))
+    num_res = input('How many results would you like to get? ')
+    
+    # validate that num_res is an integer
+    while not num_res.isdigit():
+        # tell user their input is not an integer
+        print(f'{num_res} is not an integer.')
+        
+        # ask user again how many results they would like
+        num_res = input('How many results would you like to get? ')
 
+    # convert valid input to an integer
+    num_res = int(num_res)
+    
     # create a search query using user keyword
     query = keyword + ' -filter:retweets lang:en' # exclude retweets and only include english tweets
 
