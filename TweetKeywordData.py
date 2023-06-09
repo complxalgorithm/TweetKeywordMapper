@@ -551,7 +551,7 @@ def get_user_csv_file(default):
     
     # automatically return value if the input is the same as the default csv file
     if user_file == default:
-        return user_file
+        return default
     
     # get extension of input file
     file_ext = user_file.split('.')[-1]
@@ -1057,6 +1057,7 @@ def TweetKeywordSearch(ws, default, states, cities):
                 
                     # tell user data was successfully written to csv file
                     print(f'{data} was added to {user_file}')
+                
                 # inform user when data for a Tweet is already within the csv file
                 else:
                     print(f'Data for {tweet_id} is already in {user_file}.')
