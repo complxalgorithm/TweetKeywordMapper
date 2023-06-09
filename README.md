@@ -4,15 +4,14 @@ Search Twitter for Tweets containing a particular keyword from the command line,
 ## Requirements
 1. Python 3 - get the latest release [here](https://www.python.org/downloads).
 2. Pandas - learn how to install [here](https://pandas.pydata.org/docs/getting_started/install.html).
-    - This is only required if you want to map your results using GeoPandas.
-3. GeoPandas - learn how to install [here](https://geopandas.org/en/stable/getting_started/install.html).
-    - This is only required if you want to map your results using GeoPandas.
-4. Matplotlib - learn how to install [here](https://matplotlib.org/stable/users/installing/index.html).
-    - This is only required if you want to map your results using GeoPandas.
-5. Numpy - learn how to install [here](https://numpy.org/install/).
-    - Only used in a single line in the state extraction algorithm.
+3. Tweepy - learn how to install [here](https://docs.tweepy.org/en/stable/install.html).
     - This is only required if you want to use the search capabilities.
-6. Tweepy - learn how to install [here](https://docs.tweepy.org/en/stable/install.html).
+4. GeoPandas - learn how to install [here](https://geopandas.org/en/stable/getting_started/install.html).
+    - This is only required if you want to map your results using GeoPandas.
+5. Matplotlib - learn how to install [here](https://matplotlib.org/stable/users/installing/index.html).
+    - This is only required if you want to map your results using GeoPandas.
+6. Numpy - learn how to install [here](https://numpy.org/install/).
+    - Only used in a single line in the state extraction algorithm.
     - This is only required if you want to use the search capabilities.
 7. ArcPy - learn how to download and install ArcGIS Pro [here](https://pro.arcgis.com/en/pro-app/latest/get-started/download-arcgis-pro.htm).
     - This is only required if you want to map your results using ArcGIS Pro.
