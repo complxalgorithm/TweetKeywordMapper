@@ -615,7 +615,7 @@ def get_shp_directory(ws):
     print()
     
     # ask user to choose which directory their US states shapefile is in
-    user_dir = input('Enter which directory your shapefile is in using its number: ')
+    user_dir = input('Choose which directory your shapefile is in using its number: ')
     
     # validate that user_dir exists
     while user_dir not in dirs:
@@ -696,6 +696,31 @@ def get_shapefile(ws):
     
     # return the shapefile and directory to the parent function
     return shps[user_shp], user_dir
+
+
+# define set_new_field() function - 
+def set_new_field(keyword):
+    # name if results were not filtered using a keyword
+    if keyword == '':
+        new_field = 'Tweet_Count'
+    
+    # name fi results were filtered using a keyword
+    else:
+        # split the keyword using a space
+        words = keyword.split(' ')
+
+        # name if results were filtered using a keyword
+        if len(words) > 1:
+            # name if keyword had more than 1 word
+            new_field = '_'.join(words)   # join the separate words with a _ in between each word
+            new_field = f'{new_field}_Tweet_Count'
+
+        # name if the keyword only had one word    
+        else:
+            new_field = f'{keyword}_Tweet_Count'
+    
+    # return new field name value to parent function
+    return new_field
 
 
 """

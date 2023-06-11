@@ -54,23 +54,7 @@ def TweetKeywordGeoPandas(ws, counts, keyword):
         user_field = input('Which field has the abbreviations of the states? ')
     
     # set name of the field to be created in states feature class
-    if keyword == '':
-        # name if results were not filtered using a keyword
-        new_field = 'Tweet_Count'
-    else:
-        # split the keyword using a space
-        words = keyword.split(' ')
-
-        # name if results were filtered using a keyword
-        if len(words) > 1:
-            # name if keyword had more than 1 word
-            key_str = '_'.join(words)   # join the separate words with a _ in between each word
-            new_field = key_str
-            new_field = f'{new_field}_Tweet_Count'
-
-        # name if the keyword only had one word    
-        else:
-            new_field = f'{keyword}_Tweet_Count'
+    new_field = data.set_new_field(keyword)
 	
     # go through each value in the states abbreviations field in the states shapefile
     for num, state in states_df[user_field].items():

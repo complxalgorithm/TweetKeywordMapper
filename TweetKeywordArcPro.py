@@ -9,6 +9,7 @@
 
 
 # import libraries
+import TweetKeywordData as data
 import os
 import sys
 
@@ -69,22 +70,7 @@ def TweetKeywordArcPro(ws, counts, keyword):
         user_field = input('Which field has the abbreviations of the states? ')
 
     # set name of the field to be created in states feature class
-    if keyword == '':
-        # name if results were not filtered using a keyword
-        new_field = 'Tweet_Count'
-    else:
-        # split the keyword using a space
-        words = keyword.split(' ')
-
-        # name if results were filtered using a keyword
-        if len(words) > 1:
-            # name if keyword had more than 1 word
-            new_field = '_'.join(words)   # join the separate words with a _ in between each word
-            new_field = f'{new_field}_Tweet_Count'
-            
-        # name if the keyword only had one word    
-        else:
-            new_field = f'{keyword}_Tweet_Count'
+    new_field = data.set_new_field(keyword)
 
     # create new field in states feature class, and display that it was successful
     arcpy.AddField_management(states_fc, new_field, "LONG", field_alias=new_field)
