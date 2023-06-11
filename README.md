@@ -55,7 +55,7 @@ python3 TweetKeywordMapper.py
 ## Disclaimers
 This program is not an official Twitter or Esri project. This is a project that I made for a college course and is not affiliated <em>in any way</em> with Twitter/X Corp. or Esri. If you represent either of these companies and have an issue with this project, feel free to reach out to me at any time. Regardless, please do not sue me.
 
-Sometimes, a Tweet will be missed that should have been counted. I tried to limit as many mistakes as possible. To me, it is better to exclude Tweets that should have been included than it is to include Tweets that should have been excluded.
+Sometimes, a Tweet will be missed that should have been counted. I tried to limit as many mistakes as possible. To me, it is better to exclude Tweets that should have been included than it is to include Tweets that should have been excluded. Still, I am having a little trouble making sure words like "in" and "me" are not counted as states (in this case, Indiana and Maine) every time that they should not be counted. Some of these instances may slip through and get passed off as valid results. While I believe I have mitigated this issue a lot, this is still very much a work-in-progress.
 
 There may be times when you specify a higher number of expected results, but the program doesn't reach it. That is because Twitter has a set limit of 100 results for each search query. This program will only count Tweets from which it is able to extract a state of origin towards your specified number of search results.
 
