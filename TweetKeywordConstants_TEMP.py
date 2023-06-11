@@ -94,6 +94,8 @@ cities = {
     'San Fran': 'California',
     'SoCal': 'California',
     'Sacramento': 'California',
+    'Long Beach': 'California',
+    'Oakland': 'California',
     'Chicago': 'Illinois',
     'Chi': 'Illinois',
     'Chitown': 'Illinois',
