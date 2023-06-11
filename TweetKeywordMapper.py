@@ -86,7 +86,7 @@ def TweetKeywordMapper():
     pro = shutil.which('ArcGISPro')
     
     # create the default csv file if it does not already exist within the workspace
-    # add first row to file containing headers Tweet_ID and State
+    # add first row to file containing headers Tweet_ID, Keyword, and State
     if not os.path.exists(default_csv):
         data.csv_interact(('Tweet_ID', 'Keyword', 'State'), default_csv, ws)
 
@@ -151,8 +151,23 @@ def TweetKeywordMapper():
             # display results if any were found
             print(f'\nKeyword: {keyword}\n\nIDs: {tweet_ids}\n\nPlaces: {places}\n\nCounts: {state_counts}\n')
     
+    time.sleep(1)   # pause program for a second
+    
     # run mapping functionality if results were found
     if num_results > 0:
+        # get what percentage of the total number of results came from each state
+        # will only include the states that have Tweets
+        state_counts_percents = data.get_count_percentages(state_counts, num_results, states)
+
+        # display the percentages
+        print('Percent of Tweets That Came From Each State')
+        print('-------------------------------------------')
+        for state, percent in state_counts_percents.items():
+            print(f'{state}: {percent}')
+        print()
+
+        time.sleep(1)   # pause program for a second
+        
         # ask user if they would like to map the results
         ifMap = input('Would you like to map the results? (Y or N) ')
 

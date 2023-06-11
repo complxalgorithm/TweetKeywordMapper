@@ -543,6 +543,27 @@ def get_state_counts(places, states):
 
 
 """
+# define get_count_percentages() function - calculates for each state the percent of Tweets
+# that came from there and adds each state's name and the percent to the percents dictionary
+# then returns that dictionary to the parent function
+"""
+def get_count_percentages(counts, num_res, states):
+    # initialize percents dictionary
+    percents = {}
+    
+    # iterate through each state and its count
+    for state, count in counts.items():
+        # only do this for states that have results
+        if count > 0:
+            # add full name of state as key and percent of total results as value
+            # to percents dictionary
+            percents[states[state]] = '{:.2%}'.format(count / num_res)
+    
+    # return percents dictionary to the parent function
+    return percents
+
+
+"""
 # define get_user_csv_file() function - get a csv file from the user
 """
 def get_user_csv_file(default):
@@ -689,7 +710,7 @@ def get_shapefile(ws):
     # validate that user_dir exists
     while user_shp not in shps:
         # display an error
-        print('That is not a shapefile.')
+        print(f'{user_shp} is not a shapefile.')
         
         # ask user again to choose which directory their US states shapefile is in
         user_shp = input('Choose your US states shapefile using its number: ')
@@ -772,22 +793,30 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
             print(f'{i}. {field}')
         print()
         
-        # tell user to enter the state and tweet id fields from the menu
+        # ask user to enter the state and tweet id fields from the menu
         state_field = input('Enter the field that contains names of states: ')
+        
+        # validate that the state field is in the fields list
+        while state_field not in fields:
+            print(f'{state_field} does not exist.')
+            
+            # ask user to enter the state field again
+            state_field = input('Enter the field that contains names of states: ')
+        
+        # ask user to enter the tweet id field from the menu
         id_field = input('Enter the field that contains Tweet IDs: ')
         
-        # validate that both fields are in fields list
-        while state_field not in fields or id_field not in fields:
-            # tell user if state field isn't in the fields list
-            if state_field not in fields:
-                print(f'{state_field} does not exist.')
-            
-            # tell user if id field isn't in the fields list
+        # validate that the id field is in the fields list
+        while id_field not in fields or id_field == state_field:
+            # tell user that the field is not in the fields list
             if id_field not in fields:
                 print(f'{id_field} does not exist.')
             
-            # tell user to enter the fields again
-            state_field = input('Enter the field that contains the names of states: ')
+            # tell user that their id field is the same as their states field
+            elif id_field == state_field:
+                print(f'{id_field} is the same as your states field.')
+            
+            # tell user to enter the id field again
             id_field = input('Enter the field that contains Tweet IDs: ')
         
         # intialize state_data and id_data lists to store values of state_field and id_field
@@ -817,16 +846,19 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
             
                 # validate that field is in fields list
                 while keyword_field not in fields or keyword_field == state_field or keyword_field == id_field:
+                    # display that the keyword field is the same as the state field, then pause program for half a second
                     if keyword_field == state_field:
-                        # display that the keyword field is the same as the state field, then pause program for half a second
-                        print('That is the same as your state field. Please try again.')
+                        print(f'{keyword_field} is the same as your state field.')
                         time.sleep(0.5)
+                    
+                    # display that the keyword field is the same as the id field, then pause program for half a second
                     elif keyword_field == id_field:
-                        # display that the keyword field is the same as the id field, then pause program for half a second
-                        print('That is the same as your id field. Please try again.')
+                        print(f'{keyword_field} is the same as your id field.')
+                        time.sleep(0.5)
+                    
+                    # display that the field does not exist, then pause program for half a second
                     else:
-                        # display that the field does not exist, then pause program for half a second
-                        print('That field does not exist. Please try again.')
+                        print(f'{keyword_field} field does not exist.')
                         time.sleep(0.5)
             
                     # ask user again for keyword field
