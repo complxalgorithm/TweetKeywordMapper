@@ -698,7 +698,10 @@ def get_shapefile(ws):
     return shps[user_shp], user_dir
 
 
-# define set_new_field() function - 
+"""
+# define set_new_field() function - sets name of new field using the keyword and returns it
+# to the parent function
+"""
 def set_new_field(keyword):
     # name if results were not filtered using a keyword
     if keyword == '':
