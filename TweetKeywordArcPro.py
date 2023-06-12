@@ -74,7 +74,9 @@ def TweetKeywordArcPro(ws, counts, keyword):
 
     # create new field in states feature class, and display that it was successful
     arcpy.AddField_management(states_fc, new_field, "LONG", field_alias=new_field)
-    print()
+    print(f'{new_field} was added successfully to {states_fc}.')
+    
+    time.sleep(1.5)     # pause program for a second and a half
 
     # create update cursor of states feature class that pulls state abbrevs field and the created field
     update = arcpy.da.UpdateCursor(states_fc, [user_field, new_field])
