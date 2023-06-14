@@ -17,7 +17,7 @@ Search Twitter for Tweets containing a particular keyword from the command line,
     - This is only required if you want to map your results using ArcGIS Pro.
 
 ### Install Requirements
-You can install all modules other than ArcPy by running the following command:
+You can install all modules other than ArcPy by running the following command within the TweetKeywordMapper directory:
 ```
 pip3 install -r requirements.txt
 ```
@@ -54,7 +54,7 @@ git clone https://github.com/complxalgorithm/TweetKeywordMapper.git
 ```
 Next, set the workspace of your project (i.e., your ArcGIS Pro project). It can either be within the TweetKeywordMapper directory that you downloaded, or in a different directory. You then need to set the name of the default csv file. This file should be located within the TweetKeywordMapper directory. If no file with the set name exists, the program will create a blank csv file with the appropriate fields.
 
-Once all of the requirements are met and the program is downloaded, you can run the code based on how your operating system runs Python scripts. In your terminal, change your current working directory to the TweetKeywordMapper directory, then run
+Once all of the requirements are met and the program is downloaded, you can run the program. In your terminal, run the following command:
 ```
 python3 TweetKeywordMapper.py
 ```
