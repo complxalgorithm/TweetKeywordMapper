@@ -1,0 +1,5 @@
+geopandas==0.13.0
+matplotlib==3.7.1
+numpy==1.24.3
+pandas==2.0.1
+tweepy==4.13.0

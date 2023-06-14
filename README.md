@@ -16,6 +16,13 @@ Search Twitter for Tweets containing a particular keyword from the command line,
 7. ArcPy - learn how to download and install ArcGIS Pro [here](https://pro.arcgis.com/en/pro-app/latest/get-started/download-arcgis-pro.htm).
     - This is only required if you want to map your results using ArcGIS Pro.
 
+### Install Requirements
+You can install all modules other than ArcPy by running the following command:
+```
+pip3 install -r requirements.txt
+```
+You can then download ArcGIS Pro if you have a Windows machine, and that will automatically install the latest version of ArcPy.
+
 ## Set Up & Run
 In order to run this program to its fullest extent, you will need to install the Tweepy library and ArcGIS Pro. Using the Tweepy library requires setting up a Twitter Developer account. Using ArcGIS Pro requires the Windows operating system and a paid license to use.
 
