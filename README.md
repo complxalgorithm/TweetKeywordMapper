@@ -54,11 +54,15 @@ git clone https://github.com/complxalgorithm/TweetKeywordMapper.git
 ```
 Next, set the workspace of your project (i.e., your ArcGIS Pro project). It can either be within the TweetKeywordMapper directory that you downloaded, or in a different directory. You then need to set the name of the default csv file. This file should be located within the TweetKeywordMapper directory. If no file with the set name exists, the program will create a blank csv file with the appropriate fields.
 
-Once all of the requirements are met and the program is downloaded, you can run the program. In your terminal, run the following command:
+Once all of the requirements are met and the program is downloaded, you can now run the program.
+
+#### Python
+To run the program using Python3, run the following command in your terminal:
 ```
 python3 TweetKeywordMapper.py
 ```
 
+#### Shell
 You can also use the shell script to execute the program, especially on non-Windows machines.
 
 Make the script executable by running the following command within the TweetKeywordMapper directory:
@@ -66,7 +70,7 @@ Make the script executable by running the following command within the TweetKeyw
 chmod +x tweetkeywordmapper
 ```
 
-To run the script after doing that, simply enter:
+After making the script executable, you can simply run the script by entering:
 ```
 ./tweetkeywordmapper
 ```
