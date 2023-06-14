@@ -1,11 +1,14 @@
+#!/usr/bin/env python3
+# coding: utf-8
+
 """
 
 @Name: TweetKeywordMapper.py
 @Author: Stephen Sanders <https://stephensanders.me>
 @Description: Allows user to either search Twitter for Tweets that meet a specified keyword, or
-              import Tweet data from a csv file. The state and ID for each Tweet will be identified and collected,
-              and then the number of Tweets that appear in each state will be tallied. The results will then
-              be displayed and the user will have the option to map the data using ArcGIS Pro.
+              import Tweet data from a csv file using a keyword. The state and ID for each Tweet will be identified
+              and collected, and then the number of Tweets that appear in each state will be tallied. The results
+              will then be displayed and the user will have the option to map the data using ArcGIS Pro.
 @Requirements: Python3, TweetKeywordConstants, TweetKeywordData, TweetKeywordArcPro
 
 """
