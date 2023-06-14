@@ -59,6 +59,18 @@ Once all of the requirements are met and the program is downloaded, you can run 
 python3 TweetKeywordMapper.py
 ```
 
+You can also use the shell script to execute the program, especially on non-Windows machines.
+
+Make the script executable by running the following command within the TweetKeywordMapper directory:
+```
+chmod +x tweetkeywordmapper
+```
+
+To run the script after doing that, simply enter:
+```
+./tweetkeywordmapper
+```
+
 ## Disclaimers
 This program is not an official Twitter or Esri project. This is a project that I made for a college course and is not affiliated <em>in any way</em> with Twitter/X Corp. or Esri. If you represent either of these companies and have an issue with this project, feel free to reach out to me at any time. Regardless, please do not sue me.
 

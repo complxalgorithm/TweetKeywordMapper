@@ -9,7 +9,7 @@
               import Tweet data from a csv file using a keyword. The state and ID for each Tweet will be identified
               and collected, and then the number of Tweets that appear in each state will be tallied. The results
               will then be displayed and the user will have the option to map the data using ArcGIS Pro.
-@Requirements: Python3, TweetKeywordConstants, TweetKeywordData, TweetKeywordArcPro
+@Requirements: Python3, pandas, geopandas, tweepy, matplotlib, numpy, arcpy
 
 """
 
@@ -73,18 +73,9 @@ def TweetKeywordMapper():
     # try loading the tweepy module as a way to check if it's installed
     tweepy_loader = importlib.util.find_spec('tweepy')
     
-    # try loading the pandas module to check if it's installed
-    pandas_loader = importlib.util.find_spec('pandas')
-    
     # try loading the geopandas module to check if it's installed
     geopandas_loader = importlib.util.find_spec('geopandas')
     
-    # try loading the matplotlib module to check if it's installed
-    matplotlib_loader = importlib.util.find_spec('matplotlib')
-    
-    # try loading the numpy module to check if it's installed
-    numpy_loader = importlib.util.find_spec('numpy')
-
     # check to see if a path to the ArcGIS Pro executable is present on the system
     pro = shutil.which('ArcGISPro')
     
@@ -103,7 +94,7 @@ def TweetKeywordMapper():
     where = data.where_data()
     
     # when the user chooses to search the Twitter API, make sure they have Tweepy installed
-    if where == '1' and tweepy_loader is not None and numpy_loader is not None:
+    if where == '1' and tweepy_loader is not None:
         places, tweet_ids, state_counts, keyword = data.TweetKeywordSearch(ws, default_csv, states, cities)
         
         # get number of tweets that were returned
@@ -118,13 +109,10 @@ def TweetKeywordMapper():
     # run this code when the user either chooses to import Tweet data from csv
     # or the Tweepy and/or Numpy libraries are not installed on their machine
     else:
-        # display that Tweepy and/or Numpy is not installed if either or both is the case
-        if where == '1' and (tweepy_loader is None or numpy_loader is None):
+        # display that Tweepy is not installed if either or both is the case
+        if where == '1' and tweepy_loader is None:
             if tweepy_loader is None:
                 print('Tweepy is not downloaded onto your machine.')
-            
-            if numpy_loader is None:
-                print('Numpy is not downloaded onto your machine.')
             
             print('You will have to import from a csv.')
 
@@ -192,12 +180,12 @@ def TweetKeywordMapper():
                 # make sure user is using Windows and that ArcGIS Pro is installed before mapping data
                 if platform.system() != 'Windows':
                     # tell user that they can't map since they are not using Windows
-                    print('You are not using Windows, so you can not map your data.')
+                    print('You are not using Windows, so you can not map your data using ArcGIS Pro.')
 
                 elif platform.system() == 'Windows' and pro is None:
                     # tell user they can't map because ArcGIS Pro is not installed
                     print('You are using Windows, but ArcGIS Pro is not installed.')
-                    print('Please install ArcGIS Pro if you would like to map.')
+                    print('Please install ArcGIS Pro if you would like to map using ArcGIS Pro.')
 
                 else:
                     # run TweetKeywordArcPro function in order to map state Tweet counts
@@ -206,23 +194,14 @@ def TweetKeywordMapper():
 
             # run code if user wants to use GeoPandas
             else:
-                # map using GeoPandas if all required libraries are installed
-                if pandas_loader is not None and geopandas_loader is not None and matplotlib_loader is not None:
+                # map results using GeoPandas if it is installed on user's machine
+                if geopandas_loader is not None:
+                    # map results using GeoPandas
                     geopd.TweetKeywordGeoPandas(ws, state_counts, keyword)
                 
-                # don't map using GeoPandas if any of the required libraries aren't installed
+                # tell user they cannot map using GeoPandas if it isn't installed on their machine
                 else:
-                    # tell user that pandas isn't installed
-                    if pandas_loader is None:
-                        print('The Pandas library is not installed on your machine, so you cannot map using GeoPandas.')
-
-                    # tell user that geopandas isn't installed
-                    if geopandas_loader is None:
-                        print('The GeoPandas library is not installed on your machine, so you cannot map using GeoPandas.')
-
-                    # tell user that matplotlib isn't installed
-                    if matplotlib_loader is None:
-                        print('The Matplotlib library is not installed on your machine, so you cannot map using GeoPandas.')                
+                    print('GeoPandas is not installed on your machine, so you cannot map your results using GeoPandas.')
 
     # display goodbye after the full program has executed
     print('Thank you for using Tweet Keyword Mapper!')
