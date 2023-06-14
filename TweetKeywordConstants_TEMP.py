@@ -144,6 +144,7 @@ cities = {
     'Cleveland': 'Ohio',
     'Albuquerque': 'New Mexico',
     'Denver': 'Colorado',
+    'Detroit': 'Michigan',
     'A.L': 'Alabama',
     'A.K': 'Alaska',
     'A.Z': 'Arizona',

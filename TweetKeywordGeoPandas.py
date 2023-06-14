@@ -99,13 +99,13 @@ def TweetKeywordGeoPandas(ws, counts, keyword):
     # sets axes using layer from gpd naturalearth_lowres
     """
     # get the keyword from the plot_field
-    kw = plot_field.split('_')[0]
+    ##kw = plot_field.split('_')[0]
     
     # set title of map using the keyword
-    if kw == 'Tweet':
+    if keyword == '':
         map_title = 'Tweet Count'
     else:
-        map_title = f'{kw} Tweet Count'
+        map_title = f'{keyword} Tweet Count'
     
     # get low resolution map of world from datasets
     world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
