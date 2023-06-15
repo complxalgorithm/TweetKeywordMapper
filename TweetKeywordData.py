@@ -53,7 +53,7 @@ def where_data():
 """
 def ifWrite():
     # ask user for input
-    answer = input('Would you like to write Tweet ID and State data to a CSV file? (Y or N): ')
+    answer = input('Would you like to write Tweet data to a CSV file? (Y or N): ')
     
     # validate input
     while answer.capitalize() != 'Yes' and answer.upper() != 'Y' and answer.capitalize() != 'No' and answer.upper() != 'N':
