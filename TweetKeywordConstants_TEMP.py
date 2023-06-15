@@ -132,6 +132,7 @@ cities = {
     'Minneapolis': 'Minnesota',
     'Omaha': 'Nebraska',
     'Las Vegas': 'Nevada',
+    'Vegas': 'Nevada',
     'L.V': 'Nevada',
     'LV': 'Nevada',
     'Sin City': 'Nevada',
