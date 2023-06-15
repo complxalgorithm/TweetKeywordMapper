@@ -1058,6 +1058,9 @@ def TweetKeywordSearch(ws, default, states, cities):
     # convert valid input to an integer
     num_res = int(num_res)
     
+    # new line
+    print()
+    
     # create a search query using user keyword
     query = keyword + ' -filter:retweets lang:en' # exclude retweets and only include english tweets
 
@@ -1102,6 +1105,9 @@ def TweetKeywordSearch(ws, default, states, cities):
             # in the user's csv file
             # also get a list of Tweet IDs that are already in the user's csv file
             csv_tweets, state_index, id_index, keyword_index = get_field_indexes_tweet_ids(contents)
+            
+            # new line
+            print()
             
             # iterate through tweet_data dict to write each tweet to the csv file
             for tweet_id in tweet_data:
