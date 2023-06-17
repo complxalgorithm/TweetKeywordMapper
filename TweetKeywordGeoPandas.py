@@ -98,8 +98,6 @@ def TweetKeywordGeoPandas(ws, counts, keyword):
     # generate map of the states shapefile using the plot_field as the column to plot
     # sets axes using layer from gpd naturalearth_lowres
     """
-    # get the keyword from the plot_field
-    ##kw = plot_field.split('_')[0]
     
     # set title of map using the keyword
     if keyword == '':
