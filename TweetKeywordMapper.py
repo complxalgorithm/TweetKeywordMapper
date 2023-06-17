@@ -157,7 +157,7 @@ def TweetKeywordMapper():
         print('Percent of Tweets That Came From Each State')
         print('-------------------------------------------')
         for state, percent in state_counts_percents.items():
-            print(f'{state}: {percent}')
+            print('{:<30s} {:<6}'.format(state + ':', percent))
         print()
 
         time.sleep(1)   # pause program for a second
