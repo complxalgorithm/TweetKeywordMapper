@@ -942,7 +942,7 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
                         
                         # tell user if data for keyword has already been pulled
                         else:
-                            print(f'Data for{user_keyword} has already been pulled.')
+                            print(f'Data for {user_keyword} has already been pulled.')
                             
                             time.sleep(0.5)     # pause program for half a second
                 
