@@ -120,14 +120,17 @@ def TweetKeywordMapper():
         user_file = data.get_user_csv_file(default_csv)
 
         # extract state data and fields from csv file
-        places, tweet_ids, keyword = data.csv_interact((), user_file, ws, mode='r', checkKeyword=True)
+        places, tweet_ids, keywords = data.csv_interact((), user_file, ws, mode='r', checkKeyword=True)
 
         # get Tweet counts for each state using data
         state_counts = data.get_state_counts(places, states)
 
         # get number of tweets that were returned
         num_results = len(tweet_ids)
-
+        
+        # set keyword value using keywords list
+        keyword = ' '.join(keywords)
+        
         # display how many search results were returned
         if num_results == 0:
             print(f'Reading from {user_file} returned no results.')
@@ -140,7 +143,7 @@ def TweetKeywordMapper():
             time.sleep(1) # pause program for a second
 
             # display results if any were found
-            print(f'\nKeyword: {keyword}\n\nIDs: {tweet_ids}\n\nPlaces: {places}\n\nCounts: {state_counts}\n')
+            print(f'\nKeywords: {keyword}\n\nIDs: {tweet_ids}\n\nPlaces: {places}\n\nCounts: {state_counts}\n')
     
     time.sleep(1)   # pause program for a second
     

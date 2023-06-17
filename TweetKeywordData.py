@@ -842,7 +842,7 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
                 keywords = []
             
                 # ask user to identify the keywords field from the menu
-                keyword_field = input('Enter the field that contains keywords from menu: ')
+                keyword_field = input('Enter the field that contains keywords: ')
             
                 # validate that field is in fields list
                 while keyword_field not in fields or keyword_field == state_field or keyword_field == id_field:
@@ -862,7 +862,7 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
                         time.sleep(0.5)
             
                     # ask user again for keyword field
-                    keyword_field = input('Enter the field that contains keywords from menu: ')
+                    keyword_field = input('Enter the field that contains keywords: ')
             
                 # initialize list to store keyword values object containing values from keyword_field
                 keyword_data = []
@@ -879,28 +879,102 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
             
                 # display menu of fields that were found in csv file
                 print()
+                print('Available Keywords')
+                print('------------------')
                 for i, keyword in enumerate(keywords, start=1):
                     print(f'{i}. {keyword}')
                 print()
-            
-                # ask user to enter an available keyword from the menu
-                user_keyword = input('Enter a keyword from the menu: ')
-            
-                # validate that the keyword is an option
-                while user_keyword not in keywords:
-                    # display error
-                    print(f'{user_keyword} is not an option. Please try again')
                 
-                    # ask user again to enter an available keyword from the menu
-                    user_keyword = input('Enter a keyword from the menu: ')
+                time.sleep(1)   # pause program for a second
+                
+                # determine how many keywords are available
+                total_keywords = len(keywords)
+                
+                # initialize user_keywords list to store keywords user wants to pull data for
+                user_keywords = []
+                
+                # initialize valid_number bool to False to use in below validation loop
+                valid_number = False
+                
+                # validate the input is an integer and smaller than the total number of available keywords
+                while valid_number == False:
+                    # ask user how many keywords they want to pull data for
+                    num_keywords = input('How many keywords would you like to pull data for? ')
+                    
+                    # tell user if input is not an integer
+                    if not num_keywords.isdigit():
+                        # tell user the input is not an integer
+                        print(f'{num_keywords} is not an integer.')
+                    
+                    # tell user if input is larger than total number of available keywords
+                    elif int(num_keywords) > total_keywords:
+                        # tell user the number is too large
+                        print(f'{num_keywords} is larger than the amount of available keywords: {total_keywords}.')
+                    
+                    #
+                    elif int(num_keywords) == total_keywords:
+                        # tell user the number is the same as total available keywords
+                        print(f'{num_keywords} is the same as the total number of available keywords: {total_keywords}.')
+                    
+                    # the input passed both validation tests
+                    else:
+                        # convert valid input to integer
+                        num_keywords = int(num_keywords)
+                        
+                        # signal that a valid input has been entered
+                        valid_number = True
+                
+                # new line
+                print()
+                
+                # initialize counter
+                counter = 0
+                
+                # get data for as many keywords as user wants
+                while counter < num_keywords:
+                    # ask user to enter an available keyword from the menu
+                    user_keyword = input(f'Enter keyword #{counter+1} from the menu: ')
             
-                # filter contents using user specified keyword
-                keyword_contents = contents[contents[keyword_field] == user_keyword]
-                print(f'Results For - {user_keyword}:\n{keyword_contents}')
+                    # validate that the keyword is an option
+                    while user_keyword not in keywords or user_keyword in user_keywords:
+                        # tell user if keyword is not in keywords list
+                        if user_keyword not in keywords:
+                            print(f'{user_keyword} is not an option. Please try again')
+                            
+                            time.sleep(0.5)     # pause program for half a second
+                        
+                        # tell user if data for keyword has already been pulled
+                        else:
+                            print(f'Data for{user_keyword} has already been pulled.')
+                            
+                            time.sleep(0.5)     # pause program for half a second
+                
+                        # new line
+                        print()
+                    
+                        # ask user again to enter an available keyword from the menu
+                        user_keyword = input(f'Enter keyword #{counter+1} from the menu: ')
             
-                # add data values/object of state_field and id_field (after keyword filtering) to respective list
-                state_data.append(keyword_contents[state_field])
-                id_data.append(keyword_contents[id_field])
+                    # add keyword to user_keywords list
+                    user_keywords.append(user_keyword)
+                    
+                    # filter contents using user specified keyword
+                    keyword_contents = contents[contents[keyword_field] == user_keyword]
+                    
+                    # get number of results pulled
+                    num_results = len(keyword_contents)
+                    
+                    # display results
+                    print(f'\nPulling data for {user_keyword} returned {num_results} results.\n')
+                    time.sleep(1)   # pause program for a second
+                    print(f'Results For - {user_keyword}:\n{keyword_contents}\n')
+            
+                    # add data values/object of state_field and id_field (after keyword filtering) to respective list
+                    state_data.append(keyword_contents[state_field])
+                    id_data.append(keyword_contents[id_field])
+                    
+                    # add 1 to the counter
+                    counter += 1
             
             # run this code if user indicated that they do not want to filter csv data using a keyword
             else:
@@ -909,7 +983,7 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
                 id_data.append(contents[id_field])
 
                 # set user keyword to an empty list
-                user_keyword = ''
+                user_keywords = []
         
         # run this code if function parameters indicate to not filter by keyword
         else:
@@ -918,7 +992,7 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
             id_data.append(contents[id_field])
 
             # set user keyword to an empty list
-            user_keyword = ''
+            user_keywords = []
             
         # iterate through each state result object and add the state value to the states list
         for ob in state_data:
@@ -931,7 +1005,7 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
                 ids.append(tweet)
         
         # return states, ids, and user_keyword to parent function
-        return states, ids, user_keyword
+        return states, ids, user_keywords
 
 
 """
