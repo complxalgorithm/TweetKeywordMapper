@@ -127,6 +127,9 @@ def TweetKeywordArcPro(ws, counts, keyword):
             #
             states_layer.symbology = symb
     """
+    
+    # return to parent function
+    return
 
     
 """
