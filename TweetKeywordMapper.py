@@ -17,8 +17,7 @@
 # import modules/libraries
 import TweetKeywordConstants as cons
 import TweetKeywordData as data
-import TweetKeywordArcPro as arc
-import TweetKeywordGeoPandas as geopd
+import TweetKeywordMapServices as maps
 import importlib
 import os
 import time
@@ -193,14 +192,14 @@ def TweetKeywordMapper():
                 else:
                     # run TweetKeywordArcPro function in order to map state Tweet counts
                     # if user is using Windows and ArcGIS Pro is installed
-                    arc.TweetKeywordArcPro(ws, state_counts, keyword)
+                    maps.TweetKeywordArcPro(ws, state_counts, keyword)
 
             # run code if user wants to use GeoPandas
             else:
                 # map results using GeoPandas if it is installed on user's machine
                 if geopandas_loader is not None:
                     # map results using GeoPandas
-                    geopd.TweetKeywordGeoPandas(ws, state_counts, keyword)
+                    maps.TweetKeywordGeoPandas(ws, state_counts, keyword)
                 
                 # tell user they cannot map using GeoPandas if it isn't installed on their machine
                 else:
