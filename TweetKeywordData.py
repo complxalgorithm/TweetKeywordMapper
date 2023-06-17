@@ -903,17 +903,14 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
                     
                     # tell user if input is not an integer
                     if not num_keywords.isdigit():
-                        # tell user the input is not an integer
                         print(f'{num_keywords} is not an integer.')
                     
                     # tell user if input is larger than total number of available keywords
                     elif int(num_keywords) > total_keywords:
-                        # tell user the number is too large
                         print(f'{num_keywords} is larger than the amount of available keywords: {total_keywords}.')
                     
-                    #
+                    # tell user if input equals the total number of available keywords
                     elif int(num_keywords) == total_keywords:
-                        # tell user the number is the same as total available keywords
                         print(f'{num_keywords} is the same as the total number of available keywords: {total_keywords}.')
                     
                     # the input passed both validation tests
