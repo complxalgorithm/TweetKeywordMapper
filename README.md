@@ -61,13 +61,18 @@ Once all of the requirements are met and the program is downloaded, you can now 
 #### Python
 To execute the main program using Python3, run the following command in your terminal:
 ```
-python3 TweetKeywordMapper.py
+python3 tweetkeywordmapper
 ```
 
-The counts.py program can be executed independently by running:
+The mapper.py and counts.py scripts can be executed independently by running:
+```
+python3 -m tweetkeywordmapper.scripts.mapper
+```
+for the mapper.py script, or
 ```
 python3 -m tweetkeywordmapper.scripts.counts
 ```
+for the counts.py script.
 
 #### Shell
 You can also use the <em>tkm</em> shell script to execute the program.
@@ -82,18 +87,18 @@ After making the script executable, you can simply run the program by entering:
 ./tkm
 ```
 
-The script accepts a single parameter with one of four options: main, counts, help, or a blank value.
+The script accepts a single parameter with one of four options: mapper, counts, help, or a blank value.
 ```
 username ^ TweetKeywordMapper => ./tkm help
 
 Usage: ./tkm <parameter>
-Parameter Options: main, counts, help
+Parameter Options: mapper, counts, help
 
-main:   TweetKeywordMapper.py - main Twitter search and CSV import program
+mapper: mapper.py - main Twitter search and CSV import program
 counts: counts.py - tallies a total for each unique value of a specified field from a CSV file
 help:   displays help information for this script
 
-If you do not enter a parameter, TweetKeywordMapper.py will run by default.
+If you do not enter a parameter, mapper.py will run by default.
 ```
 
 ## Disclaimers
