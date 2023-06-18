@@ -70,7 +70,7 @@ python3 -m tweetkeywordmapper.scripts.counts
 ```
 
 #### Shell
-You can also use the shell script to execute the program on non-Windows machines.
+You can also use the <em>tkm</em> shell script to execute the program.
 
 Make the script executable by running the following command within the TweetKeywordMapper directory:
 ```
