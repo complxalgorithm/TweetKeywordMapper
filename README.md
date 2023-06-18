@@ -1,6 +1,8 @@
 # Tweet Keyword Mapper
 Search Twitter for Tweets containing a particular keyword from the command line, then write results to a CSV file and/or map the results using ArcGIS Pro or GeoPandas. It allows for counting the number of Tweets from each state using data from a CSV file without having to map the results. You can pull data for multiple keywords from the CSV file. You can append your count results to shapefiles (ArcGIS Pro & GeoPandas) or feature classes within geodatabases (ArcGIS Pro).
 
+There is also the counts.py program, which will display a count and percentage of the total for all unique field values within a CSV file. This program can display the aforementioned statistics for all unique keywords that are present within a CSV file, for instance.
+
 ## Requirements
 1. Python 3 - get the latest release [here](https://www.python.org/downloads).
 2. Pandas - learn how to install [here](https://pandas.pydata.org/docs/getting_started/install.html).
@@ -62,17 +64,36 @@ To run the program using Python3, run the following command in your terminal:
 python3 TweetKeywordMapper.py
 ```
 
+The counts.py program can be executed by running:
+```
+python3 counts.py
+```
+
 #### Shell
-You can also use the shell script to execute the program, especially on non-Windows machines.
+You can also use the shell script to execute the program on non-Windows machines.
 
 Make the script executable by running the following command within the TweetKeywordMapper directory:
 ```
-chmod +x tweetkeywordmapper
+chmod +x tkm
 ```
 
-After making the script executable, you can simply run the script by entering:
+After making the script executable, you can simply run the program by entering:
 ```
-./tweetkeywordmapper
+./tkm
+```
+
+The script accepts a single parameter with one of four options: main, counts, help, or a blank value.
+```
+username ^ TweetKeywordMapper => ./tkm help
+
+Usage: ./tkm <parameter>
+Parameter Options: main, counts, help
+
+main:   TweetKeywordMapper.py - main Twitter search and CSV import program
+counts: counts.py - tallies a total for each unique value of a specified field from a CSV file
+help:   displays help information for this script
+
+If you do not enter a parameter, TweetKeywordMapper.py will run by default.
 ```
 
 ## Disclaimers
