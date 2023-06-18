@@ -16,13 +16,6 @@ import pandas as pd
 import numpy as np
 import time
 import os
-import sys
-
-"""
-cur_dir = os.getcwd()
-core_path = os.path.abspath(f'{cur_dir}/tweetkeywordmapper/core')
-sys.path.append(core_path)
-"""
 
 
 """
