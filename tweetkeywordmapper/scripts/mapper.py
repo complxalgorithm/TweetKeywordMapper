@@ -3,7 +3,7 @@
 
 """
 
-@Name: TweetKeywordMapper.py
+@Name: mapper.py
 @Author: Stephen Sanders <https://stephensanders.me>
 @Description: Allows user to either search Twitter for Tweets that meet a specified keyword, or
               import Tweet data from a csv file using a keyword. The state and ID for each Tweet will be identified
@@ -20,10 +20,6 @@ import platform
 import importlib
 import shutil
 import time
-from tweetkeywordmapper.core import TweetKeywordConstants as cons
-from tweetkeywordmapper.core import TweetKeywordData as data
-from tweetkeywordmapper.core import TweetKeywordMapServices as maps
-from tweetkeywordmapper.scripts import counts
 
 
 """
@@ -222,4 +218,15 @@ def TweetKeywordMapper():
 # execute the program
 """
 if __name__ == '__main__':
+    from tweetkeywordmapper.core import TweetKeywordConstants as cons
+    from tweetkeywordmapper.core import TweetKeywordData as data
+    from tweetkeywordmapper.core import TweetKeywordMapServices as maps
+    from tweetkeywordmapper.scripts import counts
+    
     TweetKeywordMapper()
+
+else:
+    from core import TweetKeywordConstants as cons
+    from core import TweetKeywordData as data
+    from core import TweetKeywordMapServices as maps
+    from scripts import counts

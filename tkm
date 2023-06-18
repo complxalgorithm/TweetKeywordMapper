@@ -8,8 +8,8 @@ helpFunc()
 {
     echo ""
     echo "Usage: ./tkm <parameter>"
-    echo "Parameter Options: main, counts, help\n"
-    echo "main:\tTweetKeywordMapper.py - main Twitter search and CSV import program"
+    echo "Parameter Options: mapper, counts, help\n"
+    echo "mapper:\tmapper.py - main Twitter search and CSV import program"
     echo "counts:\tcounts.py - tallies a total for each unique value of a specified field from a CSV file"
     echo "help:\tdisplays help information for this script"
     echo ""
@@ -21,7 +21,7 @@ helpFunc()
 
 # lack of parameter means the main program file should be ran
 if [ $# -eq "0" ]; then
-    exec python3 "TweetKeywordMapper.py"
+    exec python3 tweetkeywordmapper
     
     # run this if parameter is present
     else
@@ -33,8 +33,8 @@ if [ $# -eq "0" ]; then
             # run this if one parameter is present
             else
                 # run main program when parameter is set to "main"
-                if [ $1 = "main" ]; then
-                    exec python3 "TweetKeywordMapper.py"
+                if [ $1 = "mapper" ]; then
+                    exec python3 tweetkeywordmapper
                     
                     # run counts.py program from tweetkeywordmapper.scripts when parameter is set to "counts"
                     elif [ $1 = "counts" ]; then

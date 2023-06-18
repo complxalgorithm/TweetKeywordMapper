@@ -13,7 +13,14 @@
 import os
 import sys
 import warnings
-from tweetkeywordmapper.core import TweetKeywordData as data
+
+if '__name__' == '__main__':
+    from tweetkeywordmapper.core import TweetKeywordData as data
+else:
+    try:
+        from core import TweetKeywordData as data
+    except:
+        from tweetkeywordmapper.core import TweetKeywordData as data
 
 
 """

@@ -17,7 +17,14 @@ import os
 import time
 import re
 import numpy as np
-from tweetkeywordmapper.core import TweetKeywordConstants as cons
+
+if '__name__' == '__main__':
+    from tweetkeywordmapper.core import TweetKeywordConstants as cons
+else:
+    try:
+        from core import TweetKeywordConstants as cons
+    except:
+        from tweetkeywordmapper.core import TweetKeywordConstants as cons
 
 
 """

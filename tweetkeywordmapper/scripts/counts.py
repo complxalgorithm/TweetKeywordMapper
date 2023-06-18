@@ -24,9 +24,6 @@ core_path = os.path.abspath(f'{cur_dir}/tweetkeywordmapper/core')
 sys.path.append(core_path)
 """
 
-from tweetkeywordmapper.core import TweetKeywordData as data
-from tweetkeywordmapper.core import TweetKeywordConstants as cons
-
 
 """
 # define main() function - controls entire flow of program
@@ -162,4 +159,11 @@ def get_count_percentages(counts, total):
 # execute main program
 """
 if __name__ == '__main__':
+    from tweetkeywordmapper.core import TweetKeywordData as data
+    from tweetkeywordmapper.core import TweetKeywordConstants as cons
+    
     main()
+
+else:
+    from core import TweetKeywordData as data
+    from core import TweetKeywordConstants as cons
