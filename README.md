@@ -13,8 +13,8 @@ The main program file is TweetKeywordMapper.py, which can run all above function
 5. Matplotlib - learn how to install [here](https://matplotlib.org/stable/users/installing/index.html).
     - This is only required if you want to map your results using GeoPandas.
 6. Numpy - learn how to install [here](https://numpy.org/install/).
-    - Only used in a single line in the state extraction algorithm.
-    - This is only required if you want to use the search capabilities.
+    - Only used in a single line in the state extraction algorithm, as well as in the counts.py script.
+    - This is required if you want to use the search capabilities and/or use the counts functionality.
 7. ArcPy - learn how to download and install ArcGIS Pro [here](https://pro.arcgis.com/en/pro-app/latest/get-started/download-arcgis-pro.htm).
     - This is only required if you want to map your results using ArcGIS Pro.
 
