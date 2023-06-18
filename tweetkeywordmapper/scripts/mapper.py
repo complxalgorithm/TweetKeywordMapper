@@ -226,7 +226,13 @@ if __name__ == '__main__':
     TweetKeywordMapper()
 
 else:
-    from core import TweetKeywordConstants as cons
-    from core import TweetKeywordData as data
-    from core import TweetKeywordMapServices as maps
-    from scripts import counts
+    try:
+        from core import TweetKeywordConstants as cons
+        from core import TweetKeywordData as data
+        from core import TweetKeywordMapServices as maps
+        from scripts import counts
+    except:
+        from tweetkeywordmapper.core import TweetKeywordConstants as cons
+        from tweetkeywordmapper.core import TweetKeywordData as data
+        from tweetkeywordmapper.core import TweetKeywordMapServices as maps
+        from tweetkeywordmapper.scripts import counts

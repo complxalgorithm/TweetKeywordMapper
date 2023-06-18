@@ -158,5 +158,9 @@ if __name__ == '__main__':
     main()
 
 else:
-    from core import TweetKeywordData as data
-    from core import TweetKeywordConstants as cons
+    try:
+        from core import TweetKeywordData as data
+        from core import TweetKeywordConstants as cons
+    except:
+        from tweetkeywordmapper.core import TweetKeywordData as data
+        from tweetkeywordmapper.core import TweetKeywordConstants as cons
