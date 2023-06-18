@@ -59,20 +59,10 @@ Next, set the workspace of your project (i.e., your ArcGIS Pro project). It can 
 Once all of the requirements are met and the program is downloaded, you can now run the program.
 
 #### Python
-To execute the main program using Python3, run the following command in your terminal:
+To execute the main program using Python3, run the following command in your terminal within the TweetKeywordMapper directory:
 ```
 python3 tweetkeywordmapper
 ```
-
-The <em>mapper.py</em> and <em>counts.py</em> scripts can be executed independently by running:
-```
-python3 -m tweetkeywordmapper.scripts.mapper
-```
-for the <em>mapper.py</em> script, or
-```
-python3 -m tweetkeywordmapper.scripts.counts
-```
-for the <em>counts.py</em> script.
 
 #### Shell
 You can also use the <em>tkm</em> shell script to execute the program.
