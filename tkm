@@ -36,9 +36,9 @@ if [ $# -eq "0" ]; then
                 if [ $1 = "main" ]; then
                     exec python3 "TweetKeywordMapper.py"
                     
-                    # run counts.py program when parameter is set to "counts"
+                    # run counts.py program from tweetkeywordmapper.scripts when parameter is set to "counts"
                     elif [ $1 = "counts" ]; then
-                        exec python3 "counts.py"
+                        exec python3 -m tweetkeywordmapper.scripts.counts
                     
                     # display help info when parameter is set to "help"
                     elif [ $1 = "help" ]; then

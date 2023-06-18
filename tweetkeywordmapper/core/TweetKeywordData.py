@@ -17,23 +17,27 @@ import os
 import time
 import re
 import numpy as np
-from tweetkeywordmapper import TweetKeywordConstants as cons
+from tweetkeywordmapper.core import TweetKeywordConstants as cons
 
 
 """
-# define where_data() function - gets user's method of getting Tweet data: by searching Twitter
-# using the Twitter API, or by importing the data from a CSV file
+# define where_data() function - get what user would like to do: search Twitter using the Twitter API,
+# import Tweet data from a CSV file, or get counts and percents of the total of each unique value
+# of a field in a CSV file
 """
 def where_data():
     # create options dict to display
-    options = {'1': 'Search Twitter', '2': 'Import from CSV'}
+    options = {'1': 'Search Twitter', '2': 'Import Data from CSV', '3': 'Counts of Unique Field Values from CSV'}
     
     # display menu of options
     for o in options:
         print(f'{o}: {options[o]}')
     
+    # new line
+    print()
+    
     # ask where user would like to get data from
-    where = input('Choose how you would like to get Tweet count data using the option\'s number: ')
+    where = input('Choose what you would like to do using the option\'s number: ')
     
     # validate input
     while where not in options:
@@ -877,101 +881,127 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
                         if word not in keywords:
                             keywords.append(word)
             
-                # display menu of fields that were found in csv file
-                print()
-                print('Available Keywords')
-                print('------------------')
-                for i, keyword in enumerate(keywords, start=1):
-                    print(f'{i}. {keyword}')
-                print()
-                
-                time.sleep(1)   # pause program for a second
-                
-                # determine how many keywords are available
-                total_keywords = len(keywords)
-                
-                # initialize user_keywords list to store keywords user wants to pull data for
-                user_keywords = []
-                
-                # initialize valid_number bool to False to use in below validation loop
-                valid_number = False
-                
-                # validate the input is an integer and smaller than the total number of available keywords
-                while valid_number == False:
-                    # ask user how many keywords they want to pull data for
-                    num_keywords = input('How many keywords would you like to pull data for? ')
+                # handle empty csv files
+                if len(keywords) == 0:
+                    print('No keywords were found.')
                     
-                    # tell user if input is not an integer
-                    if not num_keywords.isdigit():
-                        print(f'{num_keywords} is not an integer.')
-                    
-                    # tell user if input is larger than total number of available keywords
-                    elif int(num_keywords) > total_keywords:
-                        print(f'{num_keywords} is larger than the amount of available keywords: {total_keywords}.')
-                    
-                    # tell user if input equals the total number of available keywords
-                    elif int(num_keywords) == total_keywords:
-                        print(f'{num_keywords} is the same as the total number of available keywords: {total_keywords}.')
-                    
-                    # the input passed both validation tests
-                    else:
-                        # convert valid input to integer
-                        num_keywords = int(num_keywords)
-                        
-                        # signal that a valid input has been entered
-                        valid_number = True
+                    # return empty states, ids, and user_keywords lists to parent function
+                    return [], [], []
                 
-                # new line
-                print()
-                
-                # initialize counter
-                counter = 0
-                
-                # get data for as many keywords as user wants
-                while counter < num_keywords:
-                    # ask user to enter an available keyword from the menu
-                    user_keyword = input(f'Enter keyword #{counter+1} from the menu: ')
-            
-                    # validate that the keyword is an option
-                    while user_keyword not in keywords or user_keyword in user_keywords:
-                        # tell user if keyword is not in keywords list
-                        if user_keyword not in keywords:
-                            print(f'{user_keyword} is not an option. Please try again')
+                # run this code if data is in the csv file
+                else:
+                    # display menu of fields that were found in csv file
+                    print()
+                    print('Available Keywords')
+                    print('------------------')
+                    for i, keyword in enumerate(keywords, start=1):
+                        print(f'{i}. {keyword}')
+                    print()
+
+                    time.sleep(1)   # pause program for a second
+
+                    # determine how many keywords are available
+                    total_keywords = len(keywords)
+
+                    # initialize user_keywords list to store keywords user wants to pull data for
+                    user_keywords = []
+
+                    # initialize valid_number bool to False to use in below validation loop
+                    valid_number = False
+
+                    # validate the input is an integer and smaller than the total number of available keywords
+                    while valid_number == False:
+                        # ask user how many keywords they want to pull data for
+                        num_keywords = input('How many keywords would you like to pull data for? ')
+
+                        # tell user if input is not an integer
+                        if not num_keywords.isdigit():
+                            print(f'{num_keywords} is not an integer.')
                             
                             time.sleep(0.5)     # pause program for half a second
-                        
-                        # tell user if data for keyword has already been pulled
+
+                        # tell user if input is larger than total number of available keywords
+                        elif int(num_keywords) > total_keywords:
+                            print(f'{num_keywords} is larger than the amount of available keywords: {total_keywords}.')
+                            
+                            time.sleep(0.5)     # pause program for half a second
+
+                        # tell user if input equals the total number of available keywords
+                        elif int(num_keywords) == total_keywords:
+                            print(f'{num_keywords} is the same as the total number of available keywords: {total_keywords}.')
+                            
+                            time.sleep(0.5)     # pause program for half a second
+
+                        # tell user if input is equal to 0
+                        elif int(num_keywords) == 0:
+                            print(f'You need to use at least 1 keyword.')
+                            
+                            time.sleep(0.5)     # pause program for half a second
+
+                        # the input passed both validation tests
                         else:
-                            print(f'Data for {user_keyword} has already been pulled.')
-                            
-                            time.sleep(0.5)     # pause program for half a second
-                
+                            # convert valid input to integer
+                            num_keywords = int(num_keywords)
+
+                            # signal that a valid input has been entered
+                            valid_number = True
+
+                    # new line
+                    print()
+
+                    # initialize counter
+                    counter = 0
+
+                    # get data for as many keywords as user wants
+                    while counter < num_keywords:
+                        # ask user to enter an available keyword from the menu
+                        user_keyword = input(f'Enter keyword #{counter+1} from the menu: ')
+
+                        # validate that the keyword is an option
+                        while user_keyword not in keywords or user_keyword in user_keywords:
+                            # tell user if keyword is not in keywords list
+                            if user_keyword not in keywords:
+                                print(f'{user_keyword} is not an option. Please try again')
+
+                                time.sleep(0.5)     # pause program for half a second
+
+                            # tell user if data for keyword has already been pulled
+                            else:
+                                print(f'Data for {user_keyword} has already been pulled.')
+
+                                time.sleep(0.5)     # pause program for half a second
+
+                            # new line
+                            print()
+
+                            # ask user again to enter an available keyword from the menu
+                            user_keyword = input(f'Enter keyword #{counter+1} from the menu: ')
+
                         # new line
                         print()
-                    
-                        # ask user again to enter an available keyword from the menu
-                        user_keyword = input(f'Enter keyword #{counter+1} from the menu: ')
-            
-                    # add keyword to user_keywords list
-                    user_keywords.append(user_keyword)
-                    
-                    # filter contents using user specified keyword
-                    keyword_contents = contents[contents[keyword_field] == user_keyword]
-                    
-                    # get number of results pulled
-                    num_results = len(keyword_contents)
-                    
-                    # display results
-                    print(f'\nPulling data for {user_keyword} returned {num_results} results.\n')
-                    time.sleep(1)   # pause program for a second
-                    print(f'Results For - {user_keyword}:\n{keyword_contents}\n')
-            
-                    # add data values/object of state_field and id_field (after keyword filtering) to respective list
-                    state_data.append(keyword_contents[state_field])
-                    id_data.append(keyword_contents[id_field])
-                    
-                    # add 1 to the counter
-                    counter += 1
+                        
+                        # add keyword to user_keywords list
+                        user_keywords.append(user_keyword)
+
+                        # filter contents using user specified keyword
+                        keyword_contents = contents[contents[keyword_field] == user_keyword]
+
+                        # get number of results pulled
+                        num_results = len(keyword_contents)
+
+                        # display results
+                        if num_keywords > 1:
+                            print(f'\nPulling data for {user_keyword} returned {num_results} results.\n')
+                        
+                        time.sleep(1)   # pause program for a second
+                        print(f'Results For - {user_keyword}:\n{keyword_contents}\n')
+
+                        # add data values/object of state_field and id_field (after keyword filtering) to respective list
+                        state_data.append(keyword_contents[state_field])
+                        id_data.append(keyword_contents[id_field])
+
+                        # add 1 to the counter
+                        counter += 1
             
             # run this code if user indicated that they do not want to filter csv data using a keyword
             else:

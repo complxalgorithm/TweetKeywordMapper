@@ -20,9 +20,10 @@ import platform
 import importlib
 import shutil
 import time
-from tweetkeywordmapper import TweetKeywordConstants as cons
-from tweetkeywordmapper import TweetKeywordData as data
-from tweetkeywordmapper import TweetKeywordMapServices as maps
+from tweetkeywordmapper.core import TweetKeywordConstants as cons
+from tweetkeywordmapper.core import TweetKeywordData as data
+from tweetkeywordmapper.core import TweetKeywordMapServices as maps
+from tweetkeywordmapper.scripts import counts
 
 
 """
@@ -105,6 +106,14 @@ def TweetKeywordMapper():
         if num_results > 0:
             print(f'\nKeyword: {keyword}\n\nIDs: {tweet_ids}\n\nPlaces: {places}\n\nCounts: {state_counts}\n')
 
+    # run this code if the use wants to count total for each unique field value of a field from a csv file
+    elif where == '3':
+        # set number of results to 0
+        num_results = 0
+        
+        # run counts program
+        counts.main()
+    
     # run this code when the user either chooses to import Tweet data from csv
     # or the Tweepy and/or Numpy libraries are not installed on their machine
     else:
@@ -206,7 +215,7 @@ def TweetKeywordMapper():
                     print('GeoPandas is not installed on your machine, so you cannot map your results using GeoPandas.')
 
     # display goodbye after the full program has executed
-    print('Thank you for using Tweet Keyword Mapper!')
+    print('\nThank you for using Tweet Keyword Mapper!')
 
 
 """

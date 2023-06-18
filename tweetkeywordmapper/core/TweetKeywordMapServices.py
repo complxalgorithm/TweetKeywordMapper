@@ -13,7 +13,7 @@
 import os
 import sys
 import warnings
-from tweetkeywordmapper import TweetKeywordData as data
+from tweetkeywordmapper.core import TweetKeywordData as data
 
 
 """

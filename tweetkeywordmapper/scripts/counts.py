@@ -5,11 +5,8 @@
 
 @Name: counts.py
 @Author: Stephen Sanders <https://stephensanders.me>
-@Description: Allows user to either search Twitter for Tweets that meet a specified keyword, or
-              import Tweet data from a csv file using a keyword. The state and ID for each Tweet will be identified
-              and collected, and then the number of Tweets that appear in each state will be tallied. The results
-              will then be displayed and the user will have the option to map the data using ArcGIS Pro.
-@Requirements: Python3, pandas, geopandas, tweepy, matplotlib, numpy, arcpy
+@Description: 
+@Requirements: Python3, pandas, numpy
 
 """
 
@@ -18,8 +15,17 @@
 import pandas as pd
 import numpy as np
 import time
-from tweetkeywordmapper import TweetKeywordData as data
-from tweetkeywordmapper import TweetKeywordConstants as cons
+import os
+import sys
+
+"""
+cur_dir = os.getcwd()
+core_path = os.path.abspath(f'{cur_dir}/tweetkeywordmapper/core')
+sys.path.append(core_path)
+"""
+
+from tweetkeywordmapper.core import TweetKeywordData as data
+from tweetkeywordmapper.core import TweetKeywordConstants as cons
 
 
 """
@@ -77,7 +83,7 @@ def get_unique_values(contents):
     # validate that field is in fields list
     while field not in fields:
         # tell user that field doesn't exist, then pause program for a second
-        print(f'{keyword_field} field does not exist.')
+        print(f'{field} field does not exist.')
         time.sleep(1)
 
         # ask user again for keyword field
