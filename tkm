@@ -13,7 +13,7 @@ helpFunc()
     echo "counts:\tcounts.py - tallies a total for each unique value of a specified field from a CSV file"
     echo "help:\tdisplays help information for this script"
     echo ""
-    echo "If you do not enter a parameter, TweetKeywordMapper.py will run by default.\n"
+    echo "If you do not enter a parameter, mapper.py will run by default.\n"
     exit 1
 }
 
