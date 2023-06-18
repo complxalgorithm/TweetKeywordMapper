@@ -1,7 +1,7 @@
 # Tweet Keyword Mapper
-Search Twitter for Tweets containing a particular keyword from the command line, then write results to a CSV file and/or map the results using ArcGIS Pro or GeoPandas. It allows for counting the number of Tweets from each state using data from a CSV file without having to map the results. You can pull data for multiple keywords from the CSV file. You can append your count results to shapefiles (ArcGIS Pro & GeoPandas) or feature classes within geodatabases (ArcGIS Pro).
+Search Twitter for Tweets containing a particular keyword from the command line, then write results to a CSV file and/or map the results using ArcGIS Pro or GeoPandas. It allows for counting the number of Tweets from each state using data from a CSV file without having to map the results. You can pull data for multiple keywords from the CSV file. You can append your count results to shapefiles (ArcGIS Pro & GeoPandas) or feature classes within geodatabases (ArcGIS Pro). It is also possible to display a count and percentage of the total for all unique field values within a CSV file. An example use is displaying the aforementioned statistics for all unique keywords that are present within a CSV file.
 
-There is also the counts.py program, which will display a count and percentage of the total for all unique field values within a CSV file. This program can display the aforementioned statistics for all unique keywords that are present within a CSV file, for instance.
+The main program file is TweetKeywordMapper.py, which can run all above functionality. The counts.py file can display the statistics, as outlined in the last two sentences.
 
 ## Requirements
 1. Python 3 - get the latest release [here](https://www.python.org/downloads).
@@ -59,14 +59,14 @@ Next, set the workspace of your project (i.e., your ArcGIS Pro project). It can 
 Once all of the requirements are met and the program is downloaded, you can now run the program.
 
 #### Python
-To run the program using Python3, run the following command in your terminal:
+To execute the main program using Python3, run the following command in your terminal:
 ```
 python3 TweetKeywordMapper.py
 ```
 
-The counts.py program can be executed by running:
+The counts.py program can be executed independently by running:
 ```
-python3 counts.py
+python3 -m tweetkeywordmapper.scripts.counts
 ```
 
 #### Shell
