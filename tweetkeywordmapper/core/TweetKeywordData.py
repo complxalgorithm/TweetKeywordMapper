@@ -1091,7 +1091,7 @@ def get_field_indexes_tweet_ids(contents):
     while keyword_field not in fields or keyword_field == state_field or keyword_field == id_field:
         # tell user if field does not exist
         if keyword_field not in fields:
-            print(f'{id_field} does not exist.')
+            print(f'{keyword_field} does not exist.')
         
         # tell user if field is the same as state field
         if keyword_field == state_field:
