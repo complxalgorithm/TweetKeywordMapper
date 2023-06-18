@@ -17,7 +17,7 @@ import os
 import time
 import re
 import numpy as np
-import TweetKeywordConstants as cons
+from tweetkeywordmapper import TweetKeywordConstants as cons
 
 
 """

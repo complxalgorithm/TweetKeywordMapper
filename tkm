@@ -1,0 +1,53 @@
+#!/bin/sh
+# Name: tkm (tweetkeywordmapper)
+# Author: Stephen C. Sanders <https://stephensanders.me>
+# Description: 
+
+# display help information for program
+helpFunc()
+{
+    echo ""
+    echo "Usage: ./tkm <parameter>"
+    echo "Parameter Options: main, counts, help\n"
+    echo "main:\tTweetKeywordMapper.py - main Twitter search and CSV import program"
+    echo "counts:\tcounts.py - tallies a total for each unique value of a specified field from a CSV file"
+    echo "help:\tdisplays help information for this script"
+    echo ""
+    echo "If you do not enter a parameter, TweetKeywordMapper.py will run by default.\n"
+    exit 1
+}
+
+# handle parameter
+
+# lack of parameter means the main program file should be ran
+if [ $# -eq "0" ]; then
+    exec python3 "TweetKeywordMapper.py"
+    
+    # run this if parameter is present
+    else
+        # display error and show help info if more than one parameter is specified
+        if [ $# -gt "1" ]; then
+            echo "ERROR - Too many parameters."
+            helpFunc
+            
+            # run this if one parameter is present
+            else
+                # run main program when parameter is set to "main"
+                if [ $1 = "main" ]; then
+                    exec python3 "TweetKeywordMapper.py"
+                    
+                    # run counts.py program when parameter is set to "counts"
+                    elif [ $1 = "counts" ]; then
+                        exec python3 "counts.py"
+                    
+                    # display help info when parameter is set to "help"
+                    elif [ $1 = "help" ]; then
+                        helpFunc
+                    
+                    # display error and help info if the parameter is set to anything else
+                    else
+                        echo "ERROR - That is not a valid parameter value."
+                        helpFunc
+                fi
+        fi
+fi

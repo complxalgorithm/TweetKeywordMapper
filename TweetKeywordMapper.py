@@ -15,14 +15,14 @@
 
 
 # import modules/libraries
-import TweetKeywordConstants as cons
-import TweetKeywordData as data
-import TweetKeywordMapServices as maps
-import importlib
 import os
-import time
 import platform
+import importlib
 import shutil
+import time
+from tweetkeywordmapper import TweetKeywordConstants as cons
+from tweetkeywordmapper import TweetKeywordData as data
+from tweetkeywordmapper import TweetKeywordMapServices as maps
 
 
 """

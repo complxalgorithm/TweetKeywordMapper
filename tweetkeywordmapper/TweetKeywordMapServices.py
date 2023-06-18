@@ -10,10 +10,10 @@
 """
 
 # import libraries
-import TweetKeywordData as data
 import os
 import sys
 import warnings
+from tweetkeywordmapper import TweetKeywordData as data
 
 
 """
