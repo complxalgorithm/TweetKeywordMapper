@@ -18,13 +18,6 @@ The main program file is <em>mapper.py</em>, which can run all above functionali
 7. ArcPy - learn how to download and install ArcGIS Pro [here](https://pro.arcgis.com/en/pro-app/latest/get-started/download-arcgis-pro.htm).
     - This is only required if you want to map your results using ArcGIS Pro.
 
-### Install Requirements
-You can install all modules other than ArcPy by running the following command within the TweetKeywordMapper directory:
-```
-pip3 install -r requirements.txt
-```
-You can then download ArcGIS Pro if you have a Windows machine, and that will automatically install the latest version of ArcPy.
-
 ## Set Up & Run
 In order to run this program to its fullest extent, you will need to install the Tweepy library and ArcGIS Pro. Using the Tweepy library requires setting up a Twitter Developer account. Using ArcGIS Pro requires the Windows operating system and a paid license to use.
 
@@ -47,7 +40,7 @@ In order to run this program to its fullest extent, you will need to install the
 <em>You will need to create a new ArcGIS Pro project using the map template before running the program.</em>
 <em>Additionally, ArcGIS Pro **cannot** be open at the same time that you execute the program.</em>
 
-### Run
+### Download & Install
 You can download the program in a couple ways. Download a zip file of this repository by clicking this link: https://github.com/complxalgorithm/TweetKeywordMapper/archive/refs/heads/master.zip
 
 You can also use git to clone the repo by running the following in your terminal:
@@ -56,6 +49,14 @@ git clone https://github.com/complxalgorithm/TweetKeywordMapper.git
 ```
 Next, set the workspace of your project (i.e., your ArcGIS Pro project). It can either be within the TweetKeywordMapper directory that you downloaded, or in a different directory. You then need to set the name of the default csv file. This file should be located within the TweetKeywordMapper directory. If no file with the set name exists, the program will create a blank csv file with the appropriate fields.
 
+#### Install Requirements
+You can install all modules other than ArcPy by running the following command within the TweetKeywordMapper directory:
+```
+pip3 install -r requirements.txt
+```
+You can then download ArcGIS Pro if you have a Windows machine, and that will automatically install the latest version of ArcPy.
+
+### Run
 Once all of the requirements are met and the program is downloaded, you can now run the program.
 
 #### Python
