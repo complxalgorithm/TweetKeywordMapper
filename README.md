@@ -3,6 +3,8 @@ Search Twitter for Tweets containing a particular keyword from the command line,
 
 The main program file is <em>mapper.py</em>, which can run all above functionality. The <em>counts.py</em> file can display the statistics, as outlined in the last two sentences.
 
+You can run the program as the <em>tweetkeywordmapper</em> package, or by using the <em>tkm</em> shell script.
+
 ## Requirements
 1. Python 3 - get the latest release [here](https://www.python.org/downloads).
 2. Pandas - learn how to install [here](https://pandas.pydata.org/docs/getting_started/install.html).
