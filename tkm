@@ -27,7 +27,7 @@ if [ $# -eq "0" ]; then
     else
         # display error and show help info if more than one parameter is specified
         if [ $# -gt "1" ]; then
-            echo "ERROR - Too many parameters."
+            echo "ERROR - Too many parameters. Only 1 is allowed at most."
             helpFunc
             
             # run this if one parameter is present
@@ -46,7 +46,7 @@ if [ $# -eq "0" ]; then
                     
                     # display error and help info if the parameter is set to anything else
                     else
-                        echo "ERROR - That is not a valid parameter value."
+                        echo "ERROR - $1 is not a valid parameter value."
                         helpFunc
                 fi
         fi
