@@ -45,8 +45,8 @@ def main():
     # display the count and percent of all data for each keyword in descending order
     print('{:<25s}{:<10s}{:<6s}'.format('VALUE', 'COUNT', 'PERCENT'))
     print('------------------------------------------')
-    for keyword, count in counts.items():
-        print('{:<25s}{:<10}{:<6}'.format(keyword, count, percents[keyword]))
+    for value, count in counts.items():
+        print('{:<25s}{:<10}{:<6}'.format(value, count, percents[value]))
 
 
 """

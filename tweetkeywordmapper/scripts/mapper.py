@@ -210,9 +210,6 @@ def TweetKeywordMapper():
                 else:
                     print('GeoPandas is not installed on your machine, so you cannot map your results using GeoPandas.')
 
-    # display goodbye after the full program has executed
-    print('\nThank you for using Tweet Keyword Mapper!')
-
 
 """
 # execute the program
