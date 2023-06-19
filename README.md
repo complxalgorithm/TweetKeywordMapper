@@ -57,7 +57,7 @@ pip3 install -r requirements.txt
 You can then download ArcGIS Pro if you have a Windows machine, and that will automatically install the latest version of ArcPy.
 
 ### Run
-Once all of the requirements are met and the program is downloaded, you can now run the program. Support is available to run the program as a package, or by using a shell script. Both of these support a four argument/parameter options. More options are currently under development.
+Once the program is downloaded onto your machine and all of the requirements are met, you can now run the program. Support is available to run the program as a package, or by using a shell script. Both of these support a four argument/parameter options. More options are currently under development.
 
 #### Python
 To execute the main program as a Python3 package, run the following command in your terminal within the TweetKeywordMapper directory:
