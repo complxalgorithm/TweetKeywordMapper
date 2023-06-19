@@ -41,7 +41,7 @@ In order to run this program to its fullest extent, you will need to install the
 <em>Additionally, ArcGIS Pro **cannot** be open at the same time that you execute the program.</em>
 
 ### Download & Install
-You can download the program in a couple ways. Download a zip file of this repository by clicking this link: https://github.com/complxalgorithm/TweetKeywordMapper/archive/refs/heads/master.zip
+You can download the program in a couple ways. Download a zip file of this repository by clicking [this link](https://github.com/complxalgorithm/TweetKeywordMapper/archive/refs/heads/master.zip).
 
 You can also use git to clone the repo by running the following in your terminal:
 ```
@@ -65,6 +65,20 @@ To execute the main program using Python3, run the following command in your ter
 python3 tweetkeywordmapper
 ```
 
+The program accepts a single argument with one of four options: mapper, counts, help, or a blank value.
+```
+username ^ TweetKeywordMapper => python3 tweetkeywordmapper help
+
+Usage: python3 tweetkeywordmapper <argument>
+Argument Options: mapper, counts, help
+
+mapper: mapper.py - main Twitter search, CSV import, and counts program
+counts: counts.py - tallies a total for each unique value of a specified field from a CSV file
+help:   displays help information for this script
+
+If you do not enter an argument, mapper.py will run by default.
+```
+
 #### Shell
 You can also use the <em>tkm</em> shell script to execute the program.
 
@@ -73,19 +87,19 @@ Make the script executable by running the following command within the TweetKeyw
 chmod +x tkm
 ```
 
-After making the script executable, you can simply run the program by entering:
+After making the script executable, you can simply run the main program by entering:
 ```
 ./tkm
 ```
 
-The script accepts a single parameter with one of four options: mapper, counts, help, or a blank value.
+The script accepts a single parameter with the same options as the Python program.
 ```
 username ^ TweetKeywordMapper => ./tkm help
 
 Usage: ./tkm <parameter>
 Parameter Options: mapper, counts, help
 
-mapper: mapper.py - main Twitter search and CSV import program
+mapper: mapper.py - main Twitter search, CSV import, and counts program
 counts: counts.py - tallies a total for each unique value of a specified field from a CSV file
 help:   displays help information for this script
 
