@@ -16,28 +16,35 @@ def helpFunc():
 
 # define main() function - handles arguments and runs appropriate functionality
 def main():
+    # set name of package
+    pkg = 'tweetkeywordmapper'
+    
     # initialize list of available arguments
-    avail_args = ['tweetkeywordmapper', 'mapper', 'counts', 'help']
+    avail_args = ['mapper', 'counts', 'help']
 
     # get last argument
     arg = sys.argv[-1]
 
     # get number of arguments except for name of program
     num_args = (len(sys.argv)-1)
-
-    # handle when there are 0 or 1 added arguments other than package name
-    if (num_args == 0 or num_args == 1) and arg in avail_args:
+    
+    ""
+    # handle arguments, or lack thereof
+    ""
+    
+    # run this if only the package name is entered or the package name and a valid argument are entered
+    if (num_args == 0 and arg == pkg) or (num_args == 1 and arg in avail_args):
         # display welcome message
         print('Welcome to Tweet Keyword Mapper!\n')
-
+        
         time.sleep(1)   # pause program for a second
 
         # do this when package name is the only argument
-        if num_args == 0:
+        if num_args == 0 and arg == pkg:
             # run the mapper.py script
             tkm.TweetKeywordMapper()
 
-        # do this if there is 1 additional argument
+        # do this if there is 1 additional argument that is in the avail_args list
         else:
             # run the mapper.py script if mapper is the argument
             if arg == 'mapper':
@@ -47,7 +54,7 @@ def main():
             elif arg == 'counts':
                 cnts.main()
 
-            # display help information if help is the argument
+            # display usage information if help is the argument
             else:
                 helpFunc()
 
@@ -56,18 +63,18 @@ def main():
         # display goodbye after the program has executed
         print('\nThank you for using Tweet Keyword Mapper!')
 
-    # handle when more than 1 argument is entered and/or an invalid argument value is entered
+    # handle when more than 1 argument or an invalid argument is entered
     else:
-        # display too many arguments error and then help information
+        # display too many arguments error
         if num_args > 1:
-            # display an error and then help information
             print('ERROR - Too many arguments. Only 1 is allowed at most.\n')
-            helpFunc()
-
-        # display invalid argument value error and then help information
+        
+        # display invalid argument value error
         else:
             print(f'ERROR - {arg} is not a valid argument value.\n')
-            helpFunc()
+        
+        # display usage information
+        helpFunc()
 
 
 # execute program
