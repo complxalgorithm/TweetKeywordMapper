@@ -1,7 +1,5 @@
 <h1 align="center">Tweet Keyword Mapper</h1>
-Search Twitter for Tweets containing a particular keyword from the command line, then write results to a CSV file and/or map the results using ArcGIS Pro or GeoPandas. It allows for counting the number of Tweets from each state using data from a CSV file without having to map the results. You can pull data for multiple keywords from the CSV file. You can append your count results to shapefiles (ArcGIS Pro & GeoPandas) or feature classes within geodatabases (ArcGIS Pro). It is also possible to display a count and percentage of the total for all unique field values within a CSV file. An example use is displaying the aforementioned statistics for all unique keywords that are present within a CSV file.
-
-The main program file is <em>mapper.py</em>, which can run all above functionality. The <em>counts.py</em> file can display the statistics, as outlined in the last two sentences.
+Search Twitter for Tweets containing a particular keyword from the command line, then write results to a CSV file and/or map the results using ArcGIS Pro or GeoPandas. It allows for counting the number of Tweets from each state using data from a CSV file. You can pull data for multiple keywords from the CSV file. You can append your count results to shapefiles (ArcGIS Pro & GeoPandas) or feature classes within geodatabases (ArcGIS Pro). It is also possible to display a count and percentage of the total for all unique field values within a CSV file. An example use is displaying the aforementioned statistics for all unique keywords that are present within a CSV file.
 
 You can run the program as the <em>tweetkeywordmapper</em> package, or by using the <em>tkm</em> shell script.
 
