@@ -97,11 +97,12 @@ username ^ TweetKeywordMapper => ./tkm help
 Usage: ./tkm <parameter>
 Parameter Options: mapper, counts, help
 
-mapper: mapper.py - main Twitter search, CSV import, and counts program
-counts: counts.py - tallies a total for each unique value of a specified field from a CSV file
+search: search.py - search Twitter for Tweets containing a specific keyword, then map results
+read:   read.py - import Tweet data from a CSV file, then map results
+counts: counts.py - tallies the total for each unique value of a specified field from a CSV file
 help:   displays help information for this script
 
-If you do not enter a parameter, mapper.py will run by default.
+- search and read will run mapper.py to map the results after state counts are determine.
 ```
 
 ## Disclaimers
