@@ -20,9 +20,10 @@ helpFunc()
 
 # handle parameter
 
-# lack of parameter means the main program file should be ran
+# lack of parameter triggers the displaying of an error and the help info
 if [ $# -eq "0" ]; then
-    exec python3 tweetkeywordmapper
+    echo "ERROR - No parameter provided."
+    helpFunc
     
     # run this if parameter is present
     else
