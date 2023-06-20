@@ -62,24 +62,20 @@ You can then download ArcGIS Pro if you have a Windows machine, and that will au
 Once the program is downloaded onto your machine and all of the requirements are met, you can now run the program. Support is available to run the program as a package, or by using a shell script. Both of these support a four argument/parameter options. More options are currently under development.
 
 #### Python
-To execute the main program as a Python3 package, run the following command in your terminal within the TweetKeywordMapper directory:
+The program runs as the <em>tweetkeywordmapper</em> package.
 ```
-python3 tweetkeywordmapper
+username ^ TweetKeywordMapper => python3 tweetkeywordmapper -h      
+usage: python3 tweetkeywordmapper [-h] [-s] [-r] [-c]
+
+Search/Import Tweet data from US states with a keyword, then map the count results
+
+optional arguments:
+  -h, --help    show this help message and exit
+  -s, --search  search Twitter for Tweets containing a specific keyword, then map results
+  -r, --read    import Tweet data from a CSV file, then map results
+  -c, --counts  tally the total number of occurrences for each unique value of a specified field from a CSV file
 ```
-
-The program accepts a single argument with one of four options: mapper, counts, help, or a blank value.
-```
-username ^ TweetKeywordMapper => python3 tweetkeywordmapper help
-
-Usage: python3 tweetkeywordmapper <argument>
-Argument Options: mapper, counts, help
-
-mapper: mapper.py - main Twitter search, CSV import, and counts program
-counts: counts.py - tallies a total for each unique value of a specified field from a CSV file
-help:   displays help information for this script
-
-If you do not enter an argument, mapper.py will run by default.
-```
+The program accepts a single argument with one of four options: search, read, counts, or help.
 
 #### Shell
 You can also use the <em>tkm</em> shell script to execute the program.
