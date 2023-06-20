@@ -1,5 +1,5 @@
 <h1 align="center">Tweet Keyword Mapper</h1>
-Search Twitter for Tweets containing a particular keyword from the command line, then write results to a CSV file and/or map the results using ArcGIS Pro or GeoPandas. It allows for counting the number of Tweets from each state using data from a CSV file. You can pull data for multiple keywords from the CSV file. You can append your count results to shapefiles (ArcGIS Pro & GeoPandas) or feature classes within geodatabases (ArcGIS Pro). It is also possible to display a count and percentage of the total for all unique field values within a CSV file. An example use is displaying the aforementioned statistics for all unique keywords that are present within a CSV file.
+Search Twitter for Tweets containing a particular keyword from the command line, then write results to a CSV file and/or map the results using ArcGIS Pro or GeoPandas. It allows for counting the number of Tweets from each state using data from a CSV file. You can pull data for multiple keywords from the CSV file. You can append your count results to shapefiles (ArcGIS Pro & GeoPandas) or feature classes within geodatabases (ArcGIS Pro). It is also possible to display a count and percentage of the total for all unique field values within a CSV file. An example use is displaying the aforementioned statistics for all unique keywords that are present within a CSV file.<br>
 
 You can run the program as the <em>tweetkeywordmapper</em> package, or by using the <em>tkm</em> shell script.
 
@@ -57,7 +57,7 @@ pip3 install -r requirements.txt
 You can then download ArcGIS Pro if you have a Windows machine, and that will automatically install the latest version of ArcPy.
 
 ### Run
-Once the program is downloaded onto your machine and all of the requirements are met, you can now run the program. Support is available to run the program as a package, or by using a shell script. Both of these support a four argument/parameter options. More options are currently under development.
+Once the program is downloaded onto your machine and all of the requirements are met, you can now run the program. Support is available to run the program as a package, or by using a shell script. Both of these support four argument/parameter options.
 
 #### Python
 The program runs as the <em>tweetkeywordmapper</em> package.
