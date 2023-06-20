@@ -94,15 +94,17 @@ The script accepts a single parameter with the same options as the Python progra
 ```
 username ^ TweetKeywordMapper => ./tkm help
 
-Usage: ./tkm <parameter>
-Parameter Options: mapper, counts, help
+usage: ./tkm <parameter>
 
+Search/Import Tweet data from US states with a keyword, then map the count results
+
+optional parameters:
 search: search.py - search Twitter for Tweets containing a specific keyword, then map results
 read:   read.py - import Tweet data from a CSV file, then map results
-counts: counts.py - tallies the total for each unique value of a specified field from a CSV file
+counts: counts.py - tally the total for each unique value of a specified field from a CSV file
 help:   displays help information for this script
 
-- search and read will run mapper.py to map the results after state counts are determine.
+- search and read will run mapper.py to map the results after state counts are determined.
 ```
 
 ## Disclaimers

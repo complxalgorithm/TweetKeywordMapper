@@ -7,14 +7,14 @@
 helpFunc()
 {
     echo ""
-    echo "Usage: ./tkm <parameter>"
-    echo "Parameter Options: mapper, counts, help\n"
+    echo "usage: ./tkm <parameter>\n"
+    echo "Search/Import Tweet data from US states with a keyword, then map the count results\n"
+    echo "optional parameters:"
     echo "search:\tsearch.py - search Twitter for Tweets containing a specific keyword, then map results"
     echo "read:\tread.py - import Tweet data from a CSV file, then map results"
     echo "counts:\tcounts.py - tally the total for each unique value of a specified field from a CSV file"
-    echo "help:\tdisplays help information for this script"
-    echo ""
-    echo "- search and read will run mapper.py to map the results after state counts are determine.\n"
+    echo "help:\tdisplays help information for this script\n"
+    echo "- search and read will run mapper.py to map the results after state counts are determined.\n"
     exit 1
 }
 
