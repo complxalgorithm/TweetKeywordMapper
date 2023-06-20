@@ -5,12 +5,21 @@ import argparse
 import os
 import sys
 import time
-from core import TweetKeywordData as data
-from core import TweetKeywordConstants as cons
-from scripts import mapper as tkm
-from scripts import search as tks
-from scripts import read as tkr
-from scripts import counts as cnts
+
+try:
+    from tweetkeywordmapper.core import TweetKeywordData as data
+    from tweetkeywordmapper.core import TweetKeywordConstants as cons
+    from tweetkeywordmapper.scripts import mapper as tkm
+    from tweetkeywordmapper.scripts import search as tks
+    from tweetkeywordmapper.scripts import read as tkr
+    from tweetkeywordmapper.scripts import counts as cnts
+except:
+    from core import TweetKeywordData as data
+    from core import TweetKeywordConstants as cons
+    from scripts import mapper as tkm
+    from scripts import search as tks
+    from scripts import read as tkr
+    from scripts import counts as cnts
 
 """
 # initialize constants
@@ -41,7 +50,7 @@ def get_args() -> argparse.Namespace:
     parser.add_argument('-r', '--read', action='store_true',
                          help='import Tweet data from a CSV file, then map results')
     parser.add_argument('-c', '--counts', action='store_true',
-                         help='tally the total number of occurrences for each unique value of a specified field from a CSV file')
+                         help='tally the total for each unique value of a specified field from a CSV file')
     
     # return parser
     return parser.parse_args()

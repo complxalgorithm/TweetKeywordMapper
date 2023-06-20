@@ -9,11 +9,12 @@ helpFunc()
     echo ""
     echo "Usage: ./tkm <parameter>"
     echo "Parameter Options: mapper, counts, help\n"
-    echo "mapper:\tmapper.py - main Twitter search, CSV import, and counts program"
-    echo "counts:\tcounts.py - tallies a total for each unique value of a specified field from a CSV file"
+    echo "search:\tsearch.py - search Twitter for Tweets containing a specific keyword, then map results"
+    echo "read:\tread.py - import Tweet data from a CSV file, then map results"
+    echo "counts:\tcounts.py - tallies the total for each unique value of a specified field from a CSV file"
     echo "help:\tdisplays help information for this script"
     echo ""
-    echo "If you do not enter a parameter, mapper.py will run by default.\n"
+    echo "- search and read will run mapper.py to map the results after state counts are determine.\n"
     exit 1
 }
 
@@ -32,13 +33,17 @@ if [ $# -eq "0" ]; then
             
             # run this if one parameter is present
             else
-                # run main program when parameter is set to "main"
-                if [ $1 = "mapper" ]; then
-                    exec python3 tweetkeywordmapper
+                # run search.py program when parameter is set to "search"
+                if [ $1 = "search" ]; then
+                    exec python3 tweetkeywordmapper -s
                     
-                    # run counts.py program from tweetkeywordmapper.scripts when parameter is set to "counts"
+                    # 
+                    elif [ $1 = "read" ]; then
+                        exec python3 tweetkeywordmapper -r
+                    
+                    # run counts.py program when parameter is set to "counts"
                     elif [ $1 = "counts" ]; then
-                        exec python3 -m tweetkeywordmapper.scripts.counts
+                        exec python3 -m tweetkeywordmapper -c
                     
                     # display help info when parameter is set to "help"
                     elif [ $1 = "help" ]; then
