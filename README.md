@@ -64,7 +64,7 @@ Once the program is downloaded onto your machine and all of the requirements are
 #### Python
 The program runs as the <em>tweetkeywordmapper</em> package.
 ```
-username ^ TweetKeywordMapper => python3 tweetkeywordmapper -h      
+username ^ TweetKeywordMapper => python3 tweetkeywordmapper -h
 usage: python3 tweetkeywordmapper [-h] [-s] [-r] [-c]
 
 Search/Import Tweet data from US states with a keyword, then map the count results
@@ -73,7 +73,7 @@ optional arguments:
   -h, --help    show this help message and exit
   -s, --search  search Twitter for Tweets containing a specific keyword, then map results
   -r, --read    import Tweet data from a CSV file, then map results
-  -c, --counts  tally the total number of occurrences for each unique value of a specified field from a CSV file
+  -c, --counts  tally the total for each unique value of a specified field from a CSV file
 ```
 The program accepts a single argument with one of four options: search, read, counts, or help.
 
