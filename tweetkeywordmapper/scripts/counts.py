@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# coding: utf-8
-
 """
 
 @Name: counts.py
@@ -14,14 +11,22 @@
 # import libraries
 import pandas as pd
 import numpy as np
-import time
 import os
+import time
+
+try:
+    from tweetkeywordmapper.core import TweetKeywordData as data
+    from tweetkeywordmapper.core import TweetKeywordConstants as cons
+except:
+    from core import TweetKeywordData as data
+    from core import TweetKeywordConstants as cons
 
 
 """
-# define main() function - controls entire flow of program
+# define TweetKeywordCount() function - outputs counts and percentage of total for each unique value
+# of user specified field in csv file
 """
-def main():
+def TweetKeywordCount():
     # set default csv file
     default_csv = cons.default_csv
 
@@ -99,7 +104,7 @@ def get_unique_values(contents):
 
 
 """
-# define get_counts() function - 
+# define get_counts() function - return dictionary with field values and their counts
 """
 def get_counts(contents, values, keyword_field):
     # initialize counts list
@@ -146,21 +151,3 @@ def get_count_percentages(counts, total):
     
     # return percents dictionary to main function
     return percents
-
-
-"""
-# execute main program
-"""
-if __name__ == '__main__':
-    from tweetkeywordmapper.core import TweetKeywordData as data
-    from tweetkeywordmapper.core import TweetKeywordConstants as cons
-    
-    main()
-
-else:
-    try:
-        from core import TweetKeywordData as data
-        from core import TweetKeywordConstants as cons
-    except:
-        from tweetkeywordmapper.core import TweetKeywordData as data
-        from tweetkeywordmapper.core import TweetKeywordConstants as cons
