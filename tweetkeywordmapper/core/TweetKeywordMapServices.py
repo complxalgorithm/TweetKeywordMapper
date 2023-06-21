@@ -249,8 +249,13 @@ def TweetKeywordGeoPandas(ws, counts, keyword):
     # set title of plot using map_title value
     ax.set_title(map_title)
     
-    # show map in new window
-    plt.show()
+    # try to show map in new window
+    try:
+        plt.show()
+    except:
+        print('\nERROR - Something went wrong when trying to map the data.')
+    else:
+        print(f'\nSuccessfully created {map_title} map.')
     
     # return to parent function
     return

@@ -100,108 +100,41 @@ def get_state(s, u, states, cities):
         # if the tweet was from the USA, use full name of locality
         else:
             place = pl.full_name
+            print(f'Place: {place}\n')
             
-            # split the name using a comma as the delimiter and store words in list
-            try_split = place.split(', ')
-            
-            # iterate through each element and attempt to get that from the states dict
-            for wrd in try_split:
-                if wrd in states:
-                    return states[wrd]
-                elif wrd in states.values():
-                    return wrd
-            
-            # if pl value hasn't been returned and is not blank, set pl to the original place value
-            # if it is blank then return an empty string
-            if place != '':
-                pl = place
-                print(f'Place: {pl}\n')
-            else:
+            # if pl value hasn't been returned and is not blank or a space, set pl to the original place value
+            # if it is blank or a space then return an empty string
+            if place == '' or place == ' ':
                 return ''
+            else:
+                pl = place
             
     # run this if there is no place object, but the user allows twitter to access their location
     elif (s.place is None) and (u.geo_enabled == True):
         # get the location that the user has on their profile,
         # then split the value using the comma as the delimiter, and store all words
         place = u.location
+        print(f'Place: {place}\n')
         try_split = place.split(', ')
         
-        # iterate through each word in resulting list
-        for wrd in try_split:
-            # check to see if each word is in the states dict as a key or value
-            # if it is, return the respective value
-            if wrd in states:
-                # if a key in states dict, return respective value
-                return states[wrd]
-            
-            # if uppercase version of element is a key in states dict, return respective value
-            elif wrd.upper() in states:
-                return states[wrd.upper()]
-        
-            # if a value in states dict, return try_split value
-            elif wrd in states.values():
-                return wrd
-            
-            # if a value in cities dict, return respective value in cities dict
-            elif wrd in cities:
-                return cities[wrd]
-            
-            # if titled version of value in cities dict, return respective value in cities dict
-            elif wrd.title() in cities:
-                return cities[wrd.title()]
-        
-        # if pl value hasn't been returned and is not blank, set pl to the original place value
+        # if pl value hasn't been returned and is not blank or a space, set pl to the original place value
         # if it is blank then return an empty string
-        if place != '':
-            pl = place
-            print(f'Place: {pl}\n')
-        else:
+        if place == '' or place == ' ':
             return ''
+        else:
+            pl = place
             
     # if none of these situations are the case for the tweet, return an empty string
     else:
         return ''
     
-    """
-    # if the pl value has not been returned to its parent function, then the place value is
-    # either from a different country or is most likely not in the proper <Municipality>, <State>
-    # format. a city or state will need to be searched for within the unreturned place value.
-    # a few other tests will need to be ran before doing that.
-    """
-    
-    # return its respective value in the cities dictionary if it shows up as a key
-    if pl in cities:
-        return cities[pl]
-    
-    # return value if its titled version shows up as a key in cities dict
-    elif pl.title() in cities:
-        return cities[pl.title()]
-    
-    # return its respective value in the states dictionary if it shows up as a key
-    elif pl in states:
-        return states[pl]
-    
-    # return state value if its uppercased version is a key in the states dictionary
-    elif pl.upper() in states:
-        return states[pl.upper()]
-    
-    # return value if it is a value within the states dictionary
-    elif pl in states.values():
-        return pl
-    
-    # return titled version of value if it shows up as a value in states dict
-    elif pl.title() in states.values():
-        return pl.title()
-    
-    # get the state depending on the presence of certain keywords
-    # after it fails all the above tests
+    # when the found place has a value, try to extract the state from the value
+    if pl.find('via') == -1 and pl.find('from') == -1:
+        return find_state_in_place_value(pl, states, cities)
+    elif pl.find('via') != -1:
+        return find_state_in_place_value(pl, states, cities, word='via')
     else:
-        if pl.find('via') == -1 and pl.find('from') == -1:
-            return find_state_in_place_value(pl, states, cities)
-        elif pl.find('via') != -1:
-            return find_state_in_place_value(pl, states, cities, word='via')
-        else:
-            return find_state_in_place_value(pl, states, cities, word='from')
+        return find_state_in_place_value(pl, states, cities, word='from')
 
 
 """
@@ -344,6 +277,13 @@ def find_state_in_place_value(place, states, cities, word=''):
                 else:
                     # set the resulting search object to result variable
                     result = search_for_state_city(s)(place)
+                    
+                    # trying to fix issue where a place value of 'LA' returns Louisiana
+                    # this is almost always referring to Los Angeles, California
+                    if place == 'LA':
+                        print('Probably should be California.\n')
+
+                        found_states_indexes['California'] = place.upper().index('LA')
 
                     # make sure the result is not a common word
                     if result.group(1) not in ('in', 'In', 'me', 'Me', 'de', 'la', 'La', 'or', 'Or', 'Ca', 'Mt', 'Co', 'co', 'oh', 'Oh'):
@@ -352,7 +292,11 @@ def find_state_in_place_value(place, states, cities, word=''):
                             num_found_states += 1
 
                         else:
-                            print(f'{states[s]} has already been found.')
+                            # trying to fix LA/California issue
+                            if result.group(1) == 'LA':
+                                print('California has already been found.')
+                            else:
+                                print(f'{states[s]} has already been found.')
                         
                         # add the state and its index within the place value to the found_states_indexes dictionary
                         # if the index is not already in the dictionary
@@ -367,11 +311,11 @@ def find_state_in_place_value(place, states, cities, word=''):
                     else:
                         # had to add this because I was getting the location of the foreign place that had 'Ca' in the name
                         # and was preceded by 'Au'
-                        if (search_for_state_city('AU')(place.upper()) is None) and (result.group(1) not in ('in', 'In', 'me', 'Me', 'de', 'la', 'La', 'or', 'Or', 'Ca', 'Mt', 'Co', 'co', 'oh', 'Oh')):
+                        if (search_for_state_city('AU')(place.upper()) is None) and (result.group(1) not in ('in', 'In', 'me', 'Me', 'de', 'la', 'La', 'or', 'Or', 'Mt', 'Co', 'co', 'oh', 'Oh')):
                             # only add to found states counter if it isn't in the found_states_indexes dictionary
                             if states[s] not in found_states_indexes:
                                 num_found_states += 1
-
+                            
                             else:
                                 print(f'{states[s]} has already been found.')
                             
@@ -447,7 +391,7 @@ def find_state_in_place_value(place, states, cities, word=''):
         sorted_values = np.argsort(indexes)
         
         # recreate sorted found_states_indexes dictionary
-        found_states_indexes = {found[s]: indexes[s] for s in sorted_values}   
+        found_states_indexes = {found[s]: indexes[s] for s in sorted_values}
         
         # return the first state that was found if the place value contains 'via' or 'from'
         # as long as there was more than 1 state found
