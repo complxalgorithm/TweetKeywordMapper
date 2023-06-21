@@ -16,8 +16,8 @@ Count results can be appended to shapefiles (ArcGIS Pro & GeoPandas) or feature 
 
 ## Requirements
 1. Python 3 - get the latest release [here](https://www.python.org/downloads).
-2. Pandas - learn how to install [here](https://pandas.pydata.org/docs/getting_started/install.html).
-3. Tweepy - learn how to install [here](https://docs.tweepy.org/en/stable/install.html).
+2. Tweepy - learn how to install [here](https://docs.tweepy.org/en/stable/install.html).
+3. Pandas - learn how to install [here](https://pandas.pydata.org/docs/getting_started/install.html).
 4. GeoPandas - learn how to install [here](https://geopandas.org/en/stable/getting_started/install.html).
 5. Matplotlib - learn how to install [here](https://matplotlib.org/stable/users/installing/index.html).
 6. Numpy - learn how to install [here](https://numpy.org/install/).
