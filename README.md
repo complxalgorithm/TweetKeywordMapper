@@ -108,10 +108,10 @@ usage: ./tkm <parameter>
 Search/Import Tweet data from US states with a keyword, then map the count results
 
 optional parameters:
-search: search.py - search Twitter for Tweets containing a specific keyword, then map results
-read:   read.py - import Tweet data from a CSV file, then map results
-counts: counts.py - tally the total for each unique value of a specified field from a CSV file
-help:   displays help information for this script
+search:  search Twitter for Tweets containing a specific keyword, then map results
+read:    import Tweet data from a CSV file, then map results
+counts:  tally the total for each unique value of a specified field from a CSV file
+help:    displays help information for this script
 
 - search and read will run mapper.py to map the results after state counts are determined.
 ```
