@@ -1,10 +1,15 @@
 <h1 align="center">Tweet Keyword Mapper</h1>
 
-Search Twitter for Tweets containing a particular keyword from the command line, then write results to a CSV file and/or map the results using ArcGIS Pro or GeoPandas. It allows for counting the number of Tweets from each state using data from a CSV file. You can pull data for multiple keywords from the CSV file. You can append your count results to shapefiles (ArcGIS Pro & GeoPandas) or feature classes within geodatabases (ArcGIS Pro). It is also possible to display a count and percentage of the total for all unique field values within a CSV file. An example use is displaying the aforementioned statistics for all unique keywords that are present within a CSV file.
-
+Search Twitter for Tweets containing a particular keyword from the command line, then write results to a CSV file and/or map the results using ArcGIS Pro or GeoPandas.
 [![asciicast](https://asciinema.org/a/lueHvB8fK4EX5wpFPOzvHHzDS.svg)](https://asciinema.org/a/lueHvB8fK4EX5wpFPOzvHHzDS)
 
-You can run the program as the <em>tweetkeywordmapper</em> package, or by using the <em>tkm</em> shell script.
+Tweet data can be imported from a CSV file, which will be used for counting the number of Tweets from each state. You can pull data for multiple keywords from the CSV file.
+[![asciicast](https://asciinema.org/a/592490.svg)](https://asciinema.org/a/592490)
+
+It is also possible to display a count and percentage of the total for all unique field values within a CSV file. An example use is displaying the aforementioned statistics for all unique keywords that are present within a CSV file.
+[![asciicast](https://asciinema.org/a/RK8sRi71azh9PniNo73hD83C4.svg)](https://asciinema.org/a/RK8sRi71azh9PniNo73hD83C4)
+
+Count results can be appended to shapefiles (ArcGIS Pro & GeoPandas) or feature classes within geodatabases (ArcGIS Pro). The program can be ran as the <em>tweetkeywordmapper</em> package, or by using the <em>tkm</em> shell script.
 
 ## Requirements
 1. Python 3 - get the latest release [here](https://www.python.org/downloads).
