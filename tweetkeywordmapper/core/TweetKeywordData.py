@@ -3,8 +3,8 @@
 @Name: TweetKeywordData.py
 @Author: Stephen Sanders <https://stephensanders.me>
 @Description: Contains most functions that are imperative to running the program. This includes
-              the algorithm used to determine the state of origin of each Tweet result, 
-              as well as the csv_interact() function.
+              the algorithm used to determine the state of origin of each Tweet result, the csv_interact() function,
+              directory and file related functions, and other smaller functions.
 @Requirements: tweepy, pandas, numpy
 
 """
@@ -380,6 +380,8 @@ def find_state_in_place_value(place, states, cities, word=''):
     # return an empty string if no states could be extracted from the place value
     if num_found_states == 0 or len(list(found_states_indexes.keys())) == 0:
         return ''
+    
+    # run this if at least one state was extracted from Tweet
     else:
         # get list of found states
         found = list(found_states_indexes.keys())

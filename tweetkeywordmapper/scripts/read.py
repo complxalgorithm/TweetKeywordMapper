@@ -38,7 +38,7 @@ def TweetKeywordImport(ws, default, states):
     
     # display how many search results were returned
     if num_results == 0:
-        print(f'Reading from {user_file} returned no results.')
+        print(f'Reading from {user_file} returned no results.\n')
         
         time.sleep(1) # pause program for a second
 
