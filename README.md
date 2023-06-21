@@ -4,7 +4,7 @@ Search Twitter for Tweets containing a particular keyword from the command line,
 
 [![asciicast](https://asciinema.org/a/lueHvB8fK4EX5wpFPOzvHHzDS.svg)](https://asciinema.org/a/lueHvB8fK4EX5wpFPOzvHHzDS)
 
-Tweet data can be imported from a CSV file, which will be used for counting the number of Tweets from each state. You can pull data for multiple keywords from the CSV file.
+Tweet data can be imported from a CSV file, which will then be used for counting the number of Tweets from each state. You can pull data for multiple keywords from the CSV file.
 
 [![asciicast](https://asciinema.org/a/592490.svg)](https://asciinema.org/a/592490)
 
