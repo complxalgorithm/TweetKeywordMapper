@@ -44,7 +44,7 @@ if [ $# -eq "0" ]; then
                     
                     # run counts.py program when parameter is set to "counts"
                     elif [ $1 = "counts" ]; then
-                        exec python3 -m tweetkeywordmapper -c
+                        exec python3 tweetkeywordmapper -c
                     
                     # display help info when parameter is set to "help"
                     elif [ $1 = "help" ]; then
