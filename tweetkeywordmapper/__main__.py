@@ -159,7 +159,7 @@ def main():
             
             time.sleep(0.5)   # pause program for half a second
             
-            cnts.TweetKeywordCount()
+            cnts.TweetKeywordCount(STATES)
         
         # display invalid argument error if any other arguments are entered, then quit program
         else:

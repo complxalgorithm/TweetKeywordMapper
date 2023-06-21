@@ -101,7 +101,7 @@ def TweetKeywordSearch(ws, default, states, cities):
     places, ids = data.get_states_ids_from_results(search_results, api, states, cities, num_res)
             
     # get dictionary of counts for each state
-    state_counts = data.get_state_counts(places, states)
+    state_counts = data.get_counts(places, states)
         
     # get number of tweets that were returned
     num_results = len(ids)

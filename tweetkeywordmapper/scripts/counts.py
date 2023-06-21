@@ -23,38 +23,6 @@ except:
 
 
 """
-# define TweetKeywordCount() function - outputs counts and percentage of total for each unique value
-# of user specified field in csv file
-"""
-def TweetKeywordCount():
-    # set default csv file
-    default_csv = cons.default_csv
-
-    # get csv file from user
-    user_csv = data.get_user_csv_file(default_csv)
-
-    # extract contents of csv file
-    contents = pd.read_csv(user_csv, header=0)
-    
-    # get list of unique keywords and keyword field from csv file
-    values, field = get_unique_values(contents)
-    
-    # get dictionary of keyword counts and list of unique keywords
-    counts = get_counts(contents, values, field)
-    
-    # get percents dictionary
-    percents = get_count_percentages(counts, len(contents))
-    
-    time.sleep(1.5)     # pause program for a second and a half
-    
-    # display the count and percent of all data for each keyword in descending order
-    print('{:<25s}{:<10s}{:<6s}'.format('VALUE', 'COUNT', 'PERCENT'))
-    print('------------------------------------------')
-    for value, count in counts.items():
-        print('{:<25s}{:<10}{:<6}'.format(value, count, percents[value]))
-
-
-"""
 # define get_values() function - get unique values of selected field, and return list of unique values
 # and the selected field
 """
@@ -104,50 +72,32 @@ def get_unique_values(contents):
 
 
 """
-# define get_counts() function - return dictionary with field values and their counts
+# define TweetKeywordCount() function - outputs counts and percentage of total for each unique value
+# of user specified field in csv file
 """
-def get_counts(contents, values, keyword_field):
-    # initialize counts list
-    counts = []
+def TweetKeywordCount(states):
+    # set default csv file
+    default_csv = cons.default_csv
+
+    # get csv file from user
+    user_csv = data.get_user_csv_file(default_csv)
+
+    # extract contents of csv file
+    contents = pd.read_csv(user_csv, header=0)
     
-    # iterate through each available unique field value
-    for value in values:
-        # get rows that contain the field value
-        field_contents = contents[contents[keyword_field] == value]
-
-        ##display the rows for that field value
-        ##print(f'Results for - {value}:\n{value_contents}\n')
-
-        # count how many rows there are with that value
-        count = len(field_contents)
-
-        # add this count to the counts list
-        counts.append(count)
-
-    # create dictionary of counts for each available unique field value
-    value_counts = dict(zip(values, counts))
-
-    # sort counts from highest to lowest
-    sorted_counts = reversed(np.argsort(counts))
-
-    # created sorted value_counts dictionary
-    value_counts = {values[k]: counts[k] for k in sorted_counts}
+    # get list of unique keywords and keyword field from csv file
+    values, field = get_unique_values(contents)
     
-    # return value_counts dictionary to parent function
-    return value_counts
-
-
-"""
-# define get_count_percentages() function - return percentage of total for each field value
-"""
-def get_count_percentages(counts, total):
-    # initialize empty percents dictionary
-    percents = {}
+    # get dictionary of keyword counts and list of unique keywords
+    counts = data.get_counts(values, states, df=contents, field=field, function='counts')
     
-    # iterate through each pair in counts dictionary
+    # get percents dictionary
+    percents = data.get_count_percentages(counts, len(contents), states, function='counts')
+    
+    time.sleep(1.5)     # pause program for a second and a half
+    
+    # display the count and percent of all data for each keyword in descending order
+    print('{:<25s}{:<10s}{:<6s}'.format('VALUE', 'COUNT', 'PERCENT'))
+    print('------------------------------------------')
     for value, count in counts.items():
-        # add keyword and its 
-        percents[value] = '{:.2%}'.format(count / total)
-    
-    # return percents dictionary to main function
-    return percents
+        print('{:<25s}{:<10}{:<6}'.format(value, count, percents[value]))

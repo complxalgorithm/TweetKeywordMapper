@@ -28,7 +28,7 @@ def TweetKeywordImport(ws, default, states):
     places, ids, keywords = data.csv_interact([], user_file, ws, mode='r', checkKeyword=True)
 
     # get Tweet counts for each state using data
-    state_counts = data.get_state_counts(places, states)
+    state_counts = data.get_counts(places, states)
 
     # get number of tweets that were returned
     num_results = len(ids)
