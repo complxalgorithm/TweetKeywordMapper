@@ -17,7 +17,8 @@ except:
 
 
 """
-# define TweetKeywordImport() function - 
+# define TweetKeywordImport() function - read Tweet data from a CSV file and return
+# lists of states and Tweet IDS, state_counts dictionary, keyword, and number of results
 """
 def TweetKeywordImport(ws, default, states):
     # ask user for file, and use default file if input is left blank
