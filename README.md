@@ -18,19 +18,31 @@ Count results can be appended to shapefiles (ArcGIS Pro & GeoPandas) or feature 
 1. Python 3 - get the latest release [here](https://www.python.org/downloads).
 2. Pandas - learn how to install [here](https://pandas.pydata.org/docs/getting_started/install.html).
 3. Tweepy - learn how to install [here](https://docs.tweepy.org/en/stable/install.html).
-    - This is only required if you want to use the search capabilities.
 4. GeoPandas - learn how to install [here](https://geopandas.org/en/stable/getting_started/install.html).
-    - This is only required if you want to map your results using GeoPandas.
 5. Matplotlib - learn how to install [here](https://matplotlib.org/stable/users/installing/index.html).
-    - This is only required if you want to map your results using GeoPandas.
 6. Numpy - learn how to install [here](https://numpy.org/install/).
-    - Only used in a single line in the state extraction algorithm, as well as in the counts.py script.
-    - This is required if you want to use the search capabilities and/or use the counts functionality.
 7. ArcPy - learn how to download and install ArcGIS Pro [here](https://pro.arcgis.com/en/pro-app/latest/get-started/download-arcgis-pro.htm).
     - This is only required if you want to map your results using ArcGIS Pro.
+    - The only way to install this library is by purchasing an ArcGIS Pro license and installed the software onto your machine.
 
 ## Set Up & Run
-In order to run this program to its fullest extent, you will need to install the Tweepy library and ArcGIS Pro. Using the Tweepy library requires setting up a Twitter Developer account. Using ArcGIS Pro requires the Windows operating system and a paid license to use.
+In order to run this program to its fullest extent, you will first need to download the repository onto your machine and install the requirements. You will then need to add appropriate constants values within the TweetKeywordConstants_TEMP.py file, and then remove "_TEMP" from the file name. Using the Tweepy library requires setting up a Twitter Developer account, and then creating a new project. Using ArcGIS Pro requires the Windows operating system and a paid license to use.
+
+### Download & Install
+You can download the program in a couple ways. Download a zip file of this repository by clicking [this link](https://github.com/complxalgorithm/TweetKeywordMapper/archive/refs/heads/master.zip).
+
+You can also use git to clone the repo by running the following in your terminal:
+```
+git clone https://github.com/complxalgorithm/TweetKeywordMapper.git
+```
+Next, set the workspace of your project (i.e., your ArcGIS Pro project) within the TweetKeywordConstants_TEMP.py file. Your workspace can either be within the TweetKeywordMapper directory that you downloaded, or in a different directory. You then need to set the name of the default csv file. This file should be located within the TweetKeywordMapper directory. If no file with the set name exists, the program will create a blank csv file with the appropriate fields.
+
+#### Install Requirements
+You can install all modules other than ArcPy by running the following command within the TweetKeywordMapper directory:
+```
+pip3 install -r requirements.txt
+```
+You can then download ArcGIS Pro if you have a Windows machine, and that will automatically install the latest version of ArcPy.
 
 ### Using Twitter API
 1. Set up a Twitter Developer account [here](https://developer.twitter.com).
@@ -51,24 +63,8 @@ In order to run this program to its fullest extent, you will need to install the
 <em>You will need to create a new ArcGIS Pro project using the map template before running the program.</em>
 <em>Additionally, ArcGIS Pro **cannot** be open at the same time that you execute the program.</em>
 
-### Download & Install
-You can download the program in a couple ways. Download a zip file of this repository by clicking [this link](https://github.com/complxalgorithm/TweetKeywordMapper/archive/refs/heads/master.zip).
-
-You can also use git to clone the repo by running the following in your terminal:
-```
-git clone https://github.com/complxalgorithm/TweetKeywordMapper.git
-```
-Next, set the workspace of your project (i.e., your ArcGIS Pro project). It can either be within the TweetKeywordMapper directory that you downloaded, or in a different directory. You then need to set the name of the default csv file. This file should be located within the TweetKeywordMapper directory. If no file with the set name exists, the program will create a blank csv file with the appropriate fields.
-
-#### Install Requirements
-You can install all modules other than ArcPy by running the following command within the TweetKeywordMapper directory:
-```
-pip3 install -r requirements.txt
-```
-You can then download ArcGIS Pro if you have a Windows machine, and that will automatically install the latest version of ArcPy.
-
 ### Run
-Once the program is downloaded onto your machine and all of the requirements are met, you can now run the program. Support is available to run the program as a package, or by using a shell script. Both of these support four argument/parameter options.
+Once the program is downloaded onto your machine and all of the requirements are met, you can now run the program. Support is available to run the program as the <em>tweetkeywordmapper</em> Python package, or by using the <em>tkm</em> shell script. Both of these support four argument/parameter options.
 
 #### Python
 The program runs as the <em>tweetkeywordmapper</em> package.
@@ -123,9 +119,9 @@ Sometimes, a Tweet will be missed that should have been counted. I tried to limi
 
 There may be times when you specify a higher number of expected results, but the program doesn't reach it. That is because Twitter has a set limit of 100 results for each search query. This program will only count Tweets from which it is able to extract a state of origin towards your specified number of search results.
 
-If you decide to map your results using ArcGIS Pro and you have mapped results for the same keyword using ArcGIS Pro, the program will overwrite field names that are already on the target US states shapefile (i.e., there will not be duplicate fields of the same name). The full field name should be added to ArcGIS Pro, as well. Mapping using GeoPandas will <em>not</em> overwrite duplicate fields, and will simply create a new field with a number appended to it. The field names in this case will have a limit of ten (10) characters, so the full name of the field will not appear (i.e., "Tweet_Count" would be "Tweet_Coun").
+If you decide to map your results using ArcGIS Pro and you have mapped results for the same keyword using ArcGIS Pro, the program will overwrite field names and their attribution values that are already on the target US states shapefile (i.e., there will not be duplicate fields of the same name). The full field name should be added to ArcGIS Pro, as well. Mapping using GeoPandas will <em>not</em> overwrite duplicate fields, and will simply create a new field with a number appended to it. The field names in this case will have a limit of ten (10) characters, so the full name of the field will not appear (i.e., "Tweet_Count" would be "Tweet_Coun").
 
-Unfortunately, due to how the code is written, you may run into issues with CSV files that have more than three fields. The program will add the data that was found by searching Twitter using the field indexes of the Tweet IDs, states, and keywords fields. I do not know if it still will work successfully with CSV files that contain more than three (3) fields.
+Unfortunately, due to how the code is written, you may run into issues with CSV files that have more than three fields. The program will add the data that was found by searching Twitter using the field indexes of the Tweet IDs, states, and keywords fields. I do not know if it will still work successfully with CSV files that contain more than three (3) fields.
 
 ## To-Do List
 - [X] Clean up state extraction algorithm
@@ -141,7 +137,6 @@ Unfortunately, due to how the code is written, you may run into issues with CSV 
 - [X] Add support for mapping using GeoPandas.
 - [ ] Allow user to search Tweets in other languages.
 - [ ] Allow user to search Tweets from different countries.
-- [ ] Organize the code into objects/classes.
 
 ## Contributing
 Contributions to this program are more than welcome. Simply make a pull request for my review. If there are any issues with or any suggestions for the program that you have, create an issue for my review.
