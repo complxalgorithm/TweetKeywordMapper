@@ -131,7 +131,7 @@ Unfortunately, due to how the code is written, you may run into issues with CSV 
 - [ ] If place value from a Tweet is a set of X,Y coordinates, use those to determine state.
 - [ ] Identify area codes in place value and use them to determine state of origin.
 - [X] When writing data to a csv, organize each row's data based on the location of their respective field in the file.
-- [ ] Handle situations like when shapefiles can't be found in the user specified directory.
+- [X] Handle situations like when shapefiles can't be found in the user specified directory.
 - [ ] Allow user to interact with Excel files.
 - [ ] Add support for mapping using PyQGIS.
 - [X] Add support for mapping using GeoPandas.
