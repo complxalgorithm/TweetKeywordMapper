@@ -825,6 +825,8 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
                 
                 # run this code if data is in the csv file
                 else:
+                    time.sleep(1.5)     # pause program for a second and a half
+                    
                     # display menu of fields that were found in csv file
                     print()
                     print('Available Keywords')

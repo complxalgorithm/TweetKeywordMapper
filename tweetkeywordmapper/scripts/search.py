@@ -11,6 +11,7 @@
 # import modules
 import tweepy
 from tweepy import OAuthHandler
+import time
 import pandas as pd
 
 try:
@@ -138,6 +139,8 @@ def TweetKeywordSearch(ws, default, states, cities):
             
             # new line
             print()
+            
+            time.sleep(1.5)     # pause program for a second and a half
             
             # iterate through tweet_data dict to write each tweet to the csv file
             for tweet_id in tweet_data:
