@@ -475,9 +475,9 @@ def get_counts(values, states, df=None, field='', function=''):
 # define get_count_percentages() function - calculates for each state/unique field value the percent
 # of the total number of Tweets and adds each value and the percent to the percents dictionary
 # then returns that dictionary to the parent function
-#   - function -> default to mapper
+#   - function -> default to empty string
 """
-def get_count_percentages(counts, num_res, states, function='mapper'):
+def get_count_percentages(counts, num_res, states, function=''):
     # initialize percents dictionary
     percents = {}
     
