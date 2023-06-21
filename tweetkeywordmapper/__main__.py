@@ -76,12 +76,12 @@ def create_default_csv(default, ws):
 """
 def display_results(count_percents, state_counts, places, ids, keyword, states):
     # display keyword(s), and tweet ids and places lists if any were found
-    print(f'\nKeywords: {keyword}\n\n')
-    time.sleep(1)   # pause program for a second
-    print(f'IDs: {ids}\n\n')
-    time.sleep(1)   # pause program for a second
-    print(f'Places: {places}\n\n')
-    time.sleep(1)   # pause program for a second
+    print(f'\nKeywords: {keyword}\n')
+    time.sleep(1.5)   # pause program for a second and a half
+    print(f'IDs: {ids}\n')
+    time.sleep(1.5)   # pause program for a second and a half
+    print(f'Places: {places}\n')
+    time.sleep(1.5)   # pause program for a second and a half
     
     # display the count and percentage of total for each state
     print('Total Tweets/Percent of Total From Each State')
