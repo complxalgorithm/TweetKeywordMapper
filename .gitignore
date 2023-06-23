@@ -4,7 +4,7 @@ TODO.md
 tweet-test.py
 test.py
 get-state-backup.py
-TweetKeywordConstants.py
+constants.py
 tweet_data.csv
 sample_tweets.*
 tweets.*
