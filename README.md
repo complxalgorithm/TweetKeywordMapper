@@ -92,7 +92,7 @@ optional arguments:
 ```
 
 #### Shell
-You can also use the <em>tkm</em> shell script to execute the program. This script essentially acts as an execution wrapper for the <em>tweetkeywordmapper</em> package and execute the appropriate command depending on the parameter value.
+You can also use the <em>tkm</em> shell script to execute the program. This script acts as an execution wrapper for the <em>tweetkeywordmapper</em> package and executes the appropriate command depending on the parameter value.
 
 Make the script executable by running the following command within the TweetKeywordMapper directory:
 ```
