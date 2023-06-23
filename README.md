@@ -14,21 +14,21 @@ It is also possible to display a count and percentage of the total for all uniqu
 
 Count results can be appended to shapefiles (ArcGIS Pro & GeoPandas) or feature classes within geodatabases (ArcGIS Pro).
 
-If your default file does not exist within the project directory, the program will create the file for you using Tweet_ID, Keyword, and State as default field names. It is best to create a file in this manner.
+If your default file does not exist within the project directory, the program will create the file for you using <em>Tweet_ID</em>, <em>Keyword</em>, and <em>State</em> as default field names. It is best to create a file (at least one that will be used by this program) in this manner.
 
 The program can be ran as the <em>tweetkeywordmapper</em> package, or by using the <em>tkm</em> shell script.
 
 ## Requirements
 1. Python 3
 2. Pip
-3. Tweepy
-4. Pandas
-5. GeoPandas
-6. Matplotlib 
-7. Numpy
-8. ArcPy - learn how to download and install ArcGIS Pro [here](https://pro.arcgis.com/en/pro-app/latest/get-started/download-arcgis-pro.htm).
+3. ArcPy - learn how to download and install ArcGIS Pro [here](https://pro.arcgis.com/en/pro-app/latest/get-started/download-arcgis-pro.htm).
     - This is only required if you want to map your results using ArcGIS Pro.
     - The only way to install this library is by purchasing an ArcGIS Pro license and installed the software onto your machine.
+4. Tweepy
+5. Pandas
+6. GeoPandas
+7. Matplotlib 
+8. Numpy
 
 If you are installing Pandas manually, it is ideal to install all of its dependencies.
 ```
@@ -36,7 +36,7 @@ pip3 install pandas[all]
 ```
 
 ## Set Up & Run
-In order to run this program to its fullest extent, you will first need to download the repository onto your machine and install the requirements. You will then need to add appropriate constants values within the TweetKeywordConstants_TEMP.py file, and then remove "_TEMP" from the file name. Using the Tweepy library requires setting up a Twitter Developer account, and then creating a new project. Using ArcGIS Pro requires the Windows operating system and a paid license to use.
+In order to run this program to its fullest extent, you will first need to download the repository onto your machine and install the requirements. You will then need to add appropriate constants values within the <em>constants_TEMP.py</em> file, and then remove "_TEMP" from the file name. Using the Tweepy library requires setting up a Twitter Developer account, and then creating a new project. Using ArcGIS Pro requires the Windows operating system and a paid license to use.
 
 ### Download & Install
 You can download the program in a couple ways. Download a zip file of this repository by clicking [this link](https://github.com/complxalgorithm/TweetKeywordMapper/archive/refs/heads/master.zip).
@@ -45,7 +45,7 @@ You can also use git to clone the repo by running the following in your terminal
 ```
 git clone https://github.com/complxalgorithm/TweetKeywordMapper.git
 ```
-Next, set the workspace of your project (i.e., your ArcGIS Pro project) within the TweetKeywordConstants_TEMP.py file. Your workspace can either be within the TweetKeywordMapper directory that you downloaded, or in a different directory. You then need to set the name of the default csv file. This file should be located within the TweetKeywordMapper directory. If no file with the set name exists, the program will create a blank csv file with the appropriate fields.
+Next, set the workspace of your project (i.e., your ArcGIS Pro project) within the <em>constants_TEMP.py</em> file. Your workspace can either be within the TweetKeywordMapper directory that you downloaded, or in a different directory. You then need to set the name of the default CSV/XLSX file. This file should be located within the TweetKeywordMapper directory.
 
 #### Install Requirements
 You can install all modules other than ArcPy by running the following command within the TweetKeywordMapper directory:
@@ -63,8 +63,8 @@ You can then download ArcGIS Pro if you have a Windows machine, and that will au
     - API Key and Secret
     - Bearer Token
     - Access Token and Secret
-6. Add each key, token, and secret to its respective variable in the TweetKeywordConstants_TEMP.py file.
-7. Change the above file name to TweetKeywordConstants.py.
+6. Add each key, token, and secret to its respective variable in the <em>constants_TEMP.py</em> file.
+7. Change the above file name to <em>constants.py</em>.
 
 ### Using ArcGIS Pro
 1. Assuming you are on Windows, purchase a use license [here](https://www.esri.com/en-us/arcgis/products/arcgis-pro/buy#for-individuals).
@@ -93,7 +93,7 @@ optional arguments:
 The program accepts a single argument with one of four options: search, read, counts, or help.
 
 #### Shell
-You can also use the <em>tkm</em> shell script to execute the program.
+You can also use the <em>tkm</em> shell script to execute the program. This script essentially acts as an execution wrapper for the <em>tweetkeywordmapper</em> package and execute the appropriate command depending on the parameter value.
 
 Make the script executable by running the following command within the TweetKeywordMapper directory:
 ```
@@ -130,7 +130,7 @@ There may be times when you specify a higher number of expected results, but the
 
 If you decide to map your results using ArcGIS Pro and you have mapped results for the same keyword using ArcGIS Pro, the program will overwrite field names and their attribution values that are already on the target US states shapefile (i.e., there will not be duplicate fields of the same name). The full field name should be added to ArcGIS Pro, as well. Mapping using GeoPandas will <em>not</em> overwrite duplicate fields, and will simply create a new field with a number appended to it. The field names in this case will have a limit of ten (10) characters, so the full name of the field will not appear (i.e., "Tweet_Count" would be "Tweet_Coun").
 
-Unfortunately, due to how the code is written, you may run into issues with CSV files that have more than three fields. The program will add the data that was found by searching Twitter using the field indexes of the Tweet IDs, states, and keywords fields. I do not know if it will still work successfully with CSV files that contain more than three (3) fields.
+Unfortunately, due to how the code is written, you may run into issues with CSV/XLSX files that have more than three (3) fields. The program will add the data that was found by searching Twitter using the field indexes of the Tweet IDs, states, and keywords fields. I do not know if it will still work successfully with CSV/XLSX files that contain more than three (3) fields.
 
 Upon adding support for XLSX files, I kept getting a UnicodeDecodeError or ParserError when running the <em>counts</em> functionality on a preexisting CSV file. After setting my default file to a non-existent CSV file and having the program create it for me, the program was able to run without issues. This is either a bug in my code, in Pandas's code, and/or the CSV files with which I was attempting to run the program were corrupted.
 
