@@ -4,7 +4,7 @@
 @Author: Stephen Sanders <https://stephensanders.me>
 @Description: Contains most functions that are imperative to running the program. This includes the 
               file_interact() function, directory and file related functions, and other smaller functions.
-@Requirements: tweepy, pandas
+@Requirements: pandas
 
 """
 
