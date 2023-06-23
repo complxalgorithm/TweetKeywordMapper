@@ -80,15 +80,15 @@ Once the program is downloaded onto your machine and all of the requirements are
 The program runs as the <em>tweetkeywordmapper</em> package.
 ```
 username ^ TweetKeywordMapper => python3 tweetkeywordmapper -h
-usage: python3 tweetkeywordmapper [-h] [-s] [-r] [-c]
+usage: python3 tweetkeywordmapper [-s] [-r] [-c] [-h]
 
-Search/Import Tweet data from US states with a keyword, then map the count results
+Search/Import Tweet data from US states with a keyword, then map the count results.
 
 optional arguments:
-  -h, --help    show this help message and exit
   -s, --search  search Twitter for Tweets containing a specific keyword, then map results
   -r, --read    import Tweet data from a CSV/XLSX file, then map results
-  -c, --counts  tally the total for each unique value of a specified field from a CSV/XLSX file
+  -c, --counts  tally the count for each unique value of a specified field from a CSV/XLSX file
+  -h, --help    display usage information
 ```
 The program accepts a single argument with one of four options: search, read, counts, or help.
 
@@ -100,12 +100,7 @@ Make the script executable by running the following command within the TweetKeyw
 chmod +x tkm
 ```
 
-After making the script executable, you can simply run the main program by entering:
-```
-./tkm
-```
-
-The script accepts a single parameter with the same options as the Python program.
+After making the script executable, you can now run it. The script accepts a single parameter with the same options as the Python program.
 ```
 username ^ TweetKeywordMapper => ./tkm help
 usage: ./tkm <parameter>
@@ -116,7 +111,7 @@ optional parameters:
 search:  search Twitter for Tweets containing a specific keyword, then map results
 read:    import Tweet data from a CSV/XLSX file, then map results
 counts:  tally the total for each unique value of a specified field from a CSV/XLSX file
-help:    displays help information for this script
+help:    display usage information
 
 - search and read will run mapper.py to map the results after state counts are determined.
 ```
