@@ -1,29 +1,38 @@
 <h1 align="center">Tweet Keyword Mapper</h1>
 
-Search Twitter for Tweets containing a particular keyword from the command line, then write results to a CSV file and/or map the results using ArcGIS Pro or GeoPandas.
+Search Twitter for Tweets containing a particular keyword from the command line, then write results to a CSV or XLSX file and/or map the results using ArcGIS Pro or GeoPandas.
 
 [![asciicast](https://asciinema.org/a/lueHvB8fK4EX5wpFPOzvHHzDS.svg)](https://asciinema.org/a/lueHvB8fK4EX5wpFPOzvHHzDS)
 
-Tweet data can be imported from a CSV file, which will then be used for counting the number of Tweets from each state. You can pull data for multiple keywords from the CSV file.
+Tweet data can be imported from a CSV or XLSX file, which will then be used for counting the number of Tweets from each state. You can pull data for multiple keywords from the file.
 
 [![asciicast](https://asciinema.org/a/592490.svg)](https://asciinema.org/a/592490)
 
-It is also possible to display a count and percentage of the total for all unique field values within a CSV file. An example use is displaying the aforementioned statistics for all unique keywords that are present within a CSV file.
+It is also possible to display a count and percentage of the total for all unique field values within a CSV or XLSX file. An example use is displaying the aforementioned statistics for all unique keywords that are present within a CSV or XLSX file.
 
 [![asciicast](https://asciinema.org/a/RK8sRi71azh9PniNo73hD83C4.svg)](https://asciinema.org/a/RK8sRi71azh9PniNo73hD83C4)
 
-Count results can be appended to shapefiles (ArcGIS Pro & GeoPandas) or feature classes within geodatabases (ArcGIS Pro). The program can be ran as the <em>tweetkeywordmapper</em> package, or by using the <em>tkm</em> shell script.
+Count results can be appended to shapefiles (ArcGIS Pro & GeoPandas) or feature classes within geodatabases (ArcGIS Pro).
+
+If your default file does not exist within the project directory, the program will create the file for you using Tweet_ID, Keyword, and State as default field names. It is best to create a file in this manner.
+
+The program can be ran as the <em>tweetkeywordmapper</em> package, or by using the <em>tkm</em> shell script.
 
 ## Requirements
-1. Python 3 - get the latest release [here](https://www.python.org/downloads).
-2. Tweepy - learn how to install [here](https://docs.tweepy.org/en/stable/install.html).
-3. Pandas - learn how to install [here](https://pandas.pydata.org/docs/getting_started/install.html).
-4. GeoPandas - learn how to install [here](https://geopandas.org/en/stable/getting_started/install.html).
-5. Matplotlib - learn how to install [here](https://matplotlib.org/stable/users/installing/index.html).
-6. Numpy - learn how to install [here](https://numpy.org/install/).
+1. Python 3
+2. Tweepy
+3. Pandas
+4. GeoPandas
+5. Matplotlib 
+6. Numpy
 7. ArcPy - learn how to download and install ArcGIS Pro [here](https://pro.arcgis.com/en/pro-app/latest/get-started/download-arcgis-pro.htm).
     - This is only required if you want to map your results using ArcGIS Pro.
     - The only way to install this library is by purchasing an ArcGIS Pro license and installed the software onto your machine.
+
+If you are installing Pandas manually, it is ideal to install all of its dependencies.
+```
+pip3 install pandas[all]
+```
 
 ## Set Up & Run
 In order to run this program to its fullest extent, you will first need to download the repository onto your machine and install the requirements. You will then need to add appropriate constants values within the TweetKeywordConstants_TEMP.py file, and then remove "_TEMP" from the file name. Using the Tweepy library requires setting up a Twitter Developer account, and then creating a new project. Using ArcGIS Pro requires the Windows operating system and a paid license to use.
@@ -77,8 +86,8 @@ Search/Import Tweet data from US states with a keyword, then map the count resul
 optional arguments:
   -h, --help    show this help message and exit
   -s, --search  search Twitter for Tweets containing a specific keyword, then map results
-  -r, --read    import Tweet data from a CSV file, then map results
-  -c, --counts  tally the total for each unique value of a specified field from a CSV file
+  -r, --read    import Tweet data from a CSV/XLSX file, then map results
+  -c, --counts  tally the total for each unique value of a specified field from a CSV/XLSX file
 ```
 The program accepts a single argument with one of four options: search, read, counts, or help.
 
@@ -98,15 +107,14 @@ After making the script executable, you can simply run the main program by enter
 The script accepts a single parameter with the same options as the Python program.
 ```
 username ^ TweetKeywordMapper => ./tkm help
-
 usage: ./tkm <parameter>
 
 Search/Import Tweet data from US states with a keyword, then map the count results
 
 optional parameters:
 search:  search Twitter for Tweets containing a specific keyword, then map results
-read:    import Tweet data from a CSV file, then map results
-counts:  tally the total for each unique value of a specified field from a CSV file
+read:    import Tweet data from a CSV/XLSX file, then map results
+counts:  tally the total for each unique value of a specified field from a CSV/XLSX file
 help:    displays help information for this script
 
 - search and read will run mapper.py to map the results after state counts are determined.
@@ -123,6 +131,8 @@ If you decide to map your results using ArcGIS Pro and you have mapped results f
 
 Unfortunately, due to how the code is written, you may run into issues with CSV files that have more than three fields. The program will add the data that was found by searching Twitter using the field indexes of the Tweet IDs, states, and keywords fields. I do not know if it will still work successfully with CSV files that contain more than three (3) fields.
 
+Upon adding support for XLSX files, I kept getting a UnicodeDecodeError or ParserError when running the <em>counts</em> functionality on a preexisting CSV file. After setting my default file to a non-existent CSV file and having the program create it for me, the program was able to run without issues. This is either a bug in my code, in Pandas's code, and/or the CSV files with which I was attempting to run the program were corrupted.
+
 ## To-Do List
 - [X] Clean up state extraction algorithm
 - [X] Find instance of a state's name in place values like "New York and the World" and return the appropriate state value.
@@ -132,7 +142,7 @@ Unfortunately, due to how the code is written, you may run into issues with CSV 
 - [ ] Identify area codes in place value and use them to determine state of origin.
 - [X] When writing data to a csv, organize each row's data based on the location of their respective field in the file.
 - [X] Handle situations like when shapefiles can't be found in the user specified directory.
-- [ ] Allow user to interact with Excel files.
+- [X] Allow user to interact with Excel files.
 - [ ] Add support for mapping using PyQGIS.
 - [X] Add support for mapping using GeoPandas.
 - [ ] Allow user to search Tweets in other languages.
