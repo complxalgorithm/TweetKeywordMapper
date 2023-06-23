@@ -20,12 +20,13 @@ The program can be ran as the <em>tweetkeywordmapper</em> package, or by using t
 
 ## Requirements
 1. Python 3
-2. Tweepy
-3. Pandas
-4. GeoPandas
-5. Matplotlib 
-6. Numpy
-7. ArcPy - learn how to download and install ArcGIS Pro [here](https://pro.arcgis.com/en/pro-app/latest/get-started/download-arcgis-pro.htm).
+2. Pip
+3. Tweepy
+4. Pandas
+5. GeoPandas
+6. Matplotlib 
+7. Numpy
+8. ArcPy - learn how to download and install ArcGIS Pro [here](https://pro.arcgis.com/en/pro-app/latest/get-started/download-arcgis-pro.htm).
     - This is only required if you want to map your results using ArcGIS Pro.
     - The only way to install this library is by purchasing an ArcGIS Pro license and installed the software onto your machine.
 
