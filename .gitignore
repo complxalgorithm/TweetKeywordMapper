@@ -1,10 +1,12 @@
 __pycache__/
+tweetkeywordmapper/tests/*
 TODO.md
 tweet-test.py
 test.py
 get-state-backup.py
 TweetKeywordConstants.py
 tweet_data.csv
-sample_tweets.csv
+sample_tweets.*
+tweets.*
 US_States*
 Tweet_Keyword_Mapper.qgz
