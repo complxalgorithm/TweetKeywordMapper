@@ -16,9 +16,9 @@ import shutil
 import time
 
 try:
-    from tweetkeywordmapper.core import TweetKeywordMapServices as maps
+    from tweetkeywordmapper.core import map_services as maps
 except:
-    from core import TweetKeywordMapServices as maps
+    from core import map_services as maps
 
 
 """

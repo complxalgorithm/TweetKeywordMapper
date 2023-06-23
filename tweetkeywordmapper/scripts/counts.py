@@ -16,11 +16,13 @@ import os
 import time
 
 try:
-    from tweetkeywordmapper.core import TweetKeywordData as data
-    from tweetkeywordmapper.core import TweetKeywordConstants as cons
+    from tweetkeywordmapper.core import data
+    from tweetkeywordmapper.core import stats
+    from tweetkeywordmapper.core import constants as cons
 except:
-    from core import TweetKeywordData as data
-    from core import TweetKeywordConstants as cons
+    from core import data
+    from core import stats
+    from core import constants as cons
 
 
 """
@@ -35,10 +37,10 @@ def TweetKeywordCount(ws, default_file, states):
     values, field, contents = data.file_interact([], default_file, file_type, ws, mode='r', function='counts')
     
     # get dictionary of keyword counts and list of unique keywords
-    counts = data.get_counts(values, states, df=contents, field=field, function='counts')
+    counts = stats.get_counts(values, states, df=contents, field=field, function='counts')
     
     # get percents dictionary
-    percents = data.get_count_percentages(counts, len(contents), states, function='counts')
+    percents = stats.get_count_percentages(counts, len(contents), states, function='counts')
     
     time.sleep(1.5)     # pause program for a second and a half
     

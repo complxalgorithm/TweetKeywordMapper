@@ -1,6 +1,6 @@
 """
 
-@Name: TweetKeywordConstants.py
+@Name: constants.py
 @Author: Stephen Sanders <https://stephensanders.me>
 @Description: Holds authorization key/tokens/secrets, as well as the workspace and default_csv values.
 
@@ -15,7 +15,7 @@ access_secret = "<ADD ACCESS SECRET HERE>"
 # set path to workspace
 workspace = r'<ADD WORKSPACE HERE>'
 
-# set default file
+# set default CSV or XLSX file
 default_file = '<ADD FILE NAME HERE>'
 
 # create states dictionary that stores states using abbrev as key

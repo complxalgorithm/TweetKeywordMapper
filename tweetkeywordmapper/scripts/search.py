@@ -14,11 +14,15 @@ from tweepy import OAuthHandler
 import time
 
 try:
-    from tweetkeywordmapper.core import TweetKeywordData as data
-    from tweetkeywordmapper.core import TweetKeywordConstants as cons
+    from tweetkeywordmapper.core import extract_place as ex
+    from tweetkeywordmapper.core import data
+    from tweetkeywordmapper.core import stats
+    from tweetkeywordmapper.core import constants as cons
 except:
-    from core import TweetKeywordData as data
-    from core import TweetKeywordConstants as cons
+    from core import extract_place as ex
+    from core import data
+    from core import stats
+    from core import constants as cons
 
 
 """
@@ -98,10 +102,10 @@ def TweetKeywordSearch(ws, default_file, states, cities):
     search_results = tweepy.Cursor(api.search_tweets, q=query, count=100).items()
             
     # get lists of places and tweet ids from search results
-    places, ids = data.get_states_ids_from_results(search_results, api, states, cities, num_res)
+    places, ids = ex.get_states_ids_from_results(search_results, api, states, cities, num_res)
             
     # get dictionary of counts for each state
-    state_counts = data.get_counts(places, states=states)
+    state_counts = stats.get_counts(places, states=states)
         
     # get number of tweets that were returned
     num_results = len(ids)

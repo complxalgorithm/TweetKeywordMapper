@@ -12,15 +12,17 @@ import warnings as warn
 warn.filterwarnings('ignore')
 
 try:
-    from tweetkeywordmapper.core import TweetKeywordData as data
-    from tweetkeywordmapper.core import TweetKeywordConstants as cons
+    from tweetkeywordmapper.core import data
+    from tweetkeywordmapper.core import stats
+    from tweetkeywordmapper.core import constants as cons
     from tweetkeywordmapper.scripts import mapper as tkm
     from tweetkeywordmapper.scripts import search as tks
     from tweetkeywordmapper.scripts import read as tkr
     from tweetkeywordmapper.scripts import counts as cnts
 except:
-    from core import TweetKeywordData as data
-    from core import TweetKeywordConstants as cons
+    from core import data
+    from core import stats
+    from core import constants as cons
     from scripts import mapper as tkm
     from scripts import search as tks
     from scripts import read as tkr
@@ -189,7 +191,7 @@ def main():
             if num_results > 0:
                 # get what percentage of the total number of results came from each state
                 # will only include the states that have Tweets
-                state_count_percents = data.get_count_percentages(state_counts, num_results, STATES)
+                state_count_percents = stats.get_count_percentages(state_counts, num_results, STATES)
 
                 time.sleep(1)   # pause program for a second
 

@@ -10,15 +10,43 @@
 """
 
 # import libraries
-try:
-    from tweetkeywordmapper.core import TweetKeywordData as data
-except:
-    from core import TweetKeywordData as data
-
 import matplotlib.pyplot as plt
 import os
 import sys
 import time
+
+try:
+    from tweetkeywordmapper.core import data
+except:
+    from core import data
+
+
+"""
+# define set_new_field() function - sets name of new field using the keyword and returns it
+# to the parent function
+"""
+def set_new_field(keyword):
+    # name if results were not filtered using a keyword
+    if keyword == '':
+        new_field = 'Tweet_Count'
+    
+    # name fi results were filtered using a keyword
+    else:
+        # split the keyword using a space
+        words = keyword.split(' ')
+
+        # name if results were filtered using a keyword
+        if len(words) > 1:
+            # name if keyword had more than 1 word
+            new_field = '_'.join(words)   # join the separate words with a _ in between each word
+            new_field = f'{new_field}_Tweet_Count'
+
+        # name if the keyword only had one word    
+        else:
+            new_field = f'{keyword}_Tweet_Count'
+    
+    # return new field name value to parent function
+    return new_field
 
 
 """
@@ -82,7 +110,7 @@ def TweetKeywordArcPro(ws, counts, keyword):
         user_field = input('Which field has the abbreviations of the states? ')
 
     # set name of the field to be created in states feature class
-    new_field = data.set_new_field(keyword)
+    new_field = set_new_field(keyword)
 
     # create new field in states feature class, and display that it was successful
     arcpy.AddField_management(states_fc, new_field, "LONG", field_alias=new_field)
@@ -184,7 +212,7 @@ def TweetKeywordGeoPandas(ws, counts, keyword):
         user_field = input('Which field has the abbreviations of the states? ')
     
     # set name of the field to be created in states feature class
-    new_field = data.set_new_field(keyword)
+    new_field = set_new_field(keyword)
 	
     # go through each value in the states abbreviations field in the states shapefile
     for num, state in states_df[user_field].items():

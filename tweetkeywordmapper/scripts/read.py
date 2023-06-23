@@ -11,9 +11,11 @@
 import time
 
 try:
-    from tweetkeywordmapper.core import TweetKeywordData as data
+    from tweetkeywordmapper.core import data
+    from tweetkeywordmapper.core import stats
 except:
-    from core import TweetKeywordData as data
+    from core import data
+    from core import stats
 
 
 """
@@ -28,7 +30,7 @@ def TweetKeywordRead(ws, default_file, states):
     places, ids, keywords = data.file_interact([], user_file, file_type, ws, mode='r', checkKeyword=True, function='')
 
     # get Tweet counts for each state using data
-    state_counts = data.get_counts(places, states=states)
+    state_counts = stats.get_counts(places, states=states)
 
     # get number of tweets that were returned
     num_results = len(ids)
