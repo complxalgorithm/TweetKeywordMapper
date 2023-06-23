@@ -109,7 +109,7 @@ Search/Import Tweet data from US states with a keyword, then map the count resul
 optional parameters:
 search:  search Twitter for Tweets containing a specific keyword, then map results
 read:    import Tweet data from a CSV/XLSX file, then map results
-counts:  tally the total for each unique value of a specified field from a CSV/XLSX file
+counts:  tally the count for each unique value of a specified field from a CSV/XLSX file
 help:    display usage information
 
 - search and read will run mapper.py to map the results after state counts are determined.
