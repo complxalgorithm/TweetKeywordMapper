@@ -13,7 +13,6 @@
 import pandas as pd
 import os
 import time
-import csv
 
 # change pandas options so that all results will be displayed
 # also tells pandas to show entire Tweet ID integers without truncation
@@ -80,7 +79,7 @@ def get_file_contents_fields(file, file_ext):
     # get contents from file
     if file_ext == 'csv':
         # extract contents of CSV file
-        contents = pd.read_csv(file_path, header=0, sep=',')
+        contents = pd.read_csv(file_path, header=0, engine='python', on_bad_lines='skip')
     
     # get contents from XLSX file
     else:
@@ -352,6 +351,9 @@ def file_interact(data, file, file_ext, workspace, mode='a', checkKeyword=False,
     if mode == 'a' or mode == 'w':
         # run when file is a CSV
         if file_ext == 'csv':
+            # import csv module
+            import csv
+            
             # this code makes sure that a file in append mode will append the first line to a newline
             # it will only run if the csv file already exists
             # CREDIT: tdelaney from stack overflow
@@ -370,7 +372,7 @@ def file_interact(data, file, file_ext, workspace, mode='a', checkKeyword=False,
 
         # run when file is an Excel file
         else:
-            # 
+            # append to an existing XLSX file
             if os.path.exists(file):
                 # import load_workbook function from openpyxl
                 from openpyxl import load_workbook

@@ -34,7 +34,7 @@ def TweetKeywordCount(ws, default_file, states):
     user_file, file_type = data.get_user_file(default_file)
 
     # get list of unique atrribution values, keyword field, and contents df from file
-    values, field, contents = data.file_interact([], default_file, file_type, ws, mode='r', function='counts')
+    values, field, contents = data.file_interact([], user_file, file_type, ws, mode='r', function='counts')
     
     # get dictionary of keyword counts and list of unique keywords
     counts = stats.get_counts(values, states, df=contents, field=field, function='counts')
