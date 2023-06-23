@@ -11,7 +11,7 @@ helpFunc()
     echo "optional parameters:"
     echo "search:\t search Twitter for Tweets containing a specific keyword, then map results"
     echo "read:\t import Tweet data from a CSV/XLSX file, then map results"
-    echo "counts:\t tally the total for each unique value of a specified field from a CSV/XLSX file"
+    echo "counts:\t tally the count for each unique value of a specified field from a CSV/XLSX file"
     echo "help:\t display usage information\n"
     echo "- search and read will run mapper.py to map the results after state counts are determined."
     exit 1
