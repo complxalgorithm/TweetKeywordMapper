@@ -6,15 +6,14 @@
 # display help information for program
 helpFunc()
 {
-    echo ""
     echo "usage: ./tkm <parameter>\n"
     echo "Search/Import Tweet data from US states with a keyword, then map the count results\n"
     echo "optional parameters:"
     echo "search:\t search Twitter for Tweets containing a specific keyword, then map results"
-    echo "read:\t import Tweet data from a CSV/Excel file, then map results"
-    echo "counts:\t tally the total for each unique value of a specified field from a CSV/Excel file"
+    echo "read:\t import Tweet data from a CSV/XLSX file, then map results"
+    echo "counts:\t tally the total for each unique value of a specified field from a CSV/XLSX file"
     echo "help:\t displays help information for this script\n"
-    echo "- search and read will run mapper.py to map the results after state counts are determined.\n"
+    echo "- search and read will run mapper.py to map the results after state counts are determined."
     exit 1
 }
 
@@ -30,6 +29,7 @@ if [ $# -eq "0" ]; then
         # display error and show help info if more than one parameter is specified
         if [ $# -gt "1" ]; then
             echo "ERROR - Too many parameters. Only 1 is allowed at most."
+            echo ""
             helpFunc
             
             # run this if one parameter is present
@@ -38,7 +38,7 @@ if [ $# -eq "0" ]; then
                 if [ $1 = "search" ]; then
                     exec python3 tweetkeywordmapper -s
                     
-                    # 
+                    # run read.py program when parameter is set to "read"
                     elif [ $1 = "read" ]; then
                         exec python3 tweetkeywordmapper -r
                     
@@ -53,6 +53,7 @@ if [ $# -eq "0" ]; then
                     # display error and help info if the parameter is set to anything else
                     else
                         echo "ERROR - $1 is not a valid parameter value."
+                        echo ""
                         helpFunc
                 fi
         fi

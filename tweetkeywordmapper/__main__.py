@@ -54,9 +54,9 @@ def get_args() -> argparse.Namespace:
     parser.add_argument('-s', '--search', action='store_true',
                          help='search Twitter for Tweets containing a specific keyword, then map results')
     parser.add_argument('-r', '--read', action='store_true',
-                         help='import Tweet data from a CSV/Excel file, then map results')
+                         help='import Tweet data from a CSV/XLSX file, then map results')
     parser.add_argument('-c', '--counts', action='store_true',
-                         help='tally the total for each unique value of a specified field from a CSV/Excel file')
+                         help='tally the total for each unique value of a specified field from a CSV/XLSX file')
     
     # return parser
     return parser.parse_args()
