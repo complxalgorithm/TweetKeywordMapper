@@ -5,7 +5,6 @@ import argparse
 import os
 import sys
 import time
-import pandas as pd
 import warnings as warn
 
 # ignore all warnings that GeoPandas may output
