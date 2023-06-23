@@ -135,9 +135,6 @@ def TweetKeywordMapper(ws, state_counts, keyword):
                     # tell user they cannot map using GeoPandas if it isn't installed on their machine
                     print('GeoPandas is not installed on your machine, so you cannot map your results using GeoPandas.')
 
-                    # add geopandas to failed_services list
-                    failed_services.append('geopandas')
-
                 # map results using GeoPandas if it is installed on user's machine
                 else:
                     maps.TweetKeywordGeoPandas(ws, state_counts, keyword)
@@ -158,9 +155,6 @@ def TweetKeywordMapper(ws, state_counts, keyword):
                         # tell user they can't map because ArcGIS Pro is not installed
                         print('\nYou are using Windows, but ArcGIS Pro is not installed.')
                         print('Please install ArcGIS Pro if you would like to map using ArcGIS Pro.')
-
-                    # add arcpro to failed_services list
-                    failed_services.append('arcpro')
 
                 # map results using ArcGIS Pro if user is on Windows and has ArcGIS Pro installed
                 else:
