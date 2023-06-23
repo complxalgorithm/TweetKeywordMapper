@@ -103,7 +103,6 @@ def get_state(s, u, states, cities):
         # then split the value using the comma as the delimiter, and store all words
         place = u.location
         print(f'Place: {place}\n')
-        try_split = place.split(', ')
         
         # if pl value hasn't been returned and is not blank or a space, set pl to the original place value
         # if it is blank then return an empty string
