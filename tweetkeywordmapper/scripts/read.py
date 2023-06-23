@@ -2,7 +2,7 @@
 
 @Name: read.py
 @Author: Stephen Sanders <https://stephensanders.me>
-@Description: Imports Tweet data from CSV file
+@Description: Imports Tweet data from CSV/Excel file
 @Requirements: Python3
 
 """
@@ -17,18 +17,18 @@ except:
 
 
 """
-# define TweetKeywordImport() function - read Tweet data from a CSV file and return
+# define TweetKeywordRead() function - read Tweet data from a CSV/Excel file and return
 # lists of states and Tweet IDS, state_counts dictionary, keyword, and number of results
 """
-def TweetKeywordImport(ws, default, states):
+def TweetKeywordRead(ws, default_file, states):
     # ask user for file, and use default file if input is left blank
-    user_file = data.get_user_csv_file(default)
-
-    # extract states, tweet ids, and filtered keywords from csv file
-    places, ids, keywords = data.csv_interact([], user_file, ws, mode='r', checkKeyword=True)
+    user_file, file_type = data.get_user_file(default_file)
+    
+    # extract states, tweet ids, and filtered keywords from file
+    places, ids, keywords = data.file_interact([], user_file, file_type, ws, mode='r', checkKeyword=True, function='')
 
     # get Tweet counts for each state using data
-    state_counts = data.get_counts(places, states)
+    state_counts = data.get_counts(places, states=states)
 
     # get number of tweets that were returned
     num_results = len(ids)

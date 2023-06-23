@@ -3,7 +3,7 @@
 @Name: search.py
 @Author: Stephen Sanders <https://stephensanders.me>
 @Description: Searches Twitter using a specfied keyword and extracts the US state of origin for
-              a user specified number of results
+              a user specified number of results, then writes data for each result to CSV/Excel file
 @Requirements: Python3, pandas, tweepy
 
 """
@@ -12,7 +12,6 @@
 import tweepy
 from tweepy import OAuthHandler
 import time
-import pandas as pd
 
 try:
     from tweetkeywordmapper.core import TweetKeywordData as data
@@ -24,11 +23,11 @@ except:
 
 """
 # define ifWrite() function - allow user to signal whether or not they want to write search results
-# to a csv file
+# to a CSV or XLSX file
 """
 def ifWrite():
     # ask user for input
-    answer = input('Would you like to write Tweet data to a CSV file? (Y or N): ')
+    answer = input('Would you like to write Tweet data to a CSV/Excel file? (Y or N): ')
     
     # validate input
     while answer.capitalize() != 'Yes' and answer.upper() != 'Y' and answer.capitalize() != 'No' and answer.upper() != 'N':
@@ -36,7 +35,7 @@ def ifWrite():
         print(f'{answer} is not valid. Please try again.')
         
         # ask user for input again
-        answer = input('Would you like to write Tweet ID and State data to a CSV file? (Y or N): ')
+        answer = input('Would you like to write Tweet ID and State data to a CSV/Excel file? (Y or N): ')
     
     # return answer to parent function
     return answer
@@ -46,7 +45,7 @@ def ifWrite():
 # define TweetKeywordSearch() function - searches for Tweets using a specified keyword and
 # returns the found states, the Tweet IDs, state counts, and keyword used.
 """
-def TweetKeywordSearch(ws, default, states, cities):
+def TweetKeywordSearch(ws, default_file, states, cities):
     """
     # authorize access to Twitter API by using your project's key, tokens, and secrets
     # these tokens/secrets/key can be found on your project on your Twitter Developer Portal
@@ -102,12 +101,12 @@ def TweetKeywordSearch(ws, default, states, cities):
     places, ids = data.get_states_ids_from_results(search_results, api, states, cities, num_res)
             
     # get dictionary of counts for each state
-    state_counts = data.get_counts(places, states)
+    state_counts = data.get_counts(places, states=states)
         
     # get number of tweets that were returned
     num_results = len(ids)
         
-    # only ask user if they want to write to a csv if there were search results for keyword
+    # only ask user if they want to write to a file if there were search results for keyword
     if num_results == 0:
         # display there were no search results returned
         print(f'Searching for {keyword} returned no results.')
@@ -115,49 +114,46 @@ def TweetKeywordSearch(ws, default, states, cities):
         # display number of search results returned
         print(f'Searching for {keyword} returned {num_results} results\n.')
             
-        # ask user if they want to write results to default csv file
+        # ask user if they want to write results to file
         if_write = ifWrite()
             
-        # run this if user signaled that they want to write results to csv file
+        # run this if user signaled that they want to write results to file
         if if_write.capitalize() == 'Yes' or if_write.upper() == 'Y':
-            # get csv file to write to from user
-            user_file = data.get_user_csv_file(default)
+            # get file and its type to write to from user
+            user_file, file_type = data.get_user_file(default_file)
             
-            # read contents of user csv file into contents
-            contents = pd.read_csv(user_file, header=0)
-            
-            # create tweet_data dict using ids and places lists
-            tweet_data = dict(zip(ids, places))
-            
-            # create empty data list with 3 indexes
-            written_data = [None] * 3
-            
-            # get locations of data Tweet IDs, states, and keywords in the csv file using their indexes
-            # in the user's csv file
-            # also get a list of Tweet IDs that are already in the user's csv file
-            csv_tweets, state_index, id_index, keyword_index = data.get_field_indexes_tweet_ids(contents)
-            
+            # get locations of data Tweet IDs, states, and keywords in the file using their indexes
+            # in the user's file, and as well as a dictionary of Tweet data comprising the ids and places
+            # also get a list of Tweet IDs that are already in the user's file
+            # data parameter populated with ids and places lists
+            tweets, tweet_data, state_index, id_index, keyword_index = data.file_interact([ids, places, ''], user_file, file_type,
+                                                                                             ws, mode='r', function='search')
+                
             # new line
             print()
-            
+
             time.sleep(1.5)     # pause program for a second and a half
             
-            # iterate through tweet_data dict to write each tweet to the csv file
+            # create empty written_data list to be used to store each Tweet result's data
+            # to be used to write to file - allow for three places in list
+            written_data = [None] * 3
+
+            # iterate through tweet_data dict to write each tweet to the file
             for tweet_id in tweet_data:
                 # append Tweet data to file if the Tweet ID is not already in the file
-                if tweet_id not in csv_tweets:
-                    # add the relevant data to the correct index in the data list to write it to new line in user's csv file
+                if tweet_id not in tweets:
+                    # add the relevant data to the correct index in the data list to write it to new line in user's file
                     written_data[state_index] = tweet_data[tweet_id]
                     written_data[id_index] = tweet_id
                     written_data[keyword_index] = keyword
-        
-                    # append this data to default csv file
-                    data.csv_interact(written_data, user_file, ws)
-                
-                    # tell user data was successfully written to csv file
+
+                    # append this data to file
+                    data.file_interact(written_data, user_file, file_type, ws)
+
+                    # tell user data was successfully written to file
                     print(f'{written_data} was added to {user_file}')
-                
-                # inform user when data for a Tweet is already within the csv file
+
+                # inform user when data for a Tweet is already within the file
                 else:
                     print(f'Data for {tweet_id} is already in {user_file}.')
     

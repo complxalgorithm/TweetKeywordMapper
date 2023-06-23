@@ -10,22 +10,28 @@
 """
 
 # import libraries
-import os
-import sys
-import warnings
-
 try:
     from tweetkeywordmapper.core import TweetKeywordData as data
 except:
     from core import TweetKeywordData as data
+
+import matplotlib.pyplot as plt
+import os
+import sys
+import time
 
 
 """
 # define TweetKeywordArcPro() function - maps the state counts using ArcGIS Pro
 """
 def TweetKeywordArcPro(ws, counts, keyword):
-    # import arcpy library
-    import arcpy
+    # try to import arcpy library
+    try:
+        import arcpy
+    
+    except Exception:
+        print('ArcPy is not installed.')
+        return
     
     # set workspace
     arcpy.env.workspace = ws
@@ -140,13 +146,16 @@ def TweetKeywordArcPro(ws, counts, keyword):
 # define TweetKeywordGeoPandas.py function - maps the state counts using the GeoPandas library
 """
 def TweetKeywordGeoPandas(ws, counts, keyword):
-    # ignore all warnings that GeoPandas may output
-    warnings.filterwarnings("ignore")
-    
-    # import libraries/modules
+    # import pandas
     import pandas as pd
-    import geopandas as gpd
-    import matplotlib.pyplot as plt
+    
+    # try to install geopandas
+    try:
+        import geopandas as gpd
+        
+    except Exception:
+        print('GeoPandas is not installed.')
+        return
     
     # get US states shapefile
     states_shp, shp_dir = data.get_shapefile(ws)

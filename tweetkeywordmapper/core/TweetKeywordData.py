@@ -3,7 +3,7 @@
 @Name: TweetKeywordData.py
 @Author: Stephen Sanders <https://stephensanders.me>
 @Description: Contains most functions that are imperative to running the program. This includes
-              the algorithm used to determine the state of origin of each Tweet result, the csv_interact() function,
+              the algorithm used to determine the state of origin of each Tweet result, the file_interact() function,
               directory and file related functions, and other smaller functions.
 @Requirements: tweepy, pandas, numpy
 
@@ -13,11 +13,18 @@
 # import libraries
 import pandas as pd
 import numpy as np
-import csv
 import os
 import time
+import csv
 import re
 
+# change pandas options so that all results will be displayed
+# also tells pandas to show entire Tweet ID integers without truncation
+pd.set_option('display.max_rows', 999)
+pd.set_option('display.max_columns', 999)
+pd.set_option('display.width', 999)
+pd.set_option('display.max_colwidth', 999)
+pd.set_option('display.float_format', lambda x: f'%.{0 if x.is_integer() else 1}f' % x)
 
 """
 # define get_states_from_results() function - uses search results to populate places list with
@@ -415,13 +422,14 @@ def find_state_in_place_value(place, states, cities, word=''):
 
 
 """
-# define get_counts() function - uses places list to count total number of tweets from
-# each state in the search results
+# define get_counts() function - uses lists of unique values and states to count
+# total number of Tweets from each state in the search results
+#   - states   -> default to empty dictionary
 #   - df       -> default to None
 #   - field    -> default to empty string
 #   - function -> default to empty string
 """
-def get_counts(values, states, df=None, field='', function=''):
+def get_counts(values, states={}, df=None, field='', function=''):
     # run this if counts called this function
     if function == 'counts':
         # initialize counts list
@@ -503,27 +511,36 @@ def get_count_percentages(counts, num_res, states, function=''):
 
 
 """
-# define get_user_csv_file() function - get a csv file from the user, then return valid file
+# define get_user_file() function - get a file from the user from which to read data,
+# then return valid file and its file extension
 """
-def get_user_csv_file(default):
-    # ask user to enter their file, or use the default csv file
-    user_file = input('Enter csv file from your current directory, or hit enter to use default file: ') or default
+def get_user_file(default_file):
+    # ask user to enter their file, or use the default file
+    user_file = input('Enter CSV or XlSX file from your current directory, or hit enter to use default file: ') or default_file
     
-    # automatically return value if the input is the same as the default csv file
-    if user_file == default:
-        return default
+    # automatically return file and its extension if the input is the same as the default file
+    if user_file == default_file:
+        file_ext = default_file.split('.')[-1]
+        return default_file, file_ext
     
     # get extension of input file
     file_ext = user_file.split('.')[-1]
     
-    # validate that file exists and that the file is a csv file
-    while os.path.exists(user_file) == False or file_ext != 'csv':
+    # validate that file exists and that the file is a CSV or XLSX file
+    while os.path.exists(user_file) == False or (file_ext != 'csv' and file_ext != 'xlsx'):
         # display error if input doesn't exist
         if os.path.exists(user_file) == False:
             print(f'{user_file} does not exist in your current directory.')
-        # display error if input isn't a csv file
-        elif file_ext != 'csv':
-            print(f'{user_file} is not a csv file.')
+        
+        # display error if input is not a CSV or Excel file
+        else:
+            # display error if input isn't a CSV file
+            if file_ext != 'csv':
+                print(f'{user_file} is not a CSV file.')
+
+            # display error if input isn't an Excel file
+            else:
+                print(f'{user_file} is not an XLSX file.')
             
         # ask user for file again, and use default file if input is left blank
         user_file = input('Enter file from your current directory, or hit enter to use default file: ') or default
@@ -531,8 +548,42 @@ def get_user_csv_file(default):
         # get extension of new input file
         file_ext = user_file.split('.')[-1]
     
-    # return the file to the parent function
-    return user_file
+    # return the file and file extension to the parent function
+    return user_file, file_ext
+
+
+"""
+# define get_file_contents() function - reads contents of file depending on the file extension
+# returns contents df and list of fields in file
+"""
+def get_file_contents_fields(file, file_ext):
+    # get current working directory (i.e., the project directory)
+    cwd = os.getcwd()
+
+    # set file path
+    file_path = os.path.join(cwd, file)
+    
+    # get contents from file
+    if file_ext == 'csv':
+        # extract contents of CSV file
+        contents = pd.read_csv(file_path, header=0, sep=',')
+    
+    # get contents from XLSX file
+    else:
+        # get current working directory (i.e., the project directory)
+        cwd = os.getcwd()
+
+        # set file path
+        file_path = os.path.join(cwd, file)
+        
+        # extract contents of XLSX file
+        contents = pd.read_excel(file_path, header=0, engine='openpyxl')
+        
+    # get fields from file
+    fields = [f for f in contents]
+    
+    # return file contents and field names
+    return contents, fields
 
 
 """
@@ -687,260 +738,380 @@ def set_new_field(keyword):
 
 
 """
-# define csv_interact() function - appends, writes, or reads contents of user's csv file
-# optional parameters:
-#   - mode         -> default to append
-#   - checkKeyword -> default to False
+# define get_values() function - get unique values of selected field, and return list of unique values
+# and the selected field
 """
-def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
-    # write to or append data to file using csv module
+def get_unique_values(contents, fields):
+    # display menu of fields that were found in file
+    print()
+    for i, field in enumerate(fields, start=1):
+        print(f'{i}. {field}')
+    print()
+
+    # initialize empty lists of unique keywords from file and counts of each unique keyword in keywords list
+    values = []
+    counts = []
+
+    # ask user to identify the keywords field from the menu
+    field = input('Enter the field you would like to tally from the menu: ')
+
+    # validate that field is in fields list
+    while field not in fields:
+        # tell user that field doesn't exist, then pause program for a second
+        print(f'{field} field does not exist.')
+        time.sleep(1)
+
+        # ask user again for keyword field
+        field = input('Enter the field you would like to tally from the menu: ')
+
+    print()
+
+    # initialize list to store keyword values object containing values from keyword_field
+    data = []
+
+    # add data values/object of keyword_field to keyword_data list
+    data.append(contents[field])
+
+    # iterate through each keyword result object and add unique values to keyword list
+    for ob in data:
+        for word in ob:
+            # add keyword to keywords list if it isn't already in it
+            if word not in values:
+                values.append(word)
+    
+    # return list of values and field lists to parent function
+    return values, field
+
+
+"""
+# define file_interact() function - appends to, writes to, or reads contents of user's CSV/XLSX file
+# optional parameters:
+#   - mode         -> default to append         : values -> 'a', 'w', 'r'
+#   - checkKeyword -> default to False          : values -> True, False
+#   - function     -> default to empty string   : values -> 'counts', 'search', 'read'/blank value
+"""
+def file_interact(data, file, file_ext, workspace, mode='a', checkKeyword=False, function=''):
+    # write to or append data to csv file
     if mode == 'a' or mode == 'w':
-        # this code makes sure that a file in append mode will append the first line to a newline
-        # it will only run if the csv file already exists
-        # CREDIT: tdelaney from stack overflow
-        # -> <https://stackoverflow.com/questions/64921222/csv-writer-adds-the-first-line-to-the-last-cell>
-        if mode == 'a' and os.path.exists(file):
-            with open(file, 'a+b') as f:
-                f.seek(-1, 2)
+        # run when file is a CSV
+        if file_ext == 'csv':
+            # this code makes sure that a file in append mode will append the first line to a newline
+            # it will only run if the csv file already exists
+            # CREDIT: tdelaney from stack overflow
+            # -> <https://stackoverflow.com/questions/64921222/csv-writer-adds-the-first-line-to-the-last-cell>
+            if mode == 'a' and os.path.exists(file):
+                with open(file, 'a+b') as f:
+                    f.seek(-1, 2)
+
+                    if f.read(1) != b"\n":
+                        f.write(b"\r\n")
+            
+            # write data to the file, separating each unique value with a comma
+            with open(file, mode=mode, newline='') as csv_write:
+                csvwriter = csv.writer(csv_write, delimiter=',')
+                csvwriter.writerow(data)
+
+        # run when file is an Excel file
+        else:
+            # 
+            if os.path.exists(file):
+                # import load_workbook function from openpyxl
+                from openpyxl import load_workbook
                 
-                if f.read(1) != b"\n":
-                    f.write(b"\r\n")
-        
-        # write data to the file, separating each field value with a comma
-        with open(file, mode=mode, newline='') as csv_write:
-            csvwriter = csv.writer(csv_write, delimiter=',')
-            csvwriter.writerow(data)
+                # load the file
+                wb = load_workbook(file)
+                
+                # get current working sheet
+                page = wb.active
+                
+                # append data to sheet
+                page.append(data)
+                
+                # save the updated file
+                wb.save(filename=file)
+            
+            # create XLSX file when it currently doesn't exist
+            else:
+                # create df using data
+                # in this case data will be the three default field names: Tweet_ID, Keyword, and State
+                df = pd.DataFrame([data])
+                
+                # remove the numbered fields that are generated at the top
+                # so that above default field names are the true column names of the file
+                df.columns = df.iloc[0, :]
+                df.drop(df.index[0], inplace=True)
+                
+                # write default field names to file
+                with pd.ExcelWriter(file) as writer:
+                    df.to_excel(writer, index=False)
 
         # return to the parent function
         return
     
-    # read contents of csv file using pandas module
+    # read contents of file
     else:
-        # initialize states and ids lists to store states and Tweet IDs from csv file
-        states = []
-        ids = []
+        # extract contents df and fields list from file
+        contents, fields = get_file_contents_fields(file, file_ext)
         
-        # extract contents of csv file
-        contents = pd.read_csv(file, header=0)
-        
-        # get fields from contents
-        fields = [f for f in contents]
-        
-        # display menu of fields that were found in csv file
-        print()
-        for i, field in enumerate(fields, start=1):
-            print(f'{i}. {field}')
-        print()
-        
-        # ask user to enter the state and tweet id fields from the menu
-        state_field = input('Enter the field that contains names of states: ')
-        
-        # validate that the state field is in the fields list
-        while state_field not in fields:
-            print(f'{state_field} does not exist.')
+        # run this when functionality is being called from counts module
+        if function == 'counts':
+            # get list of unique keywords and keyword field from file,
+            # then return both values to parent function
+            values, field = get_unique_values(contents, fields)
             
-            # ask user to enter the state field again
+            # return values, field, file contents df to parent function
+            return values, field, contents
+        
+        # run this functionality is being called from search module
+        elif function == 'search':
+            # get ids and places lists from data list
+            ids = data[0]
+            places = data[1]
+            
+            # create tweet_data dict using ids and places lists
+            tweet_data = dict(zip(ids, places))
+
+            # get locations of data Tweet IDs, states, and keywords in the file using their indexes
+            # in the user's file
+            # also get a list of Tweet IDs that are already in the user's file
+            # return this data plus the tweet_data once complete
+            tweets, state_index, id_index, keyword_index = get_field_indexes_tweet_ids(contents, fields)
+            
+            return tweets, tweet_data, state_index, id_index, keyword_index
+        
+        # run this when functionality is being called from read module
+        else:
+            # initialize states and ids lists to store states and Tweet IDs from file
+            states = []
+            ids = []
+
+            # display menu of fields that were found in file
+            print()
+            for i, field in enumerate(fields, start=1):
+                print(f'{i}. {field}')
+            print()
+
+            # ask user to enter the state and tweet id fields from the menu
             state_field = input('Enter the field that contains names of states: ')
-        
-        # ask user to enter the tweet id field from the menu
-        id_field = input('Enter the field that contains Tweet IDs: ')
-        
-        # validate that the id field is in the fields list
-        while id_field not in fields or id_field == state_field:
-            # tell user that the field is not in the fields list
-            if id_field not in fields:
-                print(f'{id_field} does not exist.')
-            
-            # tell user that their id field is the same as their states field
-            elif id_field == state_field:
-                print(f'{id_field} is the same as your states field.')
-            
-            # tell user to enter the id field again
+
+            # validate that the state field is in the fields list
+            while state_field not in fields:
+                print(f'{state_field} does not exist.')
+
+                # ask user to enter the state field again
+                state_field = input('Enter the field that contains names of states: ')
+
+            # ask user to enter the tweet id field from the menu
             id_field = input('Enter the field that contains Tweet IDs: ')
-        
-        # intialize state_data and id_data lists to store values of state_field and id_field
-        state_data = []
-        id_data = []
-        
-        # run keyword filtering related code if function parameter indicates to do so
-        if checkKeyword == True:
-            # ask user if they'd like to only map tweets that have a certain keyword
-            if_keyword = input('Would you like to import Tweets that have a certain keyword? (Y or N) ')
-        
-            # validate that input is Yes/Y or No/N
-            while if_keyword.title() != 'Yes' and if_keyword.upper() != 'Y' and if_keyword.title() != 'No' and if_keyword.upper() != 'N':
-                # display error if input isn't Yes/Y or No/N
-                print(f'{if_keyword} is not a valid answer. Please try again.')
-            
-                # ask user again
+
+            # validate that the id field is in the fields list
+            while id_field not in fields or id_field == state_field:
+                # tell user that the field is not in the fields list
+                if id_field not in fields:
+                    print(f'{id_field} does not exist.')
+
+                # tell user that their id field is the same as their states field
+                elif id_field == state_field:
+                    print(f'{id_field} is the same as your states field.')
+
+                # tell user to enter the id field again
+                id_field = input('Enter the field that contains Tweet IDs: ')
+
+            # intialize state_data and id_data lists to store values of state_field and id_field
+            state_data = []
+            id_data = []
+
+            # run keyword filtering related code if function parameter indicates to do so
+            if checkKeyword == True:
+                # ask user if they'd like to only map tweets that have a certain keyword
                 if_keyword = input('Would you like to import Tweets that have a certain keyword? (Y or N) ')
-        
-            # run this code if the user wants to only include Tweets with a certain keyword from the csv file
-            if if_keyword.title() == 'Yes' or if_keyword.upper() == 'Y':
-                # initialize empty list of unique keywords from csv file
-                keywords = []
-            
-                # ask user to identify the keywords field from the menu
-                keyword_field = input('Enter the field that contains keywords: ')
-            
-                # validate that field is in fields list
-                while keyword_field not in fields or keyword_field == state_field or keyword_field == id_field:
-                    # display that the keyword field is the same as the state field, then pause program for half a second
-                    if keyword_field == state_field:
-                        print(f'{keyword_field} is the same as your state field.')
-                        time.sleep(0.5)
-                    
-                    # display that the keyword field is the same as the id field, then pause program for half a second
-                    elif keyword_field == id_field:
-                        print(f'{keyword_field} is the same as your id field.')
-                        time.sleep(0.5)
-                    
-                    # display that the field does not exist, then pause program for half a second
-                    else:
-                        print(f'{keyword_field} field does not exist.')
-                        time.sleep(0.5)
-            
-                    # ask user again for keyword field
+
+                # validate that input is Yes/Y or No/N
+                while if_keyword.title() != 'Yes' and if_keyword.upper() != 'Y' and if_keyword.title() != 'No' and if_keyword.upper() != 'N':
+                    # display error if input isn't Yes/Y or No/N
+                    print(f'{if_keyword} is not a valid answer. Please try again.')
+
+                    # ask user again
+                    if_keyword = input('Would you like to import Tweets that have a certain keyword? (Y or N) ')
+
+                # run this code if the user wants to only include Tweets with a certain keyword from the file
+                if if_keyword.title() == 'Yes' or if_keyword.upper() == 'Y':
+                    # initialize empty list of unique keywords from file
+                    keywords = []
+
+                    # ask user to identify the keywords field from the menu
                     keyword_field = input('Enter the field that contains keywords: ')
-            
-                # initialize list to store keyword values object containing values from keyword_field
-                keyword_data = []
-            
-                # add data values/object of keyword_field to keyword_data list
-                keyword_data.append(contents[keyword_field])
-            
-                # iterate through each keyword result object and add unique values to keyword list
-                for ob in keyword_data:
-                    for word in ob:
-                        # add keyword to keywords list if it isn't already in it
-                        if word not in keywords:
-                            keywords.append(word)
-            
-                # handle empty csv files
-                if len(keywords) == 0:
-                    print('No keywords were found.')
-                    
-                    # return empty states, ids, and user_keywords lists to parent function
-                    return [], [], []
-                
-                # run this code if data is in the csv file
-                else:
-                    time.sleep(1.5)     # pause program for a second and a half
-                    
-                    # display menu of fields that were found in csv file
-                    print()
-                    print('Available Keywords')
-                    print('------------------')
-                    for i, keyword in enumerate(keywords, start=1):
-                        print(f'{i}. {keyword}')
-                    print()
 
-                    time.sleep(1)   # pause program for a second
+                    # validate that field is in fields list
+                    while keyword_field not in fields or keyword_field == state_field or keyword_field == id_field:
+                        # display that the keyword field is the same as the state field, then pause program for half a second
+                        if keyword_field == state_field:
+                            print(f'{keyword_field} is the same as your state field.')
+                            time.sleep(0.5)
 
-                    # determine how many keywords are available
-                    total_keywords = len(keywords)
+                        # display that the keyword field is the same as the id field, then pause program for half a second
+                        elif keyword_field == id_field:
+                            print(f'{keyword_field} is the same as your id field.')
+                            time.sleep(0.5)
 
-                    # initialize user_keywords list to store keywords user wants to pull data for
-                    user_keywords = []
-
-                    # initialize valid_number bool to False to use in below validation loop
-                    valid_number = False
-
-                    # validate the input is an integer and smaller than the total number of available keywords
-                    while valid_number == False:
-                        # ask user how many keywords they want to pull data for
-                        num_keywords = input('How many keywords would you like to pull data for? ')
-
-                        # tell user if input is not an integer
-                        if not num_keywords.isdigit():
-                            print(f'{num_keywords} is not an integer.')
-                            
-                            time.sleep(0.5)     # pause program for half a second
-
-                        # tell user if input is larger than total number of available keywords
-                        elif int(num_keywords) > total_keywords:
-                            print(f'{num_keywords} is larger than the amount of available keywords: {total_keywords}.')
-                            
-                            time.sleep(0.5)     # pause program for half a second
-
-                        # tell user if input equals the total number of available keywords
-                        elif int(num_keywords) == total_keywords:
-                            print(f'{num_keywords} is the same as the total number of available keywords: {total_keywords}.')
-                            
-                            time.sleep(0.5)     # pause program for half a second
-
-                        # tell user if input is equal to 0
-                        elif int(num_keywords) == 0:
-                            print(f'You need to use at least 1 keyword.')
-                            
-                            time.sleep(0.5)     # pause program for half a second
-
-                        # the input passed both validation tests
+                        # display that the field does not exist, then pause program for half a second
                         else:
-                            # convert valid input to integer
-                            num_keywords = int(num_keywords)
+                            print(f'{keyword_field} field does not exist.')
+                            time.sleep(0.5)
 
-                            # signal that a valid input has been entered
-                            valid_number = True
+                        # ask user again for keyword field
+                        keyword_field = input('Enter the field that contains keywords: ')
 
-                    # new line
-                    print()
+                    # initialize list to store keyword values object containing values from keyword_field
+                    keyword_data = []
 
-                    # initialize counter
-                    counter = 0
+                    # add data values/object of keyword_field to keyword_data list
+                    keyword_data.append(contents[keyword_field])
 
-                    # get data for as many keywords as user wants
-                    while counter < num_keywords:
-                        # ask user to enter an available keyword from the menu
-                        user_keyword = input(f'Enter keyword #{counter+1} from the menu: ')
+                    # iterate through each keyword result object and add unique values to keyword list
+                    for ob in keyword_data:
+                        for word in ob:
+                            # add keyword to keywords list if it isn't already in it
+                            if word not in keywords:
+                                keywords.append(word)
 
-                        # validate that the keyword is an option
-                        while user_keyword not in keywords or user_keyword in user_keywords:
-                            # tell user if keyword is not in keywords list
-                            if user_keyword not in keywords:
-                                print(f'{user_keyword} is not an option. Please try again')
+                    # handle empty files
+                    if len(keywords) == 0:
+                        print('No keywords were found.')
+
+                        # return empty states, ids, and user_keywords lists to parent function
+                        return [], [], []
+
+                    # run this code if data is in the file
+                    else:
+                        time.sleep(1.5)     # pause program for a second and a half
+
+                        # display menu of fields that were found in file
+                        print()
+                        print('Available Keywords')
+                        print('------------------')
+                        for i, keyword in enumerate(keywords, start=1):
+                            print(f'{i}. {keyword}')
+                        print()
+
+                        time.sleep(1)   # pause program for a second
+
+                        # determine how many keywords are available
+                        total_keywords = len(keywords)
+
+                        # initialize user_keywords list to store keywords user wants to pull data for
+                        user_keywords = []
+
+                        # initialize valid_number bool to False to use in below validation loop
+                        valid_number = False
+
+                        # validate the input is an integer and smaller than the total number of available keywords
+                        while valid_number == False:
+                            # ask user how many keywords they want to pull data for
+                            num_keywords = input('How many keywords would you like to pull data for? ')
+
+                            # tell user if input is not an integer
+                            if not num_keywords.isdigit():
+                                print(f'{num_keywords} is not an integer.')
 
                                 time.sleep(0.5)     # pause program for half a second
 
-                            # tell user if data for keyword has already been pulled
+                            # tell user if input is larger than total number of available keywords
+                            elif int(num_keywords) > total_keywords:
+                                print(f'{num_keywords} is larger than the amount of available keywords: {total_keywords}.')
+
+                                time.sleep(0.5)     # pause program for half a second
+
+                            # tell user if input equals the total number of available keywords
+                            elif int(num_keywords) == total_keywords:
+                                print(f'{num_keywords} is the same as the total number of available keywords: {total_keywords}.')
+
+                                time.sleep(0.5)     # pause program for half a second
+
+                            # tell user if input is equal to 0
+                            elif int(num_keywords) == 0:
+                                print(f'You need to use at least 1 keyword.')
+
+                                time.sleep(0.5)     # pause program for half a second
+
+                            # the input passed both validation tests
                             else:
-                                print(f'Data for {user_keyword} has already been pulled.')
+                                # convert valid input to integer
+                                num_keywords = int(num_keywords)
 
-                                time.sleep(0.5)     # pause program for half a second
+                                # signal that a valid input has been entered
+                                valid_number = True
+
+                        # new line
+                        print()
+
+                        # initialize counter
+                        counter = 0
+
+                        # get data for as many keywords as user wants
+                        while counter < num_keywords:
+                            # ask user to enter an available keyword from the menu
+                            user_keyword = input(f'Enter keyword #{counter+1} from the menu: ')
+
+                            # validate that the keyword is an option
+                            while user_keyword not in keywords or user_keyword in user_keywords:
+                                # tell user if keyword is not in keywords list
+                                if user_keyword not in keywords:
+                                    print(f'{user_keyword} is not an option. Please try again')
+
+                                    time.sleep(0.5)     # pause program for half a second
+
+                                # tell user if data for keyword has already been pulled
+                                else:
+                                    print(f'Data for {user_keyword} has already been pulled.')
+
+                                    time.sleep(0.5)     # pause program for half a second
+
+                                # new line
+                                print()
+
+                                # ask user again to enter an available keyword from the menu
+                                user_keyword = input(f'Enter keyword #{counter+1} from the menu: ')
 
                             # new line
                             print()
 
-                            # ask user again to enter an available keyword from the menu
-                            user_keyword = input(f'Enter keyword #{counter+1} from the menu: ')
+                            # add keyword to user_keywords list
+                            user_keywords.append(user_keyword)
 
-                        # new line
-                        print()
-                        
-                        # add keyword to user_keywords list
-                        user_keywords.append(user_keyword)
+                            # filter contents using user specified keyword
+                            keyword_contents = contents[contents[keyword_field] == user_keyword]
+                            
+                            # get number of results pulled
+                            num_results = len(keyword_contents)
 
-                        # filter contents using user specified keyword
-                        keyword_contents = contents[contents[keyword_field] == user_keyword]
+                            # display results
+                            if num_keywords > 1:
+                                print(f'\nPulling data for {user_keyword} returned {num_results} results.\n')
 
-                        # get number of results pulled
-                        num_results = len(keyword_contents)
+                            time.sleep(1)   # pause program for a second
+                            print(f'Results For - {user_keyword}:\n{keyword_contents}\n')
 
-                        # display results
-                        if num_keywords > 1:
-                            print(f'\nPulling data for {user_keyword} returned {num_results} results.\n')
-                        
-                        time.sleep(1)   # pause program for a second
-                        print(f'Results For - {user_keyword}:\n{keyword_contents}\n')
+                            # add data values/object of state_field and id_field (after keyword filtering) to respective list
+                            state_data.append(keyword_contents[state_field])
+                            
+                            id_data.append(keyword_contents[id_field])
 
-                        # add data values/object of state_field and id_field (after keyword filtering) to respective list
-                        state_data.append(keyword_contents[state_field])
-                        id_data.append(keyword_contents[id_field])
+                            # add 1 to the counter
+                            counter += 1
 
-                        # add 1 to the counter
-                        counter += 1
-            
-            # run this code if user indicated that they do not want to filter csv data using a keyword
+                # run this code if user indicated that they do not want to filter file data using a keyword
+                else:
+                    # add data values/object of state_field and id_field (without keyword filtering) to respective list
+                    state_data.append(contents[state_field])
+                    contents[id_field] = contents[id_field].astype(float)
+                    
+                    id_data.append(contents[id_field])
+
+                    # set user keyword to an empty list
+                    user_keywords = []
+
+            # run this code if function parameters indicate to not filter by keyword
             else:
                 # add data values/object of state_field and id_field (without keyword filtering) to respective list
                 state_data.append(contents[state_field])
@@ -948,48 +1119,37 @@ def csv_interact(data, file, workspace, mode='a', checkKeyword=False):
 
                 # set user keyword to an empty list
                 user_keywords = []
-        
-        # run this code if function parameters indicate to not filter by keyword
-        else:
-            # add data values/object of state_field and id_field (without keyword filtering) to respective list
-            state_data.append(contents[state_field])
-            id_data.append(contents[id_field])
 
-            # set user keyword to an empty list
-            user_keywords = []
-            
-        # iterate through each state result object and add the state value to the states list
-        for ob in state_data:
-            for state in ob:
-                states.append(state)
-            
-        # iterate through each id result object and add the id value to the ids list
-        for ob in id_data:
-            for tweet in ob:
-                ids.append(tweet)
-        
-        # return states, ids, and user_keyword to parent function
-        return states, ids, user_keywords
+            # iterate through each state result object and add the state value to the states list
+            for ob in state_data:
+                for state in ob:
+                    states.append(state)
+
+            # iterate through each id result object and add the id value to the ids list
+            for ob in id_data:
+                for tweet in ob:
+                    # had to format like this to prevent truncated values from being added to ids list
+                    ids.append(int('{:.0f}'.format(tweet)))
+
+            # return states, ids, and user_keyword to parent function
+            return states, ids, user_keywords
 
 
 """
 # define get_field_indexes_tweet_ids() function - determines the location of each relevant field using the user's input
-# also generates a list of Tweet IDs that are in the csv file to make sure duplicate Tweets aren't being added to the file
+# also generates a list of Tweet IDs that are in the file to make sure duplicate Tweets aren't being added to the file
 # returns the list of Tweet IDs and the indexes of the state, tweet_id, and keyword fields
 """
-def get_field_indexes_tweet_ids(contents):
-    # get fields from csv file
-    fields = [f for f in contents]
-
-    # display menu of fields that were found in csv file
+def get_field_indexes_tweet_ids(contents, fields):
+    # display menu of fields that were found in file
     print()
     for i, field in enumerate(fields, start=1):
         print(f'{i}. {field}')
     print()
-    
+
     # ask user to enter field that has states
     state_field = input('Enter the field that contains names of states: ')
-    
+
     # validate that specified state field is in fields list
     while state_field not in fields:
         # tell user that state field isn't in the fields list
@@ -997,46 +1157,46 @@ def get_field_indexes_tweet_ids(contents):
 
         # tell user to enter the states field again
         state_field = input('Enter the field that contains the names of states: ')
-    
+
     # ask user to enter field that has Tweet IDs
     id_field = input('Enter the field that contains Tweet IDs: ')
-    
+
     # validate that specified ids field is in fields list and is not the same as states field
     while id_field not in fields or id_field == state_field:
         # tell user if field does not exist
         if id_field not in fields:
             print(f'{id_field} does not exist.')
-        
+
         # tell user if field is the same as state field
         if id_field == state_field:
             print(f'That is the same as {state_field}.')
-        
+
         # tell user to enter the ids field again
         id_field = input('Enter the field that contains Tweet IDs: ')
-    
+
     # ask user to enter field that contains keywords
     keyword_field = input('Enter the field that contains keywords: ')
-    
+
     # validate that specified keywords field is in fields list and is not the same as states or ids fields
     while keyword_field not in fields or keyword_field == state_field or keyword_field == id_field:
         # tell user if field does not exist
         if keyword_field not in fields:
             print(f'{keyword_field} does not exist.')
-        
+
         # tell user if field is the same as state field
         if keyword_field == state_field:
             print(f'That is the same as {state_field}.')
-        
+
         # tell user if field is the same as id field
         if keyword_field == id_field:
             print(f'That is the same as {id_field}.')
-        
+
         # tell user to enter the ids field again
         keyword_field = input('Enter the field that contains keywords: ')
-    
-    # get list of tweet ids from csv file using user id_field
+
+    # get list of tweet ids from file using user id_field
     tweets = contents[id_field].tolist()
-    
+
     # determine indexes of each of the specified fields in the fields list
     state_index = fields.index(state_field)
     id_index = fields.index(id_field)

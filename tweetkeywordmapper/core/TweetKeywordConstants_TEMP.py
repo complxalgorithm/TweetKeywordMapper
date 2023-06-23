@@ -15,8 +15,8 @@ access_secret = "<ADD ACCESS SECRET HERE>"
 # set path to workspace
 workspace = r'<ADD WORKSPACE HERE>'
 
-# set default csv file
-default_csv = '<ADD CSV FILE NAME HERE>'
+# set default file
+default_file = '<ADD FILE NAME HERE>'
 
 # create states dictionary that stores states using abbrev as key
 states = {

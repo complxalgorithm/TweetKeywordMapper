@@ -86,7 +86,7 @@ def TweetKeywordMapper(ws, state_counts, keyword):
             if platform.system() != 'Windows' or (platform.system() == 'Windows' and pro is None):
                 if platform.system() != 'Windows':
                     # tell user that they can't map since they are not using Windows
-                    print('\nYou are not using Windows, so you can not map your data using ArcGIS Pro.\n')
+                    print('\nYou are not using Windows, so you cannot map your data using ArcGIS Pro.\n')
 
                 else:
                     # tell user they can't map because ArcGIS Pro is not installed
