@@ -77,7 +77,7 @@ You can then download ArcGIS Pro if you have a Windows machine, and that will au
 Once the program is downloaded onto your machine and all of the requirements are met, you can now run the program. Support is available to run the program as the <em>tweetkeywordmapper</em> Python package, or by using the <em>tkm</em> shell script. Both of these support four argument/parameter options.
 
 #### Python
-The program runs as the <em>tweetkeywordmapper</em> package.
+The program runs as the <em>tweetkeywordmapper</em> package. The program accepts a single argument with one of four options: search, read, counts, or help.
 ```
 username ^ TweetKeywordMapper => python3 tweetkeywordmapper -h
 usage: python3 tweetkeywordmapper [-s] [-r] [-c] [-h]
@@ -90,7 +90,6 @@ optional arguments:
   -c, --counts  tally the count for each unique value of a specified field from a CSV/XLSX file
   -h, --help    display usage information
 ```
-The program accepts a single argument with one of four options: search, read, counts, or help.
 
 #### Shell
 You can also use the <em>tkm</em> shell script to execute the program. This script essentially acts as an execution wrapper for the <em>tweetkeywordmapper</em> package and execute the appropriate command depending on the parameter value.
