@@ -12,7 +12,7 @@ helpFunc()
     echo "search:\t search Twitter for Tweets containing a specific keyword, then map results"
     echo "read:\t import Tweet data from a CSV/XLSX file, then map results"
     echo "counts:\t tally the total for each unique value of a specified field from a CSV/XLSX file"
-    echo "help:\t displays help information for this script\n"
+    echo "help:\t display usage information for this script\n"
     echo "- search and read will run mapper.py to map the results after state counts are determined."
     exit 1
 }
@@ -21,15 +21,14 @@ helpFunc()
 
 # lack of parameter triggers the displaying of an error and the help info
 if [ $# -eq "0" ]; then
-    echo "ERROR - No parameter provided."
+    echo "ERROR - No parameter provided.\n"
     helpFunc
     
     # run this if parameter is present
     else
         # display error and show help info if more than one parameter is specified
         if [ $# -gt "1" ]; then
-            echo "ERROR - Too many parameters. Only 1 is allowed at most."
-            echo ""
+            echo "ERROR - Too many parameters. Only 1 is allowed at most.\m"
             helpFunc
             
             # run this if one parameter is present
@@ -52,8 +51,7 @@ if [ $# -eq "0" ]; then
                     
                     # display error and help info if the parameter is set to anything else
                     else
-                        echo "ERROR - $1 is not a valid parameter value."
-                        echo ""
+                        echo "ERROR - $1 is not a valid parameter value.\n"
                         helpFunc
                 fi
         fi

@@ -48,8 +48,8 @@ CITIES = cons.cities
 def get_args() -> argparse.Namespace:
     # create ArgumentParser instance
     parser = argparse.ArgumentParser(prog='python3 tweetkeywordmapper',
-                                     description='Search/Import Tweet data from US states with a keyword, then map the count results',
-                                     add_help=True)
+                                     description='Search/Import Tweet data from US states with a keyword, then map the count results.',
+                                     add_help=False)
     
     # add argument options to parser
     parser.add_argument('-s', '--search', action='store_true',
@@ -57,7 +57,9 @@ def get_args() -> argparse.Namespace:
     parser.add_argument('-r', '--read', action='store_true',
                          help='import Tweet data from a CSV/XLSX file, then map results')
     parser.add_argument('-c', '--counts', action='store_true',
-                         help='tally the total for each unique value of a specified field from a CSV/XLSX file')
+                         help='tally the count for each unique value of a specified field from a CSV/XLSX file')
+    parser.add_argument('-h', '--help', action='help',
+                       help='display usage information for this script')
     
     # return parser
     return parser.parse_args()
