@@ -126,8 +126,6 @@ If you decide to map your results using ArcGIS Pro and you have mapped results f
 
 Unfortunately, due to how the code is written, you may run into issues with CSV/XLSX files that have more than three (3) fields. The program will add the data that was found by searching Twitter using the field indexes of the Tweet IDs, states, and keywords fields. I do not know if it will still work successfully with CSV/XLSX files that contain more than three (3) fields.
 
-Upon adding support for XLSX files, I kept getting a UnicodeDecodeError or ParserError when running the <em>counts</em> functionality on a preexisting CSV file. After setting my default file to a non-existent CSV file and having the program create it for me, the program was able to run without issues. This is either a bug in my code, in Pandas's code, and/or the CSV files with which I was attempting to run the program were corrupted.
-
 ## To-Do List
 - [X] Clean up state extraction algorithm
 - [X] Find instance of a state's name in place values like "New York and the World" and return the appropriate state value.
