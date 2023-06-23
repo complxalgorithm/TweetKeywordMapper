@@ -59,7 +59,7 @@ def get_args() -> argparse.Namespace:
     parser.add_argument('-c', '--counts', action='store_true',
                          help='tally the count for each unique value of a specified field from a CSV/XLSX file')
     parser.add_argument('-h', '--help', action='help',
-                       help='display usage information for this script')
+                       help='display usage information')
     
     # return parser
     return parser.parse_args()
