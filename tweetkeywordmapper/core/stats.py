@@ -17,11 +17,8 @@ def get_counts(values, states={}, df=None, field='', function=''):
         
         # iterate through each unique value in values list
         for v in values:
-            # get rows that contain the field value
-            field_contents = df[df[field] == v]
-
-            # add count of rows to the counts list
-            counts.append(len(field_contents))
+            # add count of rows with current field value to the counts list
+            counts.append(len(df[df[field] == v]))
         
         # create dictionary of counts for each available unique field value
         value_counts = dict(zip(values, counts))
