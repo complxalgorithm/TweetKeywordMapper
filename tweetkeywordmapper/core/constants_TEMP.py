@@ -149,6 +149,7 @@ cities = {
     'Albuquerque': 'New Mexico',
     'Denver': 'Colorado',
     'Detroit': 'Michigan',
+    'Kansas City': 'Missouri',
     'St. Louis': 'Missouri',
     'St Louis': 'Missouri',
     'STL': 'Missouri',

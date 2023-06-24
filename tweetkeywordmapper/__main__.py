@@ -7,9 +7,6 @@ import sys
 import time
 import warnings as warn
 
-# ignore all warnings that GeoPandas may output
-warn.filterwarnings('ignore')
-
 try:
     from tweetkeywordmapper.core import data
     from tweetkeywordmapper.core import stats
@@ -25,7 +22,10 @@ except:
     from scripts import mapper as tkm
     from scripts import search as tks
     from scripts import read as tkr
-    from scripts import counts as cnts   
+    from scripts import counts as cnts
+    
+# ignore all warnings that GeoPandas may output
+warn.filterwarnings('ignore')
 
 """
 # initialize constants
