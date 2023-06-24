@@ -20,11 +20,8 @@ def get_counts(values, states={}, df=None, field='', function=''):
             # get rows that contain the field value
             field_contents = df[df[field] == v]
 
-            # count how many rows there are with that value
-            count = len(field_contents)
-
-            # add this count to the counts list
-            counts.append(count)
+            # add count of rows to the counts list
+            counts.append(len(field_contents))
         
         # create dictionary of counts for each available unique field value
         value_counts = dict(zip(values, counts))
@@ -45,17 +42,9 @@ def get_counts(values, states={}, df=None, field='', function=''):
     
         # iterate over the keys in states dict
         for s in states:
-            # initialize counter to 0
-            count = 0
-            
-            # iterate through each place in values list
-            for p in values:
-                # if the place is equal to the current states dict value, add 1 to the counter
-                if p == states[s]:
-                    count += 1
-
-            # add current state's abbreviation key and its count as the next key/value combo in counts dict
-            counts[s] = count
+            # total the number of occurrences of each value in states dict and
+            # add that count as value to counts dict, keyed to the state's abbreviation
+            counts[s] = values.count(states[s])
         
         # return counts dict to parent function
         return counts
