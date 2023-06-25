@@ -7,6 +7,5 @@ get-state-backup.py
 constants.py
 tweet_data.csv
 sample_tweets.*
-tweets.*
 US_States*
 Tweet_Keyword_Mapper.qgz
