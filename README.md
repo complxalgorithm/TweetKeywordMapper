@@ -73,6 +73,16 @@ You can then download ArcGIS Pro if you have a Windows machine, and that will au
 <em>You will need to create a new ArcGIS Pro project using the map template before running the program.</em>
 <em>Additionally, ArcGIS Pro **cannot** be open at the same time that you execute the program.</em>
 
+### Getting US States Boundaries Shapefile
+You can get a US states polygon shapefile from many places. Here are a few:
+1. [United States Census Bureau](https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html)
+2. [National Weather Service](https://www.weather.gov/gis/USStates)
+3. [Data.gov](https://catalog.data.gov/dataset/2019-cartographic-boundary-shapefile-region-for-united-states-1-5000000)
+
+It is recommended that you remove all territories (including Puerto Rico) from the shapefile because only results from a US <em>state</em> will be counted.
+
+This file can either be anywhere within the workspace that you specified in the <em>constants</em> module. It can be directly in your root workspace directory or within a subdirectory of the workspace directory.
+
 ### Run
 Once the program is downloaded onto your machine and all of the requirements are met, you can now run the program. Support is available to run the program as the <em>tweetkeywordmapper</em> Python package, or by using the <em>tkm</em> shell script. Both of these support four argument/parameter options.
 
