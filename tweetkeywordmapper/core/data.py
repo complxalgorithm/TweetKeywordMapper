@@ -89,8 +89,20 @@ def get_file_contents_fields(file, file_ext):
         # set file path
         file_path = os.path.join(cwd, file)
         
+        # set file name
+        file_name = file.split('.')[0]
+        
         # extract contents of XLSX file
         contents = pd.read_excel(file_path, header=0, engine='openpyxl')
+        
+        # get first row of file contents to check if file name is name of a column
+        columns = contents.columns.to_list()
+        
+        # extract contents of XLSX file again using the 2nd row as field names
+        # if the file name is listed as a field in the 1st row
+        # this means that the df was not using the correct row as field names the first time
+        if file_name in columns:
+            contents = pd.read_excel(file_path, header=1, engine='openpyxl')
         
     # get fields from file
     fields = [f for f in contents]
