@@ -9,7 +9,6 @@
 
 
 # import modules
-import os
 import platform
 import importlib
 import shutil

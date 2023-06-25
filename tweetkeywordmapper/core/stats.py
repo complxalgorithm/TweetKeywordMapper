@@ -1,6 +1,3 @@
-# import module
-import numpy as np
-
 """
 # define get_counts() function - uses lists of unique values and states to count
 # total number of Tweets from each state in the search results
@@ -12,6 +9,9 @@ import numpy as np
 def get_counts(values, states={}, df=None, field='', function=''):
     # run this if counts called this function
     if function == 'counts':
+        # import numpy
+        import numpy as np
+        
         # initialize counts list
         counts = []
         

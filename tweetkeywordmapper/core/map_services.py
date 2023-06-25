@@ -10,10 +10,9 @@
 """
 
 # import libraries
-import matplotlib.pyplot as plt
 import os
-import sys
 import time
+#import sys
 
 try:
     from tweetkeywordmapper.core import data
@@ -174,8 +173,9 @@ def TweetKeywordArcPro(ws, counts, keyword):
 # define TweetKeywordGeoPandas.py function - maps the state counts using the GeoPandas library
 """
 def TweetKeywordGeoPandas(ws, counts, keyword):
-    # import pandas
+    # import modules
     import pandas as pd
+    import matplotlib.pyplot as plt
     
     # try to install geopandas
     try:
