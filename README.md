@@ -18,7 +18,7 @@ If your default file does not exist within the project directory, the program wi
 
 The program can be ran as the <em>tweetkeywordmapper</em> package, or by using the <em>tkm</em> shell script.
 
-## Requirements
+<h2 align="center">Requirements</h2>
 1. Python 3
 2. pip (use pip3)
 3. ArcPy - learn how to download and install ArcGIS Pro [here](https://pro.arcgis.com/en/pro-app/latest/get-started/download-arcgis-pro.htm).
@@ -35,7 +35,7 @@ If you are installing Pandas manually, it is ideal to install all of its depende
 pip3 install pandas[all]
 ```
 
-## Set Up & Run
+<h2 align="center">Set Up & Run</h2>
 In order to run this program to its fullest extent, you will first need to download the repository onto your machine and install the requirements. You will then need to add appropriate constants values within the <em>constants_TEMP.py</em> file, and then remove "_TEMP" from the file name. Using the Tweepy library requires setting up a Twitter Developer account, and then creating a new project. Using ArcGIS Pro requires the Windows operating system and a paid license to use.
 
 ### Download & Install
@@ -115,7 +115,7 @@ help:    display usage information
 - search and read will run mapper.py to map the results after state counts are determined.
 ```
 
-## Privacy
+<h2 align="center">Privacy</h2>
 The data in the sample files contain Tweet IDs, the searched keyword that was found in each Tweet, and each Tweet's extracted state of origin. Twitter necessitates the screen name in order to view the Tweets on Twitter. The URL structure is as such:
 
 ```
@@ -124,7 +124,7 @@ https://www.twitter.com/SCREEN_NAME/TWEET_ID
 
 While this program has to use the screen name in order to pull data about the user in the state extraction algorithm, it does not - nor will it ever - allow you to save the screen name affiliated with any Tweet to your CSV/XLSX file. If you append any of the Tweet IDs to the <em>twitter.com</em> domain, you will get an error saying that the account does not exist. It is because of this that you will not be able to view any of the Tweets on Twitter. This is by design.
 
-## Disclaimers
+<h2 align="center">Disclaimers</h2>
 This program is not an official Twitter or Esri project. This is a project that I made for a college course and is not affiliated <em>in any way</em> with Twitter/X Corp. or Esri. If you represent either of these companies and have an issue with this project, feel free to reach out to me at any time. Regardless, please do not sue me.
 
 Sometimes, a Tweet will be missed that should have been counted. I tried to limit as many mistakes as possible. To me, it is better to exclude Tweets that should have been included than it is to include Tweets that should have been excluded. There still may be times where a Tweet is counted that should not have been. That is still rarer than Tweets not getting counted that should have been.
@@ -135,7 +135,7 @@ If you decide to map your results using ArcGIS Pro and you have mapped results f
 
 Unfortunately, due to how the code is written, you may run into issues with CSV/XLSX files that have more than three (3) fields. The program will add the data that was found by searching Twitter using the field indexes of the Tweet IDs, states, and keywords fields. I do not know if it will still work successfully with CSV/XLSX files that contain more than three (3) fields.
 
-## To-Do List
+<h2 align="center">To-Do List</h2>
 - [X] Clean up state extraction algorithm
 - [X] Find instance of a state's name in place values like "New York and the World" and return the appropriate state value.
 - [X] Get state from Tweet where user's location has something like "NY -> FL".
@@ -150,10 +150,10 @@ Unfortunately, due to how the code is written, you may run into issues with CSV/
 - [ ] Allow user to search Tweets in other languages.
 - [ ] Allow user to search Tweets from different countries.
 
-## Contributing
+<h2 align="center">Contributing</h2>
 Contributions to this program are more than welcome. Simply make a pull request for my review. If there are any issues with, or any suggestions for, the program that you may have, create an issue for my review.
 
 My only requirement is that you thoroughly comment your code so that others and I can follow along with what you are doing, and can learn from what you added.
 
-## Copyright
+<h2 align="center">Copyright</h2>
 &copy; 2023 [Stephen C. Sanders](https://stephensanders.me). Licensed under the <a href="https://github.com/complxalgorithm/TweetKeywordMapper/blob/master/LICENSE">MIT License</a>. Credit would be appreciated.
