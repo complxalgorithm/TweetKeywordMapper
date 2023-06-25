@@ -81,7 +81,7 @@ You can get a US states polygon shapefile from many places. Here are a few:
 
 It is recommended that you remove all territories (including Puerto Rico) from the shapefile because only results from a US <em>state</em> will be counted.
 
-This file can either be anywhere within the workspace that you specified in the <em>constants</em> module. It can be directly in your root workspace directory or within a subdirectory of the workspace directory.
+This file can be anywhere within the workspace that you specified in the <em>constants</em> module. It can be directly within your root workspace directory or within a subdirectory of the workspace directory.
 
 ### Run
 Once the program is downloaded onto your machine and all of the requirements are met, you can now run the program. Support is available to run the program as the <em>tweetkeywordmapper</em> Python package, or by using the <em>tkm</em> shell script. Both of these support four argument/parameter options.
