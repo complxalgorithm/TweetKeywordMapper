@@ -20,7 +20,7 @@ The program can be ran as the <em>tweetkeywordmapper</em> package, or by using t
 
 ## Requirements
 1. Python 3
-2. Pip
+2. pip (use pip3)
 3. ArcPy - learn how to download and install ArcGIS Pro [here](https://pro.arcgis.com/en/pro-app/latest/get-started/download-arcgis-pro.htm).
     - This is only required if you want to map your results using ArcGIS Pro.
     - The only way to install this library is by purchasing an ArcGIS Pro license and installed the software onto your machine.
@@ -115,6 +115,15 @@ help:    display usage information
 - search and read will run mapper.py to map the results after state counts are determined.
 ```
 
+## Privacy
+The data in the sample files contain Tweet IDs, the searched keyword that was found in each Tweet, and each Tweet's extracted state of origin. Twitter necessitates the screen name in order to view the Tweets on Twitter. The URL structure is as such:
+
+```
+https://www.twitter.com/SCREEN_NAME/TWEET_ID
+```
+
+While this program has to use the screen name in order to pull data about the user in the state extraction algorithm, it does not - nor will it ever - allow you to save the screen name affiliated with any Tweet to your CSV/XLSX file. If you append any of the Tweet IDs to the <em>twitter.com</em> domain, you will get an error saying that the account does not exist. It is because of this that you will not be able to view any of the Tweets on Twitter. This is by design.
+
 ## Disclaimers
 This program is not an official Twitter or Esri project. This is a project that I made for a college course and is not affiliated <em>in any way</em> with Twitter/X Corp. or Esri. If you represent either of these companies and have an issue with this project, feel free to reach out to me at any time. Regardless, please do not sue me.
 
@@ -142,7 +151,7 @@ Unfortunately, due to how the code is written, you may run into issues with CSV/
 - [ ] Allow user to search Tweets from different countries.
 
 ## Contributing
-Contributions to this program are more than welcome. Simply make a pull request for my review. If there are any issues with or any suggestions for the program that you have, create an issue for my review.
+Contributions to this program are more than welcome. Simply make a pull request for my review. If there are any issues with, or any suggestions for, the program that you may have, create an issue for my review.
 
 My only requirement is that you thoroughly comment your code so that others and I can follow along with what you are doing, and can learn from what you added.
 
