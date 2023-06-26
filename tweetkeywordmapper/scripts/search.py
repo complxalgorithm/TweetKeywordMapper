@@ -4,7 +4,7 @@
 @Author: Stephen Sanders <https://stephensanders.me>
 @Description: Searches Twitter using a specfied keyword and extracts the US state of origin for
               a user specified number of results, then writes data for each result to CSV/Excel file
-@Requirements: Python3, pandas, tweepy
+@Requirements: Python3, tweepy
 
 """
 

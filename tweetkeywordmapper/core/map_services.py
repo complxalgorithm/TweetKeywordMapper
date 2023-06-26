@@ -1,6 +1,6 @@
 """
 
-@Name: TweetKeywordMapServices.py
+@Name: map_services.py
 @Author: Stephen Sanders <https://stephensanders.me>
 @Description: Maps the Tweet data using ArcGIS Pro or GeoPandas.
               Can only work with shapefiles when using GeoPandas.

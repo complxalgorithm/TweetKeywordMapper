@@ -4,7 +4,7 @@
 @Author: Stephen Sanders <https://stephensanders.me>
 @Description: Counts the total for each unique attribute value of a specified field within a CSV/Excel file
               Also determines percentages of total for each attribute value
-@Requirements: Python3, pandas, numpy
+@Requirements: Python3
 
 """
 

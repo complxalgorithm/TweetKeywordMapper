@@ -1,7 +1,19 @@
+"""
+
+@Name: extract_place.py
+@Author: Stephen Sanders <https://stephensanders.me>
+@Description: State extraction algorithm used to determine US state of origin of Tweets that were pulled
+              by Tweepy search cursor.
+@Requirements: numpy
+
+"""
+
+
 # import modules
 import numpy as np
 import re
 import time
+
 
 """
 # define get_states_from_results() function - uses search results to populate places list with

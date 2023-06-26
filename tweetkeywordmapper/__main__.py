@@ -8,16 +8,12 @@ import time
 import warnings as warn
 
 try:
-    from tweetkeywordmapper.core import data
-    from tweetkeywordmapper.core import stats
     from tweetkeywordmapper.core import constants as cons
     from tweetkeywordmapper.scripts import mapper as tkm
     from tweetkeywordmapper.scripts import search as tks
     from tweetkeywordmapper.scripts import read as tkr
     from tweetkeywordmapper.scripts import counts as cnts
 except:
-    from core import data
-    from core import stats
     from core import constants as cons
     from scripts import mapper as tkm
     from scripts import search as tks
@@ -26,6 +22,7 @@ except:
     
 # ignore all warnings that GeoPandas may output
 warn.filterwarnings('ignore')
+
 
 """
 # initialize constants
@@ -72,6 +69,12 @@ def get_args() -> argparse.Namespace:
 def create_default_file(default, ws, file_type):
     # create default file if it doesn't already exist
     if not os.path.exists(default):
+        # import data module
+        try:
+            from tweetkeywordmapper.core import data
+        except:
+            from core import data
+        
         # create default file if it's a CSV or XLSX file
         if file_type == 'csv' or file_type == 'xlsx':
             data.file_interact(['Tweet_ID', 'Keyword', 'State'], default, file_type, ws)
@@ -190,6 +193,12 @@ def main():
         if args.search or args.read:
             # run this code if results were found
             if num_results > 0:
+                # import stats module
+                try:
+                    from tweetkeywordmapper.core import stats
+                except:
+                    from core import stats
+                
                 # get what percentage of the total number of results came from each state
                 # will only include the states that have Tweets
                 state_count_percents = stats.get_count_percentages(state_counts, num_results, STATES)

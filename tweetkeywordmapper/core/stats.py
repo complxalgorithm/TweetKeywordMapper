@@ -1,4 +1,14 @@
 """
+
+@Name: stats.py
+@Author: Stephen Sanders <https://stephensanders.me>
+@Description: Functions for counting results and determining percentages of the total.
+@Requirements: numpy
+
+"""
+
+
+"""
 # define get_counts() function - uses lists of unique values and states to count
 # total number of Tweets from each state in the search results
 #   - states   -> default to empty dictionary
