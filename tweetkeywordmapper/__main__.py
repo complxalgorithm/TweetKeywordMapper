@@ -137,9 +137,9 @@ def main():
     # get number of arguments except for name of program
     num_args = (len(sys.argv)-1)
     
-    ""
+    """
     # handle arguments, or lack thereof
-    ""
+    """
     
     # display an error if no additional arguments are entered after tweetkeywordmapper, then quit program
     # NOTE: usage information will be displayed if more than 1 additional argument is entered
