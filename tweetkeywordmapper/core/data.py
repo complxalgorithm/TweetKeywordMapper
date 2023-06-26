@@ -66,8 +66,8 @@ def get_user_file(default_file):
 
 
 """
-# define get_file_contents() function - reads contents of file depending on the file extension
-# returns contents df and list of fields in file
+# define get_file_contents_fields() function - reads contents of file depending on the file extension
+# returns contents df and list of field names
 """
 def get_file_contents_fields(file, file_ext):
     # get current working directory (i.e., the project directory)
@@ -76,22 +76,25 @@ def get_file_contents_fields(file, file_ext):
     # set file path
     file_path = os.path.join(cwd, file)
     
-    # get contents from file
+    # set file name
+    file_name = file.split('.')[0]
+    
+    # get contents from CSV file
     if file_ext == 'csv':
         # extract contents of CSV file
-        contents = pd.read_csv(file_path, header=0, engine='python', on_bad_lines='skip')
+        contents = pd.read_csv(file_path, header=0, engine='python')
+        
+        # get first row of file contents to check if file name is name of a column
+        columns = contents.columns.to_list()
+        
+        # extract contents of CSV file again using the 2nd row as field names
+        # if the file name is listed as a field in the 1st row
+        # this means that the df was not using the correct row as field names the first time
+        if file_name in columns:
+            contents = pd.read_csv(file_path, header=1, engine='python')
     
     # get contents from XLSX file
     else:
-        # get current working directory (i.e., the project directory)
-        cwd = os.getcwd()
-
-        # set file path
-        file_path = os.path.join(cwd, file)
-        
-        # set file name
-        file_name = file.split('.')[0]
-        
         # extract contents of XLSX file
         contents = pd.read_excel(file_path, header=0, engine='openpyxl')
         
