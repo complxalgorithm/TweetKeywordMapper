@@ -404,7 +404,7 @@ def file_interact(data, file, file_ext, workspace, mode='a', checkKeyword=False,
                 # save the updated file
                 wb.save(filename=file)
             
-            # create XLSX file when it currently doesn't exist
+            # create XLSX file when it doesn't currently exist
             else:
                 # create df using data
                 # in this case data will be the three default field names: Tweet_ID, Keyword, and State
