@@ -19,21 +19,20 @@ If your default file does not exist within the project directory, the program wi
 The program can be ran as the <em>tweetkeywordmapper</em> package, or by using the <em>tkm</em> shell script.
 
 ## Requirements
-1. Python 3
-2. pip (use pip3)
-3. ArcPy - learn how to download and install ArcGIS Pro [here](https://pro.arcgis.com/en/pro-app/latest/get-started/download-arcgis-pro.htm).
-    - This is only required if you want to map your results using ArcGIS Pro.
-    - The only way to install this library is by purchasing an ArcGIS Pro license and installed the software onto your machine.
-4. Tweepy
-5. Pandas
-6. GeoPandas
-7. Matplotlib 
-8. Numpy
+1. python3
+2. pip
+3. tweepy
+4. pandas / geopandas
+5. arcpy
+6. matplotlib 
+7. numpy
 
 If you are installing Pandas manually, it is ideal to install all of its dependencies.
 ```
 pip3 install pandas[all]
 ```
+
+In order to install ArcPy and ArcGIS Pro, you must have a Windows machine.
 
 ## Set Up & Run
 In order to run this program to its fullest extent, you will first need to download the repository onto your machine and install the requirements. You will then need to add appropriate constants values within the <em>constants_TEMP.py</em> file, and then remove "_TEMP" from the file name. Using the Tweepy library requires setting up a Twitter Developer account, and then creating a new project. Using ArcGIS Pro requires the Windows operating system and a paid license to use.
