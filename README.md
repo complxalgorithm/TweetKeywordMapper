@@ -140,7 +140,7 @@ Unfortunately, due to how the code is written, you may run into issues with CSV/
 The data in the sample files contain Tweet IDs, the searched keyword that was found in each Tweet, and each Tweet's extracted state of origin. Twitter necessitates the screen name in order to view the Tweets on Twitter. The URL structure is as such:
 
 ```
-https://www.twitter.com/SCREEN_NAME/TWEET_ID
+https://twitter.com/SCREEN_NAME/status/TWEET_ID
 ```
 
 While this program has to use the screen name in order to pull data about the user in the state extraction algorithm, it does not - nor will it ever - allow you to save the screen name affiliated with any Tweet to your CSV/XLSX file. If you append any of the Tweet IDs to the <em>twitter.com</em> domain, you will get an error saying that the account does not exist. It is because of this that you will not be able to view any of the Tweets on Twitter. This is by design.
