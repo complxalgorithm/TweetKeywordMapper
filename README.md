@@ -35,7 +35,7 @@ If you are installing Pandas manually, it is ideal to install all of its depende
 pip3 install pandas[all]
 ```
 
-<h2 align="center">Set Up & Run</h2>
+## Set Up & Run
 In order to run this program to its fullest extent, you will first need to download the repository onto your machine and install the requirements. You will then need to add appropriate constants values within the <em>constants_TEMP.py</em> file, and then remove "_TEMP" from the file name. Using the Tweepy library requires setting up a Twitter Developer account, and then creating a new project. Using ArcGIS Pro requires the Windows operating system and a paid license to use.
 
 ### Download & Install
@@ -125,7 +125,7 @@ help:    display usage information
 - search and read will run mapper.py to map the results after state counts are determined.
 ```
 
-<h2 align="center">Disclaimers & Privacy</h2>
+## Disclaimers
 This program is not an official Twitter or Esri project. This is a project that I made for a college course and is not affiliated <em>in any way</em> with Twitter/X Corp. or Esri. If you represent either of these companies and have an issue with this project, feel free to reach out to me at any time. Regardless, please do not sue me.
 
 Sometimes, a Tweet will be missed that should have been counted. I tried to limit as many mistakes as possible. To me, it is better to exclude Tweets that should have been included than it is to include Tweets that should have been excluded. There still may be times where a Tweet is counted that should not have been. That is still rarer than Tweets not getting counted that should have been.
@@ -160,7 +160,7 @@ While this program has to use the screen name in order to pull data about the us
 - [ ] Allow user to search Tweets in other languages.
 - [ ] Allow user to search Tweets from different countries.
 
-<h2 align="center">Contributing</h2>
+## Contributing
 Contributions to this program are more than welcome. Simply make a pull request for my review. If there are any issues with, or any suggestions for, the program that you may have, create an issue for my review.
 
 My only requirement is that you thoroughly comment your code so that others and I can follow along with what you are doing, and can learn from what you added.
