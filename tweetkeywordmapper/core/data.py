@@ -678,8 +678,6 @@ def file_interact(data, file, file_ext, workspace, mode='a', checkKeyword=False,
                 else:
                     # add data values/object of state_field and id_field (without keyword filtering) to respective list
                     state_data.append(contents[state_field])
-                    contents[id_field] = contents[id_field].astype(float)
-                    
                     id_data.append(contents[id_field])
 
                     # set user keyword to an empty list
