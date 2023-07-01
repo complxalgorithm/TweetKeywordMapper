@@ -49,7 +49,7 @@ def ifWrite():
 # define TweetKeywordSearch() function - searches for Tweets using a specified keyword and
 # returns the found states, the Tweet IDs, state counts, and keyword used.
 """
-def TweetKeywordSearch(ws, default_file, states, cities):
+def TweetKeywordSearch(ws, default_file, states, cities, area_codes):
     """
     # authorize access to Twitter API by using your project's key, tokens, and secrets
     # these tokens/secrets/key can be found on your project on your Twitter Developer Portal
@@ -102,7 +102,7 @@ def TweetKeywordSearch(ws, default_file, states, cities):
     search_results = tweepy.Cursor(api.search_tweets, q=query, count=100).items()
             
     # get lists of places and tweet ids from search results
-    places, ids = ex.get_states_ids_from_results(search_results, api, states, cities, num_res)
+    places, ids = ex.get_states_ids_from_results(search_results, api, states, cities, area_codes, num_res)
             
     # get dictionary of counts for each state
     state_counts = stats.get_counts(places, states=states)

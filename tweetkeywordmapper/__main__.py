@@ -34,9 +34,10 @@ WS = cons.workspace
 DEFAULT_FILE = cons.default_file
 DEFAULT_FILE_TYPE = DEFAULT_FILE.split('.')[-1]
 
-# set states and cities dictionaries
+# set states, cities, and area codes dictionaries
 STATES = cons.states
 CITIES = cons.cities
+AREA_CODES = cons.area_codes
 
 
 """
@@ -165,7 +166,7 @@ def main():
             
             time.sleep(0.5)   # pause program for half a second
             
-            places, ids, state_counts, keyword, num_results = tks.TweetKeywordSearch(WS, DEFAULT_FILE, STATES, CITIES)
+            places, ids, state_counts, keyword, num_results = tks.TweetKeywordSearch(WS, DEFAULT_FILE, STATES, CITIES, AREA_CODES)
 
         # run the read.py script if import is the argument
         elif args.read:

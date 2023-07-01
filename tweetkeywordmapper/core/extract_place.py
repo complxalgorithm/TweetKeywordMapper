@@ -19,7 +19,7 @@ import time
 # define get_states_from_results() function - uses search results to populate places list with
 # full name of the state that each of the tweets with geolocation info was tweeted from
 """
-def get_states_ids_from_results(results, api, states, cities, num):
+def get_states_ids_from_results(results, api, states, cities, areas, num):
     # initialize tweet ids list to store ids of tweets
     tweet_ids = []
     
@@ -54,7 +54,7 @@ def get_states_ids_from_results(results, api, states, cities, num):
         
         else:
             # get the state from which the tweet was sent
-            place = get_state(stat, user, states, cities)
+            place = get_state(stat, user, states, cities, areas)
 
             print(f'State: {place}\n')
         
@@ -86,7 +86,7 @@ def get_states_ids_from_results(results, api, states, cities, num):
 """
 # define get_state() function - extracts the state from each tweet using either the Status or User model
 """
-def get_state(s, u, states, cities):
+def get_state(s, u, states, cities, areas):
     # run this code if there is a place object in status model for the tweet
     if s.place is not None:
         # set variable to place object of status model
@@ -130,13 +130,13 @@ def get_state(s, u, states, cities):
     
     # when the found place has a value, try to extract the state from the value
     if pl.find('via') == -1 and pl.find('from') == -1:
-        return find_state_in_place_value(pl, states, cities)
+        return find_state_in_place_value(pl, states, cities, areas)
     
     elif pl.find('via') != -1:
-        return find_state_in_place_value(pl, states, cities, word='via')
+        return find_state_in_place_value(pl, states, cities, areas, word='via')
     
     else:
-        return find_state_in_place_value(pl, states, cities, word='from')
+        return find_state_in_place_value(pl, states, cities, areas, word='from')
 
 
 """
@@ -153,7 +153,7 @@ def search_for_state_city(p):
 # define find_state_in_place_value() function - searches for any mention of a state or city and returns the state value
 # that is most likely to be the state of origin of the Tweet
 """
-def find_state_in_place_value(place, states, cities, word=''):
+def find_state_in_place_value(place, states, cities, areas, word=''):
     # initialize num_found_states variable to keep track of how many states could be pulled
     # from the place value
     num_found_states = 0
@@ -370,6 +370,42 @@ def find_state_in_place_value(place, states, cities, word=''):
                 pass
         
         # move on if a state abbreviation or name could not be found
+        else:
+            pass
+    
+    # iterate through each area code in area_codes dictionary
+    for code in areas:
+        # run this if an area code was found in place value
+        if search_for_state_city(code)(place) is not None:
+            # display the area code that was found
+            print(f'Area Code: {code} => {areas[code]}')
+            
+            # attempt to get index within place value of found area code
+            try:
+                place.index(code)
+            
+            # move on if an error occurred
+            except Exception:
+                pass
+            
+            # an index was found successfully
+            else:
+                # only add to found states counter if state isn't already in the found_states_indexes dictionary
+                if areas[code] not in found_states_indexes:
+                    num_found_states += 1
+
+                else:
+                    print(f'{areas[code]} has already been found.')
+
+                # add the state and its index within the place value to the found_states_indexes dictionary
+                # if the index is not already in the dictionary
+                if place.index(code) not in found_states_indexes.values():
+                    found_states_indexes[areas[code]] = place.index(code)
+
+                else:
+                    print(f'A state has already been found at {place.index(code)}.')
+        
+        # move on if area code could not be found in place value
         else:
             pass
     
