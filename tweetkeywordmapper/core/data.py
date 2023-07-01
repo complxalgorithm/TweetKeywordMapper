@@ -77,7 +77,7 @@ def get_file_contents_fields(file, file_ext):
     file_path = os.path.join(cwd, file)
     
     # set file name
-    file_name = file.split('.')[0]
+    file_name = os.path.splitext(os.path.basename(file_path))[0]
     
     # get contents from CSV file
     if file_ext == 'csv':
@@ -701,7 +701,7 @@ def file_interact(data, file, file_ext, workspace, mode='a', checkKeyword=False,
             for ob in id_data:
                 for tweet in ob:
                     # had to format like this to prevent truncated values from being added to ids list
-                    ids.append(int('{:.0f}'.format(tweet)))
+                    ids.append(tweet)
 
             # return states, ids, and user_keyword to parent function
             return states, ids, user_keywords

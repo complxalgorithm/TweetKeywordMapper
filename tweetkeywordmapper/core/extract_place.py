@@ -38,8 +38,8 @@ def get_states_ids_from_results(results, api, states, cities, areas, num):
         tweet_id = status['_json']['id']
         screen_name = status['_json']['user']['screen_name']
         
+        # display Tweet ID
         print(f'Tweet ID: {tweet_id}\n')
-        #print(f'Screen Name: {screen_name}')
         
         # try to get status data using the tweet id
         # try to get user data using the screen name
@@ -162,6 +162,9 @@ def find_state_in_place_value(place, states, cities, areas, word=''):
     # they are located within the place value string
     found_states_indexes = {}
     
+    # strip place value of certain characters: '?', '.', '!', ';', and ':'
+    place = re.sub('\?|\.|\!|\;|\:', '', place)
+    
     # iterate through each city in the cities dictionary
     for c in cities:
         # run this code if a city mention is within the place value
@@ -180,7 +183,7 @@ def find_state_in_place_value(place, states, cities, areas, word=''):
                 else:
                     # display the city value that was found
                     # this could also include other names or abbreviations of states
-                    print(f'City Found: {c}')
+                    print(f'City Found: {c} => {cities[c]}')
                     
                     # get result object of value that was found
                     result = search_for_state_city(c)(place)
@@ -200,7 +203,7 @@ def find_state_in_place_value(place, states, cities, areas, word=''):
                             found_states_indexes[cities[c]] = place.upper().index(c)
                     
                         else:
-                            print(f'A state has already been found at {place.title().index(c)}.')
+                            print(f'A state has already been found at index {place.title().index(c)}.')
                     
                     # tell user if the result may be a common word, and don't include it
                     else:
@@ -224,7 +227,7 @@ def find_state_in_place_value(place, states, cities, areas, word=''):
                 else:
                     # display the city value that was found
                     # this could also include other names or abbreviations for states
-                    print(f'City Found: {c}')
+                    print(f'City Found: {c} => {cities[c]}')
                     
                     # get result object of value that was found
                     result = search_for_state_city(c)(place)
@@ -244,7 +247,7 @@ def find_state_in_place_value(place, states, cities, areas, word=''):
                             found_states_indexes[cities[c]] = place.title().index(c)
                     
                         else:
-                            print(f'A state has already been found at {place.title().index(c)}.')
+                            print(f'A state has already been found at index {place.title().index(c)}.')
                     
                     # tell user if the result may be a common word, and don't include it
                     else:
@@ -306,7 +309,7 @@ def find_state_in_place_value(place, states, cities, areas, word=''):
                             found_states_indexes[states[s]] = place.upper().index(s)
                             
                         else:
-                            print(f'A state has already been found at {place.upper().index(s)}.')
+                            print(f'A state has already been found at index {place.upper().index(s)}.')
                         
 
                     # run if the result is not a common word
@@ -328,7 +331,7 @@ def find_state_in_place_value(place, states, cities, areas, word=''):
 
                             # tell user when a state has already been found at that index
                             else:
-                                print(f'A state has already been found at {place.upper().index(s)}.')
+                                print(f'A state has already been found at index {place.upper().index(s)}.')
 
                         # tell user when the found result may not refer to a state
                         else:
@@ -362,7 +365,7 @@ def find_state_in_place_value(place, states, cities, areas, word=''):
                         found_states_indexes[states[s]] = place.title().index(states[s])
                     
                     else:
-                        print(f'A state has already been found at {place.title().index(states[s])}.')
+                        print(f'A state has already been found at index {place.title().index(states[s])}.')
                     
 
             # move on if a state abbreviation or name could not be found
@@ -403,7 +406,7 @@ def find_state_in_place_value(place, states, cities, areas, word=''):
                     found_states_indexes[areas[code]] = place.index(code)
 
                 else:
-                    print(f'A state has already been found at {place.index(code)}.')
+                    print(f'A state has already been found at index {place.index(code)}.')
         
         # move on if area code could not be found in place value
         else:
