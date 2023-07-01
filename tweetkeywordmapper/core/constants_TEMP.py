@@ -81,6 +81,8 @@ cities = {
     'New York City': 'New York',
     'Brooklyn': 'New York',
     'Manhattan': 'New York',
+    'Bronx': 'New York',
+    'Staten Island': 'New York',
     'Buffalo': 'New York',
     'WNY': 'New York',
     'Calif': 'California',
