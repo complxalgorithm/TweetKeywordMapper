@@ -1,6 +1,6 @@
 bearer_token = '<ADD BEARER TOKEN HERE>'
 consumer_key = '<ADD CONSUMER KEY HERE>'
-consumer_secret = "<ADD CONSUMER SECRET HERE>'
+consumer_secret = '<ADD CONSUMER SECRET HERE>'
 access_token = '<ADD ACCESS TOKEN HERE>'
 access_secret = '<ADD ACCESS SECRET HERE>'
 
