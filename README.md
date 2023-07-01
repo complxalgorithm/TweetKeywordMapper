@@ -44,7 +44,9 @@ You can also use git to clone the repo by running the following in your terminal
 ```
 git clone https://github.com/complxalgorithm/TweetKeywordMapper.git
 ```
-Next, set the workspace of your project (i.e., your ArcGIS Pro project) within the <em>constants_TEMP.py</em> file. Your workspace can either be within the TweetKeywordMapper directory that you downloaded, or in a different directory. You then need to set the name of the default CSV/XLSX file. This file should be located within the TweetKeywordMapper directory.
+Next, set the workspace of your project (i.e., your ArcGIS Pro project) within the <em>constants_TEMP.py</em> file. Your workspace can either be within the TweetKeywordMapper directory that you downloaded, or in a different directory.
+
+You then need to set the name of the default CSV/XLSX file. This file should be located within the TweetKeywordMapper directory. You can use either of the sample files that are included, just make sure to move the one you want to use into the root project directory.
 
 #### Install Requirements
 You can install all modules other than ArcPy by running the following command within the TweetKeywordMapper directory:
@@ -107,7 +109,6 @@ Make the script executable by running the following command within the TweetKeyw
 ```
 chmod +x tkm
 ```
-
 After making the script executable, you can now run it. The script accepts a single parameter with the same options as the Python program.
 ```
 username ^ TweetKeywordMapper => ./tkm help
@@ -137,11 +138,9 @@ Unfortunately, due to how the code is written, you may run into issues with CSV/
 
 ### Privacy
 The data in the sample files contain Tweet IDs, the searched keyword that was found in each Tweet, and each Tweet's extracted state of origin. Twitter necessitates the screen name in order to view the Tweets on Twitter. The URL structure is as such:
-
 ```
 https://twitter.com/SCREEN_NAME/status/TWEET_ID
 ```
-
 While this program has to use the screen name in order to pull data about the user in the state extraction algorithm, it does not - nor will it ever - allow you to save the screen name affiliated with any Tweet to your CSV/XLSX file. If you append any of the Tweet IDs to the <em>twitter.com</em> domain, you will get an error saying that the account does not exist. It is because of this that you will not be able to view any of the Tweets on Twitter. This is by design.
 
 ## To-Do List
@@ -150,7 +149,7 @@ While this program has to use the screen name in order to pull data about the us
 - [X] Get state from Tweet where user's location has something like "NY -> FL".
 - [X] Get state from Tweet where user's location has something like "Florida via New York"
 - [ ] If place value from a Tweet is a set of X,Y coordinates, use those to determine state.
-- [ ] Identify area codes in place value and use them to determine state of origin.
+- [X] Identify area codes in place value and use them to determine state of origin.
 - [X] When writing data to a csv, organize each row's data based on the location of their respective field in the file.
 - [X] Handle situations like when shapefiles can't be found in the user specified directory.
 - [X] Allow user to interact with Excel files.
