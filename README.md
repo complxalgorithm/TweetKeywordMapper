@@ -88,17 +88,20 @@ This file can be anywhere within the workspace that you specified in the <em>con
 Once the program is downloaded onto your machine and all of the requirements are met, you can now run the program. Support is available to run the program as the <em>tweetkeywordmapper</em> Python package, or by using the <em>tkm</em> shell script. Both of these support four argument/parameter options.
 
 #### Python
-The program runs as the <em>tweetkeywordmapper</em> package. The program accepts a single argument with one of four options: search, read, counts, or help.
+The program runs as the <em>tweetkeywordmapper</em> package. The program accepts up to two arguments with one of five options: search, read, counts, create, or help. If two arguments are used, create <em>must be</em> one of them.
 ```
 username ^ TweetKeywordMapper => python3 tweetkeywordmapper -h
-usage: python3 tweetkeywordmapper [-s] [-r] [-c] [-h]
+usage: python3 tweetkeywordmapper [-s] [-r] [-c] [-f] [-h]
 
 Search/Import Tweet data from US states with a keyword, then map the count results.
+- search and read will run mapper.py to map the results after state counts are totaled.
+- if you want to use two parameters, -f must be one of them.
 
 optional arguments:
   -s, --search  search Twitter for Tweets containing a specific keyword, then map results
   -r, --read    import Tweet data from a CSV/XLSX file, then map results
   -c, --counts  tally the count for each unique value of a specified field from a CSV/XLSX file
+  -f, --create  create a CSV or XLSX file to use for writing and importing Tweet data
   -h, --help    display usage information
 ```
 
@@ -109,20 +112,21 @@ Make the script executable by running the following command within the TweetKeyw
 ```
 chmod +x tkm
 ```
-After making the script executable, you can now run it. The script accepts a single parameter with the same options as the Python program.
+After making the script executable, you can now run it. The script accepts up to two parameters with the same options and conditions as the Python execution.
 ```
 username ^ TweetKeywordMapper => ./tkm help
-usage: ./tkm <parameter>
+usage: ./tkm [search] [read] [counts] [create] [help]
 
-Search/Import Tweet data from US states with a keyword, then map the count results
+Search/Import Tweet data from US states with a keyword, then map the count results.
+- search and read will run mapper.py to map the results after state counts are totaled.
+- if you want to use two parameters, cf must be one of them.
 
 optional parameters:
 search:  search Twitter for Tweets containing a specific keyword, then map results
 read:    import Tweet data from a CSV/XLSX file, then map results
 counts:  tally the count for each unique value of a specified field from a CSV/XLSX file
+create:  create a CSV or XLSX file to use for writing and importing Tweet data
 help:    display usage information
-
-- search and read will run mapper.py to map the results after state counts are determined.
 ```
 
 ## Disclaimers
