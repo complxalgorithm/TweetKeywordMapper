@@ -14,7 +14,7 @@ It is also possible to display a count and percentage of the total for all uniqu
 
 Count results can be appended to shapefiles (ArcGIS Pro & GeoPandas) or feature classes within geodatabases (ArcGIS Pro).
 
-If your default file does not exist within the project directory, the program will create the file for you using <em>Tweet_ID</em>, <em>Keyword</em>, and <em>State</em> as default field names. It is best to create a file (at least one that will be used by this program) in this manner.
+The program has an option that allows you to create a file for you using <em>Tweet_ID</em>, <em>Keyword</em>, and <em>State</em> as default field names. This includes if your default file does not already exist, or if you just want to create another file. It is best to create a file (at least one that will be used by this program) in this manner.
 
 The program can be ran as the <em>tweetkeywordmapper</em> package, or by using the <em>tkm</em> shell script.
 
