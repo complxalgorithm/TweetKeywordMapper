@@ -106,7 +106,9 @@ def create_file(default_file, ws):
     
     # tell user default file exists
     else:
-        print(f'{default_file} is your set default file, and it exists.')
+        print(f'{default_file} is your set default file, and it exists.\n')
+        
+        time.sleep(0.5)     # pause program for half a second
         
     # ask if they'd like to create another file anyway
     ifCreate = input('Would you still like to create another file? (Y or N) ')

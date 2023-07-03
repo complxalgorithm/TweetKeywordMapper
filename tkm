@@ -9,7 +9,7 @@ helpFunc()
     echo "usage: ./tkm [search] [read] [counts] [create] [help]\n"
     echo "Search/Import Tweet data from US states with a keyword, then map the count results."
     echo "- search and read will run mapper.py to map the results after state counts are totaled."
-    echo "- if you want to use two parameters, cf must be one of them.\n"
+    echo "- if you want to use two parameters, create must be one of them.\n"
     echo "optional parameters:"
     echo "search:\t search Twitter for Tweets containing a specific keyword, then map results"
     echo "read:\t import Tweet data from a CSV/XLSX file, then map results"
@@ -33,41 +33,73 @@ if [ $# -eq "0" ]; then
             echo "ERROR - Too many parameters. Only 2 is allowed at most.\n"
             helpFunc
             
-            # display error and show usage info if an invalid parameter was used
-            elif ! [[ ${@/*[cf]*/} || ${@/*[search]*/} || ${@/*[read]*/} || ${@/*[counts]*/} || ${@/*[help]*/} ]]; then
-                echo "ERROR - Invalid parameter.\n"
+            # show usage information if help is a parameter
+            elif [[ $1 = "help" || $2 = "help" ]]; then
                 helpFunc
             
             # display error and show usage info if create file is not a parameter 
-            elif [ $# -eq "2" ] && [[ $1 != "cf" && $2 != "cf" ]]; then
+            elif [ $# -eq "2" ] && [[ $1 != "create" && $2 != "create" ]]; then
                 echo "ERROR - create must be used when using 2 arguments.\n"
                 helpFunc
-            
-            # run this if one parameter is present
+                
+            # run this in any other situation
             else
-                # run create_file function when parameter is set to "create"
-                if [[ $1 = "create" || $2 = "create" ]]; then
-                    exec python3 tweetkeywordmapper -cf
+                # go through each argument that was passed
+                for i in "$@"; do
+                    # if any of the arguments are not valid, display an error and usage information
+                    if [[ $i != "search" && $i != "read" && $i != "counts" && $i != "create" ]]; then
+                        echo "ERROR - $i is an invalid function.\n"
+                        helpFunc
+                    fi
+                done
+                
+                # when there is 1 parameter
+                if [ $# -eq "1" ]; then
+                    # 
+                    if [ $1 = "search" ]; then
+                        exec python3 tweetkeywordmapper -s
+                    
+                        # run read.py program when parameter is set to "read"
+                        elif [ $1 = "read" ]; then
+                            exec python3 tweetkeywordmapper -r
+                
+                        # run counts.py program when parameter is set to "counts"
+                        elif [ $1 = "counts" ]; then
+                            exec python3 tweetkeywordmapper -c
+                    
+                        # elif
+                        elif [ $1 = "create" ]; then
+                            exec python3 tweetkeywordmapper -f
+                        
+                        # display usage information
+                        else
+                            helpFunc
+                    fi
+                    
+                    # when there are 2 parameters
+                    else
+                        # there are 2 parameters, and since no errors were returned,
+                        # it can be assumed that "create" is one of the parameters
+                        # run it along with whatever functionality the second parameter is
+                        # attached to
+                        
+                        # run search.py program when parameter is set to "search"
+                        if [[ $1 = "search" || $2 = "search" ]]; then
+                            exec python3 tweetkeywordmapper -s -f
+
+                            # run read.py program when parameter is set to "read"
+                            elif [[ $1 = "read" || $2 = "read" ]]; then
+                                exec python3 tweetkeywordmapper -r -f
+
+                            # run counts.py program when parameter is set to "counts"
+                            elif [[ $1 = "counts" || $2 = "counts" ]]; then
+                                exec python3 tweetkeywordmapper -c -f
+
+                            # display usage information
+                            else
+                                helpFunc
+                        fi
                 fi
                 
-                # run search.py program when parameter is set to "search"
-                if [[ $1 = "search" || $2 = "search" ]]; then
-                    exec python3 tweetkeywordmapper -s
-                fi
-                    
-                # run read.py program when parameter is set to "read"
-                if [[ $1 = "read" || $2 = "read" ]]; then
-                    exec python3 tweetkeywordmapper -r
-                fi
-                    
-                # run counts.py program when parameter is set to "counts"
-                if [[ $1 = "counts" || $2 = "counts" ]]; then
-                    exec python3 tweetkeywordmapper -c
-                fi
-                    
-                # display help info when parameter is set to "help"
-                if [[ $1 = "help" || $2 = "help" ]]; then
-                    helpFunc
-                fi
         fi
 fi

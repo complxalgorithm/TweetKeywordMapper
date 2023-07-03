@@ -114,6 +114,9 @@ def TweetKeywordSearch(ws, default_file, states, cities, area_codes):
     if num_results == 0:
         # display there were no search results returned
         print(f'Searching for {keyword} returned no results.')
+        
+        time.sleep(1)   # pause program for a second
+    
     else:
         # display number of search results returned
         print(f'Searching for {keyword} returned {num_results} results\n.')

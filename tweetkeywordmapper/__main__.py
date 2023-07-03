@@ -126,15 +126,15 @@ def main():
         
         return
     
-    # make sure createfile is one of the arguments if two arguments are entered after package name
-    elif num_args == 2 and not args.create:
-        print('ERROR - f/create flag must be used when using 2 arguments. Use -h or --help for usage information.')
-        
-        return
-    
     # display an error if more than two additional arguments are entered after package name
     elif num_args > 2:
         print('ERROR - Too many arguments. Use -h or --help for usage information.')
+        
+        return
+    
+    # make sure createfile is one of the arguments if two arguments are entered after package name
+    elif num_args == 2 and not args.create:
+        print('ERROR - f/create flag must be used when using 2 arguments. Use -h or --help for usage information.')
         
         return
     
@@ -147,6 +147,10 @@ def main():
 
         # run create_file function if createfile is an argument
         if args.create:
+            print('Create a CSV or XLSX File\n')
+            
+            time.sleep(0.5)   # pause program for half a second
+            
             # create file
             create_file(DEFAULT_FILE, WS)
 
