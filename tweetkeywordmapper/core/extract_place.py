@@ -297,11 +297,7 @@ def find_state_in_place_value(place, states, cities, areas, word=''):
                             num_found_states += 1
 
                         else:
-                            # trying to fix LA/California issue
-                            if result.group(1) == 'LA':
-                                print('California has already been found.')
-                            else:
-                                print(f'{states[s]} has already been found.')
+                            print(f'{states[s]} has already been found.')
                         
                         # add the state and its index within the place value to the found_states_indexes dictionary
                         # if the index is not already in the dictionary
