@@ -26,43 +26,116 @@ pd.set_option('display.float_format', lambda x: f'%.{0 if x.is_integer() else 1}
 """
 # define get_user_file() function - get a file from the user from which to read data,
 # then return valid file and its file extension
+# optional parameter:
+#   - arg -> default to False
 """
-def get_user_file(default_file):
-    # ask user to enter their file, or use the default file
-    user_file = input('Enter CSV or XlSX file from your current directory, or hit enter to use default file: ') or default_file
+def get_user_file(default_file, arg=False):
+    # run this if function is being called using an argument
+    if arg == True:
+        # ask user to enter their file
+        user_file = input('Enter name for your CSV or XlSX file: ')
     
-    # automatically return file and its extension if the input is the same as the default file
-    if user_file == default_file:
-        file_ext = default_file.split('.')[-1]
-        return default_file, file_ext
-    
-    # get extension of input file
-    file_ext = user_file.split('.')[-1]
-    
-    # validate that file exists and that the file is a CSV or XLSX file
-    while os.path.exists(user_file) == False or (file_ext != 'csv' and file_ext != 'xlsx'):
-        # display error if input doesn't exist
-        if os.path.exists(user_file) == False:
-            print(f'{user_file} does not exist in your current directory.')
-        
-        # display error if input is not a CSV or Excel file
-        else:
-            # display error if input isn't a CSV file
-            if file_ext != 'csv':
-                print(f'{user_file} is not a CSV file.')
-
-            # display error if input isn't an Excel file
-            else:
-                print(f'{user_file} is not an XLSX file.')
-            
-        # ask user for file again, and use default file if input is left blank
-        user_file = input('Enter file from your current directory, or hit enter to use default file: ') or default
-        
-        # get extension of new input file
+        # get extension of input file
         file_ext = user_file.split('.')[-1]
+        
+        # validate that the file is a CSV or XLSX
+        while file_ext not in ('csv', 'xlsx'):
+            # display improper file type error
+            print('ERROR - that is not a CSV or XLSX file name.')
+            
+            # ask user to enter another file name
+            user_file = input('Enter name for your CSV or XlSX file: ')
+    
+            # get extension of input file
+            file_ext = user_file.split('.')[-1]
+    
+    # run this in every other situation
+    else:
+        # ask user to enter their file, or use the default file
+        user_file = input('Enter CSV or XlSX file from your current directory, or hit enter to use default file: ') or default_file
+
+        # get extension of input file
+        file_ext = user_file.split('.')[-1]
+
+        # validate that file exists and that the file is a CSV or XLSX file
+        while not os.path.exists(user_file) or (file_ext != 'csv' and file_ext != 'xlsx'):
+            # display error if input doesn't exist
+            if not os.path.exists(user_file):
+                print(f'ERROR - {user_file} does not exist in your current directory.')
+
+            # display error if input is not a CSV or Excel file
+            else:
+                # display error if input isn't a CSV file
+                print(f'{user_file} is not a CSV or XLSX file.')
+
+            # ask user for file again, and use default file if input is left blank
+            user_file = input('Enter file from your current directory, or hit enter to use default file: ') or default_file
+
+            # get extension of new input file
+            file_ext = user_file.split('.')[-1]
     
     # return the file and file extension to the parent function
     return user_file, file_ext
+
+
+"""
+# define create_file() function - create file if it does not already exist within the workspace
+# by adding first row to file containing headers Tweet_ID, Keyword, and State
+"""
+def create_file(default_file, ws):
+    # set default field names to be added as first row to new file
+    default_fields = ['Tweet_ID', 'Keyword', 'State']
+    
+    # create default file if it doesn't already exist
+    if not os.path.exists(default_file):
+        # get extension of input file
+        file_type = user_file.split('.')[-1]
+        
+        # create default file if it's a CSV or XLSX file
+        if file_type == 'csv' or file_type == 'xlsx':
+            file_interact(default_fields, default_file, file_type, ws)
+
+            # display that default file was successfully created, then return to parent function
+            print(f'Default file created called: {default_file}')
+            
+            return
+        
+        # display error if file is not a CSV or XLSX file
+        else:
+            print(f'Could not create default file {default_file} because it is not a CSV or XLSX file.')
+    
+    # tell user default file exists
+    else:
+        print(f'{default_file} is your set default file, and it exists.')
+        
+    # ask if they'd like to create another file anyway
+    ifCreate = input('Would you still like to create another file? (Y or N) ')
+        
+    # validate their answer, and ask again if necessary
+    while ifCreate.upper() not in ('Y', 'N') and ifCreate.title() not in ('Yes', 'No'):
+        print(f'{ifCreate} is not valid.')
+        ifCreate = input('Would you still like to create another file? (Y or N) ')
+        
+    # new line
+    print()
+    
+    # get user's file, then create it, if the user signals they would like to 
+    if ifCreate.upper() == 'Y' or ifCreate.title() == 'Yes':
+        user_file, file_type = get_user_file(default_file, arg=True)
+            
+        file_interact(default_fields, user_file, file_type, ws)
+        
+        print(f'{user_file} created successfully.')
+        
+    # tell user that no file was created if they said they didn't want to
+    else:
+        print('No file created.\n')
+        
+    # pause program for a second
+    time.sleep(1)
+        
+    # return to parent function
+    return
 
 
 """

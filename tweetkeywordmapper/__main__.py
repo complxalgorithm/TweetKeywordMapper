@@ -8,12 +8,14 @@ import time
 import warnings as warn
 
 try:
+    from tweetkeywordmapper.core.data import create_file
     from tweetkeywordmapper.core import constants as cons
     from tweetkeywordmapper.scripts import mapper as tkm
     from tweetkeywordmapper.scripts import search as tks
     from tweetkeywordmapper.scripts import read as tkr
     from tweetkeywordmapper.scripts import counts as cnts
 except:
+    from core.data import create_file
     from core import constants as cons
     from scripts import mapper as tkm
     from scripts import search as tks
@@ -44,9 +46,17 @@ AREA_CODES = cons.area_codes
 # define get_args() function - set valid arguments and return arguments parser
 """
 def get_args() -> argparse.Namespace:
+    # import textwrap module to be used in argument parser
+    import textwrap
+    
     # create ArgumentParser instance
     parser = argparse.ArgumentParser(prog='python3 tweetkeywordmapper',
-                                     description='Search/Import Tweet data from US states with a keyword, then map the count results.',
+                                     formatter_class=argparse.RawDescriptionHelpFormatter,
+                                     description=textwrap.dedent('''\
+                                        Search/Import Tweet data from US states with a keyword, then map the count results.
+                                        - search and read will run mapper.py to map the results after state counts are totaled.
+                                        - if you want to use two parameters, -f must be one of them.
+                                        '''),
                                      add_help=False)
     
     # add argument options to parser
@@ -56,42 +66,13 @@ def get_args() -> argparse.Namespace:
                          help='import Tweet data from a CSV/XLSX file, then map results')
     parser.add_argument('-c', '--counts', action='store_true',
                          help='tally the count for each unique value of a specified field from a CSV/XLSX file')
+    parser.add_argument('-f', '--create', action='store_true',
+                       help='create a CSV or XLSX file to use for writing and importing Tweet data')
     parser.add_argument('-h', '--help', action='help',
                        help='display usage information')
     
     # return parser
     return parser.parse_args()
-
-
-"""
-# define create_default_file() function - create the default file if it does not already exist
-# within the workspace by adding first row to file containing headers Tweet_ID, Keyword, and State
-"""
-def create_default_file(default, ws, file_type):
-    # create default file if it doesn't already exist
-    if not os.path.exists(default):
-        # import data module
-        try:
-            from tweetkeywordmapper.core import data
-        except:
-            from core import data
-        
-        # create default file if it's a CSV or XLSX file
-        if file_type == 'csv' or file_type == 'xlsx':
-            data.file_interact(['Tweet_ID', 'Keyword', 'State'], default, file_type, ws)
-
-            # display that default file was successfully create
-            print(f'Default file created called: {default}\n')
-        
-        # display error if file is not a CSV or XLSX file
-        else:
-            print(f'Could not create default file {default} because it is not a CSV or XLSX file.')
-
-        # pause program for a second
-        time.sleep(1)
-        
-        # return to parent function
-        return
 
         
 """
@@ -100,11 +81,11 @@ def create_default_file(default, ws, file_type):
 def display_results(count_percents, state_counts, places, ids, keyword, states):
     # display keyword(s), and tweet ids and places lists if any were found
     print(f'\nKeywords: {keyword}\n')
-    time.sleep(1.5)   # pause program for a second and a half
+    time.sleep(1.5)                 # pause program for a second and a half
     print(f'IDs: {ids}\n')
-    time.sleep(1.5)   # pause program for a second and a half
+    time.sleep(1.5)                 # pause program for a second and a half
     print(f'Places: {places}\n')
-    time.sleep(1.5)   # pause program for a second and a half
+    time.sleep(1.5)                 # pause program for a second and a half
     
     # display the count and percentage of total for each state
     print('Total Tweets/Percent of Total From Each State')
@@ -129,38 +110,47 @@ def main():
     # get arguments
     args = get_args()
     
-    # set name of package
-    pkg = 'tweetkeywordmapper'
-    
-    # get last argument
-    arg = sys.argv[-1]
-    
-    # get number of arguments except for name of program
+    # get number of arguments minus package name
     num_args = (len(sys.argv)-1)
     
     """
     # handle arguments, or lack thereof
     """
     
-    # display an error if no additional arguments are entered after tweetkeywordmapper, then quit program
-    # NOTE: usage information will be displayed if more than 1 additional argument is entered
-    #       and a default error will be displayed if an invalid argument is entered
+    # display an error if no additional arguments are entered after package name, then quit program
+    # NOTES: usage information will be displayed by default if more than 1 additional argument is entered
+    #        a default error will be displayed if an invalid argument is entered
+    #        if help is used along with another argument, the program will only display usage information
     if num_args == 0:
         print('ERROR - No argument provided. Use -h or --help for usage information.')
         
         return
     
-    # run this code if no errors in argumentation are present
+    # make sure createfile is one of the arguments if two arguments are entered after package name
+    elif num_args == 2 and not args.create:
+        print('ERROR - f/create flag must be used when using 2 arguments. Use -h or --help for usage information.')
+        
+        return
+    
+    # display an error if more than two additional arguments are entered after package name
+    elif num_args > 2:
+        print('ERROR - Too many arguments. Use -h or --help for usage information.')
+        
+        return
+    
+    # only 1 argument was entered
     else:
         # display welcome message
         print('Welcome to Tweet Keyword Mapper!\n')
         
         time.sleep(1)   # pause program for a second
 
-        # create default file if it doesn't already exist
-        create_default_file(DEFAULT_FILE, WS, DEFAULT_FILE_TYPE)
+        # run create_file function if createfile is an argument
+        if args.create:
+            # create file
+            create_file(DEFAULT_FILE, WS)
 
-        # run the search.py script if search is the argument
+        # run the search.py script if search is an argument
         if args.search:
             print('Search Twitter for Tweets Containing a Keyword\n')
             
@@ -168,29 +158,23 @@ def main():
             
             places, ids, state_counts, keyword, num_results = tks.TweetKeywordSearch(WS, DEFAULT_FILE, STATES, CITIES, AREA_CODES)
 
-        # run the read.py script if import is the argument
+        # run the read.py script if read is an argument
         elif args.read:
-            print('Import Tweet Data from a CSV/Excel File\n')
+            print('Import Tweet Data from a CSV or XLSX File\n')
             
             time.sleep(0.5)   # pause program for half a second
             
             places, ids, state_counts, keyword, num_results = tkr.TweetKeywordRead(WS, DEFAULT_FILE, STATES)
 
-        # run the counts.py script if counts is the argument
+        # run the counts.py script if counts is an argument
         elif args.counts:
-            print('Count Instances of Each Unique Value of a Field in a CSV/Excel File\n')
+            print('Count Instances of Each Unique Value of a Field in a CSV or XLSX File\n')
             
             time.sleep(0.5)   # pause program for half a second
             
             cnts.TweetKeywordCount(WS, DEFAULT_FILE, STATES)
-        
-        # display invalid argument error if any other arguments are entered, then quit program
-        else:
-            print('ERROR - Invalid argument. Use -h or --help for usage information.')
-            
-            return
 
-        # run this code if search or import were the arguments
+        # run this code if search or import were an argument
         if args.search or args.read:
             # run this code if results were found
             if num_results > 0:
@@ -213,12 +197,9 @@ def main():
 
                 # run mapping functionality
                 tkm.TweetKeywordMapper(WS, state_counts, keyword)
-
+        
         # display goodbye after the program has executed
-        if arg != pkg:
-            time.sleep(1)   # pause program for a second
-            
-            print('\nThank you for using Tweet Keyword Mapper!')
+        print('\nThank you for using Tweet Keyword Mapper!')
 
 
 # execute program

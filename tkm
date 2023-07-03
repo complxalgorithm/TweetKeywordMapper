@@ -6,14 +6,16 @@
 # display help information for program
 helpFunc()
 {
-    echo "usage: ./tkm <parameter>\n"
-    echo "Search/Import Tweet data from US states with a keyword, then map the count results\n"
+    echo "usage: ./tkm [search] [read] [counts] [create] [help]\n"
+    echo "Search/Import Tweet data from US states with a keyword, then map the count results."
+    echo "- search and read will run mapper.py to map the results after state counts are totaled."
+    echo "- if you want to use two parameters, cf must be one of them.\n"
     echo "optional parameters:"
     echo "search:\t search Twitter for Tweets containing a specific keyword, then map results"
     echo "read:\t import Tweet data from a CSV/XLSX file, then map results"
     echo "counts:\t tally the count for each unique value of a specified field from a CSV/XLSX file"
-    echo "help:\t display usage information\n"
-    echo "- search and read will run mapper.py to map the results after state counts are determined."
+    echo "create:\t create a CSV or XLSX file to use for writing and importing Tweet data"
+    echo "help:\t display usage information"
     exit 1
 }
 
@@ -27,32 +29,45 @@ if [ $# -eq "0" ]; then
     # run this if parameter is present
     else
         # display error and show help info if more than one parameter is specified
-        if [ $# -gt "1" ]; then
-            echo "ERROR - Too many parameters. Only 1 is allowed at most.\m"
+        if [ $# -gt "2" ]; then
+            echo "ERROR - Too many parameters. Only 2 is allowed at most.\n"
             helpFunc
+            
+            # display error and show usage info if an invalid parameter was used
+            elif ! [[ ${@/*[cf]*/} || ${@/*[search]*/} || ${@/*[read]*/} || ${@/*[counts]*/} || ${@/*[help]*/} ]]; then
+                echo "ERROR - Invalid parameter.\n"
+                helpFunc
+            
+            # display error and show usage info if create file is not a parameter 
+            elif [ $# -eq "2" ] && [[ $1 != "cf" && $2 != "cf" ]]; then
+                echo "ERROR - create must be used when using 2 arguments.\n"
+                helpFunc
             
             # run this if one parameter is present
             else
+                # run create_file function when parameter is set to "create"
+                if [[ $1 = "create" || $2 = "create" ]]; then
+                    exec python3 tweetkeywordmapper -cf
+                fi
+                
                 # run search.py program when parameter is set to "search"
-                if [ $1 = "search" ]; then
+                if [[ $1 = "search" || $2 = "search" ]]; then
                     exec python3 tweetkeywordmapper -s
+                fi
                     
-                    # run read.py program when parameter is set to "read"
-                    elif [ $1 = "read" ]; then
-                        exec python3 tweetkeywordmapper -r
+                # run read.py program when parameter is set to "read"
+                if [[ $1 = "read" || $2 = "read" ]]; then
+                    exec python3 tweetkeywordmapper -r
+                fi
                     
-                    # run counts.py program when parameter is set to "counts"
-                    elif [ $1 = "counts" ]; then
-                        exec python3 tweetkeywordmapper -c
+                # run counts.py program when parameter is set to "counts"
+                if [[ $1 = "counts" || $2 = "counts" ]]; then
+                    exec python3 tweetkeywordmapper -c
+                fi
                     
-                    # display help info when parameter is set to "help"
-                    elif [ $1 = "help" ]; then
-                        helpFunc
-                    
-                    # display error and help info if the parameter is set to anything else
-                    else
-                        echo "ERROR - $1 is not a valid parameter value.\n"
-                        helpFunc
+                # display help info when parameter is set to "help"
+                if [[ $1 = "help" || $2 = "help" ]]; then
+                    helpFunc
                 fi
         fi
 fi
