@@ -119,7 +119,7 @@ usage: ./tkm [search] [read] [counts] [create] [help]
 
 Search/Import Tweet data from US states with a keyword, then map the count results.
 - search and read will run mapper.py to map the results after state counts are totaled.
-- if you want to use two parameters, cf must be one of them.
+- if you want to use two parameters, create must be one of them.
 
 optional parameters:
 search:  search Twitter for Tweets containing a specific keyword, then map results
