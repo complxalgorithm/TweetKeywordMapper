@@ -147,7 +147,7 @@ https://twitter.com/SCREEN_NAME/status/TWEET_ID
 ```
 While this program has to use the screen name in order to pull data about the user in the state extraction algorithm, it does not - nor will it ever - allow you to save the screen name affiliated with any Tweet to your CSV/XLSX file. If you append any of the Tweet IDs to the <em>twitter.com</em> domain, you will get an error saying that the account does not exist. It is because of this that you will not be able to view any of the Tweets on Twitter. This is by design.
 
-## TO-DO
+## To-Do
 See the [TODO](TODO.md) list to view features that I would like to add in the future.
 
 ## Contributing
