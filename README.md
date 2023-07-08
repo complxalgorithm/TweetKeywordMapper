@@ -147,23 +147,11 @@ https://twitter.com/SCREEN_NAME/status/TWEET_ID
 ```
 While this program has to use the screen name in order to pull data about the user in the state extraction algorithm, it does not - nor will it ever - allow you to save the screen name affiliated with any Tweet to your CSV/XLSX file. If you append any of the Tweet IDs to the <em>twitter.com</em> domain, you will get an error saying that the account does not exist. It is because of this that you will not be able to view any of the Tweets on Twitter. This is by design.
 
-## To-Do List
-- [X] Clean up state extraction algorithm
-- [X] Find instance of a state's name in place values like "New York and the World" and return the appropriate state value.
-- [X] Get state from Tweet where user's location has something like "NY -> FL".
-- [X] Get state from Tweet where user's location has something like "Florida via New York"
-- [ ] If place value from a Tweet is a set of X,Y coordinates, use those to determine state.
-- [X] Identify area codes in place value and use them to determine state of origin.
-- [X] When writing data to a csv, organize each row's data based on the location of their respective field in the file.
-- [X] Handle situations like when shapefiles can't be found in the user specified directory.
-- [X] Allow user to interact with Excel files.
-- [ ] Add support for mapping using PyQGIS.
-- [X] Add support for mapping using GeoPandas.
-- [ ] Allow user to search Tweets in other languages.
-- [ ] Allow user to search Tweets from different countries.
+## TO-DO
+See the [TODO](TODO.md) list to view features that I would like to add in the future.
 
 ## Contributing
-Contributions to this program are more than welcome. Simply make a pull request for my review. If there are any issues with, or any suggestions for, the program that you may have, create an issue for my review.
+Contributions are more than welcome. Simply make a pull request for my review. If there are any issues with, or any suggestions for, the program that you may have, create an issue for my review.
 
 My only requirement is that you thoroughly comment your code so that others and I can follow along with what you are doing, and can learn from what you added.
 
