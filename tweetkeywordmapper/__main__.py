@@ -184,13 +184,13 @@ def main():
             if num_results > 0:
                 # import stats module
                 try:
-                    from tweetkeywordmapper.core import stats
+                    from tweetkeywordmapper.core.stats import get_count_percentages
                 except:
-                    from core import stats
+                    from core.stats import get_count_percentages
                 
                 # get what percentage of the total number of results came from each state
                 # will only include the states that have Tweets
-                state_count_percents = stats.get_count_percentages(state_counts, num_results, STATES)
+                state_count_percents = get_count_percentages(state_counts, num_results, STATES)
 
                 time.sleep(1)   # pause program for a second
 

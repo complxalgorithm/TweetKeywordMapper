@@ -740,6 +740,7 @@ def file_interact(data, file, file_ext, workspace, mode='a', checkKeyword=False,
 
                             time.sleep(1)   # pause program for a second
                             print(f'Results For - {user_keyword}:\n{keyword_contents}\n')
+                            time.sleep(1)   # pause program for a second
 
                             # add data values/object of state_field and id_field (after keyword filtering) to respective list
                             state_data.append(keyword_contents[state_field])
