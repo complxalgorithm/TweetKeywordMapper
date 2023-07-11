@@ -293,20 +293,18 @@ def find_state_in_place_value(place, states, cities, areas, word=''):
                     # make sure the result is not a common word
                     if result.group(1) not in ('in', 'In', 'me', 'Me', 'de', 'la', 'La', 'or', 'Or', 'Ca', 'Mt', 'Co', 'co', 'oh', 'Oh'):
                         # only add to found states counter if it isn't in the found_states_indexes dictionary
-                        if states[s] not in found_states_indexes:
+                        # add the state and its index within the place value to the found_states_indexes dictionary
+                        # if the index is not already in the dictionary
+                        if (states[s] not in found_states_indexes) and (place.upper().index(s) not in found_states_indexes.values()):
                             num_found_states += 1
+                            
+                            found_states_indexes[states[s]] = place.upper().index(s)
+                        
+                        elif (states[s] not in found_states_indexes) and (place.upper().index(s) in found_states_indexes.values()):
+                            print(f'A state has already been found at index {place.upper().index(s)}.')
 
                         else:
                             print(f'{states[s]} has already been found.')
-                        
-                        # add the state and its index within the place value to the found_states_indexes dictionary
-                        # if the index is not already in the dictionary
-                        if place.upper().index(s) not in found_states_indexes.values():
-                            found_states_indexes[states[s]] = place.upper().index(s)
-                            
-                        else:
-                            print(f'A state has already been found at index {place.upper().index(s)}.')
-                        
 
                     # run if the result is not a common word
                     else:
@@ -314,20 +312,18 @@ def find_state_in_place_value(place, states, cities, areas, word=''):
                         # and was preceded by 'Au'
                         if (search_for_state_city('AU')(place.upper()) is None) and (result.group(1) not in ('in', 'In', 'me', 'Me', 'de', 'la', 'La', 'or', 'Or', 'Mt', 'Co', 'co', 'oh', 'Oh')):
                             # only add to found states counter if it isn't in the found_states_indexes dictionary
-                            if states[s] not in found_states_indexes:
+                            # add the state and its index within the place value to the found_states_indexes dictionary
+                            # if the index is not already in the dictionary
+                            if (states[s] not in found_states_indexes) and (place.upper().index(s) not in found_states_indexes.values()):
                                 num_found_states += 1
+                                
+                                found_states_indexes[states[s]] = place.upper().index(s)
+                            
+                            elif (states[s] not in found_states_indexes) and (place.upper().index(s) in found_states_indexes.values()):
+                                print(f'A state has already been found at index {place.upper().index(s)}.')
                             
                             else:
                                 print(f'{states[s]} has already been found.')
-                            
-                            # add the state and its index within the place value to the found_states_indexes dictionary
-                            # if the index is not already in the dictionary
-                            if place.upper().index(s) not in found_states_indexes.values():
-                                found_states_indexes[states[s]] = place.upper().index(s)
-
-                            # tell user when a state has already been found at that index
-                            else:
-                                print(f'A state has already been found at index {place.upper().index(s)}.')
 
                         # tell user when the found result may not refer to a state
                         else:
@@ -349,20 +345,18 @@ def find_state_in_place_value(place, states, cities, areas, word=''):
                 # the index/location of a mention of the state was found in the place value
                 else:
                     # only add to found states counter if it isn't in the found_states_indexes dictionary
-                    if states[s] not in found_states_indexes:
+                    # add the state and its index within the place value to the found_states_indexes dictionary
+                    # if the index is not already in the dictionary
+                    if (states[s] not in found_states_indexes) and (place.title().index(states[s]) not in found_states_indexes.values()):
                         num_found_states += 1
+                        
+                        found_states_indexes[states[s]] = place.title().index(states[s])
+
+                    elif (states[s] not in found_states_indexes) and (place.title().index(states[s]) in found_states_indexes.values()):
+                        print(f'A state has already been found at index {place.title().index(states[s])}.')
 
                     else:
                         print(f'{states[s]} has already been found.')
-                    
-                    # add the state and its index within the place value to the found_states_indexes dictionary
-                    # if the index is not already in the dictionary
-                    if place.title().index(states[s]) not in found_states_indexes.values():
-                        found_states_indexes[states[s]] = place.title().index(states[s])
-                    
-                    else:
-                        print(f'A state has already been found at index {place.title().index(states[s])}.')
-                    
 
             # move on if a state abbreviation or name could not be found
             else:
@@ -390,19 +384,18 @@ def find_state_in_place_value(place, states, cities, areas, word=''):
             # an index was found successfully
             else:
                 # only add to found states counter if state isn't already in the found_states_indexes dictionary
-                if areas[code] not in found_states_indexes:
+                # add the state and its index within the place value to the found_states_indexes dictionary
+                # if the index is not already in the dictionary
+                if (areas[code] not in found_states_indexes) and (place.index(code) not in found_states_indexes.values()):
                     num_found_states += 1
+                    
+                    found_states_indexes[areas[code]] = place.index(code)
+                
+                elif (areas[code] not in found_states_indexes) and (place.index(code) in found_states_indexes.values()):
+                    print(f'A state has already been found at index {place.index(code)}.')
 
                 else:
                     print(f'{areas[code]} has already been found.')
-
-                # add the state and its index within the place value to the found_states_indexes dictionary
-                # if the index is not already in the dictionary
-                if place.index(code) not in found_states_indexes.values():
-                    found_states_indexes[areas[code]] = place.index(code)
-
-                else:
-                    print(f'A state has already been found at index {place.index(code)}.')
         
         # move on if area code could not be found in place value
         else:
