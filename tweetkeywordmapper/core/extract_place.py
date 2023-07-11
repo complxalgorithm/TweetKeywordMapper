@@ -142,8 +142,7 @@ def get_state(s, u, states, cities, areas):
 """
 # define search_for_state() function - looks for instance of a state abbreviation or name of a city
 # within the place value and returns an object if an instance is found
-# CREDIT: Hugh Bothwell
-# https://stackoverflow.com/questions/5319922/check-if-a-word-is-in-a-string-in-python
+# CREDIT: Hugh Bothwell -> https://stackoverflow.com/questions/5319922/check-if-a-word-is-in-a-string-in-python
 """
 def search_for_state_city(p):
     return re.compile(r'\b({0})\b'.format(p), flags=re.IGNORECASE).search
@@ -263,8 +262,68 @@ def find_state_in_place_value(place, states, cities, areas, word=''):
     
     # iterate through each state in the states dictionary
     for s in states:
+        # handle Washington, DC situations separately
+        if s == 'DC':
+            # run this if DC's abbreviation was found in place value
+            if search_for_state_city(s)(place.upper()) is not None:
+                # display the state abbreviation that was found
+                print(f'State Found: {s}')
+
+                # attempt to find the index of a mention of the current state in a uppercased version of the place value
+                try:
+                    place.upper().index(s)
+
+                # move on if nothing was found
+                except ValueError:
+                    pass
+                
+                # index of mention of DC was found in place value
+                else:
+                    # only add to found states counter if it isn't in the found_states_indexes dictionary
+                    # add the state and its index within the place value to the found_states_indexes dictionary
+                    # if the index is not already in the dictionary
+                    if (states[s] not in found_states_indexes) and (place.upper().index(s) not in found_states_indexes.values()):
+                        num_found_states += 1
+
+                        found_states_indexes[states[s]] = place.upper().index(s)
+
+                    elif (states[s] not in found_states_indexes) and (place.upper().index(s) in found_states_indexes.values()):
+                        print(f'A state has already been found at index {place.upper().index(s)}.')
+
+                    else:
+                        print(f'{states[s]} has already been found.')
+            
+            # run this if abbreviation was not found
+            else:
+                # attempt to find the index of a mention of the District of Columbia in place value
+                try:
+                    place.upper().index(states[s].upper())
+                
+                # move on if nothing was found
+                except ValueError:
+                    pass
+
+                # the index/location of a mention of DC was found in the place value
+                else:
+                    # display the state name that was found
+                    print(f'State Found: {states[s]}')
+
+                    # only add to found states counter if it isn't in the found_states_indexes dictionary
+                    # add the state and its index within the place value to the found_states_indexes dictionary
+                    # if the index is not already in the dictionary
+                    if (states[s] not in found_states_indexes) and (place.upper().index(states[s].upper()) not in found_states_indexes.values()):
+                        num_found_states += 1
+
+                        found_states_indexes[states[s]] = place.upper().index(states[s].upper())
+
+                    elif (states[s] not in found_states_indexes) and (place.upper().index(states[s].upper()) in found_states_indexes.values()):
+                        print(f'A state has already been found at index {place.upper().index(states[s].upper())}.')
+
+                    else:
+                        print(f'{states[s]} has already been found.')
+        
         # run this code if a state mention is within the place value
-        if search_for_state_city(s)(place.upper()) is not None or search_for_state_city(states[s])(place.title()) is not None:
+        elif (search_for_state_city(s)(place.upper()) is not None) or (search_for_state_city(states[s])(place.title()) is not None):
             # do this if mention of state's abbreviation is found within uppercased version of place value
             if search_for_state_city(s)(place.upper()) is not None:
                 # display the state abbreviation that was found
@@ -348,9 +407,18 @@ def find_state_in_place_value(place, states, cities, areas, word=''):
                     # add the state and its index within the place value to the found_states_indexes dictionary
                     # if the index is not already in the dictionary
                     if (states[s] not in found_states_indexes) and (place.title().index(states[s]) not in found_states_indexes.values()):
-                        num_found_states += 1
+                        # set the resulting search object to result variable
+                        result = search_for_state_city(states[s])(place)
                         
-                        found_states_indexes[states[s]] = place.title().index(states[s])
+                        # handle situation where Washington State is being added to found states when
+                        # the place value is equal to Washington, D.C.
+                        if place.upper() in ('WASHINGTON, DC', 'WASHINGTON, DISTRICT OF COLUMBIA') and result.group(1) in ('Washington', 'washington'):
+                            print('Washington refers to DC, not the separate state.')
+                        
+                        else:
+                            num_found_states += 1
+                            
+                            found_states_indexes[states[s]] = place.title().index(states[s])
 
                     elif (states[s] not in found_states_indexes) and (place.title().index(states[s]) in found_states_indexes.values()):
                         print(f'A state has already been found at index {place.title().index(states[s])}.')
@@ -378,7 +446,7 @@ def find_state_in_place_value(place, states, cities, areas, word=''):
                 place.index(code)
             
             # move on if an error occurred
-            except Exception:
+            except ValueError:
                 pass
             
             # an index was found successfully
