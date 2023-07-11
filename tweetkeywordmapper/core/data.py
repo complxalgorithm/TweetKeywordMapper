@@ -88,8 +88,8 @@ def create_file(default_file, ws):
     
     # create default file if it doesn't already exist
     if not os.path.exists(default_file):
-        # get extension of input file
-        file_type = user_file.split('.')[-1]
+        # get extension of default file
+        file_type = default_file.split('.')[-1]
         
         # create default file if it's a CSV or XLSX file
         if file_type == 'csv' or file_type == 'xlsx':
@@ -102,7 +102,12 @@ def create_file(default_file, ws):
         
         # display error if file is not a CSV or XLSX file
         else:
-            print(f'Could not create default file {default_file} because it is not a CSV or XLSX file.')
+            print(f'Could not create default file {default_file} because it is not a CSV or XLSX file.\n')
+            
+            time.sleep(0.5)     # pause program for half a second
+            
+            # ask if they'd like to create a file
+            ifCreate = input('Would you like to create a file? (Y or N) ')
     
     # tell user default file exists
     else:
@@ -110,8 +115,8 @@ def create_file(default_file, ws):
         
         time.sleep(0.5)     # pause program for half a second
         
-    # ask if they'd like to create another file anyway
-    ifCreate = input('Would you still like to create another file? (Y or N) ')
+        # ask if they'd like to create another file anyway
+        ifCreate = input('Would you still like to create another file? (Y or N) ')
         
     # validate their answer, and ask again if necessary
     while ifCreate.upper() not in ('Y', 'N') and ifCreate.title() not in ('Yes', 'No'):
@@ -127,7 +132,9 @@ def create_file(default_file, ws):
             
         file_interact(default_fields, user_file, file_type, ws)
         
-        print(f'{user_file} created successfully.')
+        time.sleep(0.5)     # pause program for half a second
+        
+        print(f'\n{user_file} created successfully.')
         
     # tell user that no file was created if they said they didn't want to
     else:
