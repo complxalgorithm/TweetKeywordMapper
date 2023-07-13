@@ -16,6 +16,6 @@
 
 ## Minor
 - [ ] Ask user if they would like to set the name of the new field in the feature class and the name of the generated map.
-- [ ] Extract time and data from Tweet and store this data in file.
+- [ ] Extract time and date from Tweet and store this data in file.
 - [ ] Allow user to save generated plot as a PNG before showing it.
 - [ ] Add support for mapping using PyQGIS.
