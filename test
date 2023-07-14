@@ -7,8 +7,7 @@
 helpFunc()
 {
     echo "usage: ./test [extract] [contents] [help]\n"
-    echo "tweetkeywordmapper test script"
-    echo "Test extract_place.py or get_file_contents_fields() functionality.\n"
+    echo "Test tweetkeywordmapper functionality\n"
     echo "optional parameters:"
     echo "extract:\t test coordinates and find state in value functions from extract_place module"
     echo "contents:\t test get_file_contents_fields() function from data module"
