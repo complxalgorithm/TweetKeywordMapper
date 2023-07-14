@@ -11,6 +11,7 @@
 
 ## Major
 - [ ] If place value from a Tweet is a set of X,Y coordinates, use those to determine state.
+- [ ] Account for full addresses so that a house number is not mistaken for an area code.
 - [ ] Allow user to search Tweets in other languages.
 - [ ] Allow user to search Tweets from different countries.
 
