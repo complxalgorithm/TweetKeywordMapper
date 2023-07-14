@@ -1,5 +1,52 @@
 #!/bin/sh
+# Name: test (tweetkeywordmapper)
+# Author: Stephen C. Sanders <https://stephensanders.me>
+# Description: test shell script to run test python scripts in tweetkeywordmapper package
 
-exec python3 -m tests.test_extract_place
-#exec python3 -m tests.test_file_contents_fields
-#exec python3 -m tests.test_threads.py
+# display help information for program
+helpFunc()
+{
+    echo "usage: ./test [extract] [contents] [help]\n"
+    echo "tweetkeywordmapper test script"
+    echo "Test extract_place.py or get_file_contents_fields() functionality.\n"
+    echo "optional parameters:"
+    echo "extract:\t test coordinates and find state in value functions from extract_place module"
+    echo "contents:\t test get_file_contents_fields() function from data module"
+    echo "help:\t\t display usage information"
+    exit 1
+}
+
+# handle parameter
+
+# lack of parameter triggers the displaying of an error and the help info
+if [ $# -eq "0" ]; then
+    echo "ERROR - No parameter provided.\n"
+    helpFunc
+    
+    # run this if parameter is present
+    else
+        # display error and show help info if more than one parameter is specified
+        if [ $# -gt "1" ]; then
+            echo "ERROR - Too many parameters.\n"
+            helpFunc
+            
+            else
+                # run test of extract_place module
+                if [ $1 = extract ]; then
+                    exec python3 -m tweetkeywordmapper.tests.test_extract_place
+                    
+                    # run test of get_file_contents_fields function
+                    elif [ $1 = contents ]; then
+                        exec python3 -m tweetkeywordmapper.tests.test_file_contents_fields
+                    
+                    # how usage information
+                    elif [ $1 = help ]; then
+                        helpFunc
+                    
+                    # display not a valid parameter error
+                    else
+                        echo "ERROR - Not a valid parameter.\n"
+                        helpFunc
+                fi
+        fi
+fi
