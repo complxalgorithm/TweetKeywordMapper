@@ -4,12 +4,13 @@
 @Author: Stephen Sanders <https://stephensanders.me>
 @Description: State extraction algorithm used to determine US state of origin of Tweets that were pulled
               by Tweepy search cursor.
-@Requirements: numpy
+@Requirements: numpy, geopy
 
 """
 
 
 # import modules
+from geopy.geocoders import Nominatim
 import numpy as np
 import re
 import time
@@ -128,15 +129,105 @@ def get_state(s, u, states, cities, areas):
     else:
         return ''
     
+    """
     # when the found place has a value, try to extract the state from the value
-    if pl.find('via') == -1 and pl.find('from') == -1:
-        return find_state_in_place_value(pl, states, cities, areas)
+    # depending on the type
+    """
     
-    elif pl.find('via') != -1:
-        return find_state_in_place_value(pl, states, cities, areas, word='via')
+    # remove dash from value in the event that it is a set of coordinates in the western hemisphere or south of the equator
+    temp_pl = re.sub('\-', '', pl)
+    
+    # create list of elements using this temp value
+    if len(temp_pl.split(', ')) > 1:
+        elements = temp_pl.split(', ')
+    
+    elif len(temp_pl.split(',')) > 1:
+        elements = temp_pl.split(',')
+    
+    elif len(temp_pl.split(' ')) > 1:
+        elements = temp_pl.split(' ')
     
     else:
-        return find_state_in_place_value(pl, states, cities, areas, word='from')
+        elements = []
+    
+    # depending on what the place value is, try to determine state of origin
+    if (pl.find('ÜT: ') != -1 or pl.find('°') != -1) or (len(elements) == 2 and ('.' in elements[0] and elements[0].replace('.', '').isnumeric()) and ('.' in elements[1] and elements[1].replace('.', '').isnumeric())):
+        return determine_state_from_coordinates(pl, states)
+    
+    elif pl.find('via') != -1 or pl.find('from') != -1:
+        return find_state_in_place_value(pl, states, cities, areas, word='via')
+    
+    else: 
+        return find_state_in_place_value(pl, states, cities, areas)
+
+
+"""
+# define determine_state_from_coordinates() function - will use potential coordinates from place value
+# to determine state of origin
+"""
+def determine_state_from_coordinates(pl, states):
+    # intialize Nominatim API
+    geolocator = Nominatim(user_agent='Tweet Keyword Mapper')
+    
+    # run this if ÜT is not in place value
+    if pl.find('ÜT: ') != -1:
+        # remove ÜT from place value
+        pl = re.sub('\ÜT: ', '', pl)
+        
+        # get x,y coordinates from place value
+        elements = pl.split(',')
+    
+    # run this in every other situation
+    else:
+        # try splitting value by a comma space
+        if (len(pl.split(', '))) > 1:
+            elements = pl.split(', ')
+        
+        # try splitting value by a comma
+        elif (len(pl.split(','))) > 1:
+            elements = pl.split(',')
+
+        # try splitting value by a space
+        elif (len(pl.split(' '))) > 1:
+            elements = pl.split(' ')
+
+        # return empty string if all fails
+        else:
+            return ''
+        
+    # create coordinates string
+    coordinates = ' , '.join(elements)
+    
+    print(coordinates)
+
+    # get location using coordinates
+    location = geolocator.reverse(coordinates)
+
+    # get city, state, country address from location
+    address = location.raw['address']
+
+    # when an address can't be determined, return an empty string
+    if address is None:
+        print('Could not use coordinates provided in {pl}\n')
+
+        return ''
+
+    # use the address values to try to determine state
+    else:
+        # get state from the address when it comes from the United States,
+        # then return the state
+        if address['country'] == 'United States':
+            state = address['state']
+
+            print(f'State Found from Coordinates: {state}\n')
+
+            return state
+
+        # return empty string when tweet came from a different country
+        else:
+            print('Not from the United States.')
+
+            return ''
 
 
 """
@@ -381,7 +472,7 @@ def find_state_in_place_value(place, states, cities, areas, word=''):
                         
                         # handle situation where Washington State is being added to found states when
                         # the place value is equal to Washington, D.C.
-                        if place.upper() in ('WASHINGTON, DC', 'WASHINGTON, DISTRICT OF COLUMBIA') and result.group(1) in ('Washington', 'washington'):
+                        if (place.upper().find('WASHINGTON, DC') != -1 or (place.upper().find('WASHINGTON, DC') != -1) or place.upper().find('WASHINGTON, DISTRICT OF COLUMBIA') != -1) and (result.group(1) in ('Washington', 'washington')):
                             print('Washington refers to DC, not the separate state.')
                         
                         # handle situation where Virginia is being returned in cases where full West Virginia name is in place value
