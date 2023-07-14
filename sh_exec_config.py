@@ -1,7 +1,7 @@
 import os, psutil, time
 
 # list of valid shells
-shells = ['sh', 'bash', 'zsh', 'csh', 'tcsh', 'ksh', 'fish']
+shells = ['sh', 'bash', 'zsh', 'csh', 'scsh', 'tcsh', 'ksh', 'fish']
 
 # get parent process name
 parent_proc = psutil.Process(os.getppid()).name()
