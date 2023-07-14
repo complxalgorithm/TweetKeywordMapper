@@ -16,10 +16,10 @@ import time
 
 # change pandas options so that all results will be displayed
 # also tells pandas to show entire Tweet ID integers without truncation
-pd.set_option('display.max_rows', 999)
-pd.set_option('display.max_columns', 999)
-pd.set_option('display.width', 999)
-pd.set_option('display.max_colwidth', 999)
+pd.set_option('display.max_rows', 99999)
+pd.set_option('display.max_columns', 9999)
+pd.set_option('display.width', 9999)
+pd.set_option('display.max_colwidth', 9999)
 pd.set_option('display.float_format', lambda x: f'%.{0 if x.is_integer() else 1}f' % x)
 
 
