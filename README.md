@@ -54,9 +54,9 @@ You can then download ArcGIS Pro if you have a Windows machine, and that will au
 #### Configure Shell Scripts
 In order to run the <em>tkm</em> and <em>test</em> shell scripts, you will first need to make them executable. You can do this by running the following in the project directory:
 ```
-$ python3 sh_exec_config.py
+$ python3 -m tweetkeywordmapper.utils.sh_exec_config.py
 ```
-Most Bourne or C shell variants can run these scripts. They will not work if you use PowerShell, for instance.
+Bourne or C shell variants can run these scripts. They will not work if you use PowerShell, for instance.
 
 ### Using Twitter API
 1. Set up a Twitter Developer account [here](https://developer.twitter.com).
@@ -81,7 +81,7 @@ Most Bourne or C shell variants can run these scripts. They will not work if you
 You can get a US states polygon shapefile from many places. Here are a few:
 1. [United States Census Bureau](https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html)
 2. [National Weather Service](https://www.weather.gov/gis/USStates)
-3. [Data.gov](https://catalog.data.gov/dataset/2019-cartographic-boundary-shapefile-region-for-united-states-1-5000000)
+3. [Data.gov](https://catalog.data.gov/dataset/tiger-line-shapefile-2017-nation-u-s-current-state-and-equivalent-national)
 
 It is recommended that you remove all territories (including Puerto Rico) from the shapefile because only results from a US <em>state</em> will be counted.
 
