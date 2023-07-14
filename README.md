@@ -24,8 +24,9 @@ The program can be ran as the <em>tweetkeywordmapper</em> package, or by using t
 3. tweepy
 4. pandas / geopandas
 5. arcpy
-6. matplotlib 
-7. numpy
+6. geopy
+7. matplotlib 
+8. numpy
 
 If you are installing Pandas manually, it is ideal to install all of its dependencies.
 ```
@@ -148,7 +149,7 @@ https://twitter.com/SCREEN_NAME/status/TWEET_ID
 While this program has to use the screen name in order to pull data about the user in the state extraction algorithm, it does not - nor will it ever - allow you to save the screen name affiliated with any Tweet to your CSV/XLSX file. If you append any of the Tweet IDs to the <em>twitter.com</em> domain, you will get an error saying that the account does not exist. It is because of this that you will not be able to view any of the Tweets on Twitter. This is by design.
 
 ## To-Do
-See the [TODO](TODO.md) list to view features that I would like to add in the future.
+See the [TODO](TODO.md) list to view features that will be added in the future.
 
 ## Contributing
 Contributions are more than welcome. Simply make a pull request for my review. If there are any issues with, or any suggestions for, the program that you may have, create an issue for my review.

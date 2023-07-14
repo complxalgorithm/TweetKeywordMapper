@@ -8,10 +8,10 @@
 - [X] Allow user to interact with Excel files.
 - [X] Allow user to extract data for multiple keywords from their file.
 - [X] Add support for mapping using GeoPandas.
-- [ ] Account for full addresses so that a house number is not mistaken for an area code.
+- [X] If place value from a Tweet is a set of X,Y coordinates, use those to determine state.
+- [X] Account for full addresses so that a house number is not mistaken for an area code.
 
 ## Major
-- [ ] If place value from a Tweet is a set of X,Y coordinates, use those to determine state.
 - [ ] Allow user to search Tweets in other languages.
 - [ ] Allow user to search Tweets from different countries.
 
