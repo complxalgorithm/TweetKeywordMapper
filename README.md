@@ -146,9 +146,11 @@ extract:         test coordinates and find state in value functions from extract
 contents:        test get_file_contents_fields() function from data module
 help:            display usage information
 ```
-You could also test them manually using Python3, such as:
+You could also test them manually using Python3:
 ```
 $ python3 -m tweetkeywordmapper.tests.test_extract_place
+
+$ python3 -m tweetkeywordmapper.tests.test_file_contents_fields
 ```
 
 ## Disclaimers
