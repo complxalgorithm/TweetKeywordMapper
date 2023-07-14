@@ -263,64 +263,33 @@ def find_state_in_place_value(place, states, cities, areas, word=''):
     # iterate through each state in the states dictionary
     for s in states:
         # handle Washington, DC situations separately
-        if s == 'DC':
-            # run this if DC's abbreviation was found in place value
-            if search_for_state_city(s)(place.upper()) is not None:
-                # display the state abbreviation that was found
-                print(f'State Found: {s}')
+        if s == 'DC' and search_for_state_city(s)(place.upper()) is None:
+            # attempt to find the index of a mention of the District of Columbia in place value
+            try:
+                place.upper().index(states[s].upper())
 
-                # attempt to find the index of a mention of the current state in a uppercased version of the place value
-                try:
-                    place.upper().index(s)
+            # move on if nothing was found
+            except ValueError:
+                pass
 
-                # move on if nothing was found
-                except ValueError:
-                    pass
-                
-                # index of mention of DC was found in place value
-                else:
-                    # only add to found states counter if it isn't in the found_states_indexes dictionary
-                    # add the state and its index within the place value to the found_states_indexes dictionary
-                    # if the index is not already in the dictionary
-                    if (states[s] not in found_states_indexes) and (place.upper().index(s) not in found_states_indexes.values()):
-                        num_found_states += 1
-
-                        found_states_indexes[states[s]] = place.upper().index(s)
-
-                    elif (states[s] not in found_states_indexes) and (place.upper().index(s) in found_states_indexes.values()):
-                        print(f'A state has already been found at index {place.upper().index(s)}.')
-
-                    else:
-                        print(f'{states[s]} has already been found.')
-            
-            # run this if abbreviation was not found
+            # the index/location of a mention of DC was found in the place value
             else:
-                # attempt to find the index of a mention of the District of Columbia in place value
-                try:
-                    place.upper().index(states[s].upper())
-                
-                # move on if nothing was found
-                except ValueError:
-                    pass
+                # display the state name that was found
+                print(f'State Found: {states[s]}')
 
-                # the index/location of a mention of DC was found in the place value
+                # only add to found states counter if it isn't in the found_states_indexes dictionary
+                # add the state and its index within the place value to the found_states_indexes dictionary
+                # if the index is not already in the dictionary
+                if (states[s] not in found_states_indexes) and (place.upper().index(states[s].upper()) not in found_states_indexes.values()):
+                    num_found_states += 1
+
+                    found_states_indexes[states[s]] = place.upper().index(states[s].upper())
+
+                elif (states[s] not in found_states_indexes) and (place.upper().index(states[s].upper()) in found_states_indexes.values()):
+                    print(f'A state has already been found at index {place.upper().index(states[s].upper())}.')
+
                 else:
-                    # display the state name that was found
-                    print(f'State Found: {states[s]}')
-
-                    # only add to found states counter if it isn't in the found_states_indexes dictionary
-                    # add the state and its index within the place value to the found_states_indexes dictionary
-                    # if the index is not already in the dictionary
-                    if (states[s] not in found_states_indexes) and (place.upper().index(states[s].upper()) not in found_states_indexes.values()):
-                        num_found_states += 1
-
-                        found_states_indexes[states[s]] = place.upper().index(states[s].upper())
-
-                    elif (states[s] not in found_states_indexes) and (place.upper().index(states[s].upper()) in found_states_indexes.values()):
-                        print(f'A state has already been found at index {place.upper().index(states[s].upper())}.')
-
-                    else:
-                        print(f'{states[s]} has already been found.')
+                    print(f'{states[s]} has already been found.')
         
         # run this code if a state mention is within the place value
         elif (search_for_state_city(s)(place.upper()) is not None) or (search_for_state_city(states[s])(place.title()) is not None):
@@ -415,6 +384,10 @@ def find_state_in_place_value(place, states, cities, areas, word=''):
                         if place.upper() in ('WASHINGTON, DC', 'WASHINGTON, DISTRICT OF COLUMBIA') and result.group(1) in ('Washington', 'washington'):
                             print('Washington refers to DC, not the separate state.')
                         
+                        # handle situation where Virginia is being returned in cases where full West Virginia name is in place value
+                        elif (place.upper().find('WEST VIRGINIA') != -1) and (result.group(1) in ('Virginia', 'virginia')):
+                            print('Virginia is not referring to the separate state, but is part of West Virginia.')
+                        
                         else:
                             num_found_states += 1
                             
@@ -451,19 +424,25 @@ def find_state_in_place_value(place, states, cities, areas, word=''):
             
             # an index was found successfully
             else:
-                # only add to found states counter if state isn't already in the found_states_indexes dictionary
-                # add the state and its index within the place value to the found_states_indexes dictionary
-                # if the index is not already in the dictionary
-                if (areas[code] not in found_states_indexes) and (place.index(code) not in found_states_indexes.values()):
-                    num_found_states += 1
-                    
-                    found_states_indexes[areas[code]] = place.index(code)
-                
-                elif (areas[code] not in found_states_indexes) and (place.index(code) in found_states_indexes.values()):
-                    print(f'A state has already been found at index {place.index(code)}.')
+                # account for full street addresses with house numbers
+                if (place.upper().find('STREET') == -1) and (place.upper().find('DR') == -1) and (place.upper().find('DRIVE') == -1) and (place.upper().find('RD') == -1) and (place.upper().find('ROAD') == -1) and (place.upper().find('BLVD') == -1) and (place.upper().find('BOULEVARD') == -1):
+                    # only add to found states counter if state isn't already in the found_states_indexes dictionary
+                    # add the state and its index within the place value to the found_states_indexes dictionary
+                    # if the index is not already in the dictionary
+                    if (areas[code] not in found_states_indexes) and (place.index(code) not in found_states_indexes.values()):
+                        num_found_states += 1
 
+                        found_states_indexes[areas[code]] = place.index(code)
+
+                    elif (areas[code] not in found_states_indexes) and (place.index(code) in found_states_indexes.values()):
+                        print(f'A state has already been found at index {place.index(code)}.')
+
+                    else:
+                        print(f'{areas[code]} has already been found.')
+                
+                # tell user when the code is probably a house number in a full street address
                 else:
-                    print(f'{areas[code]} has already been found.')
+                    print(f'{code} is probably the house number in an address.')
         
         # move on if area code could not be found in place value
         else:
