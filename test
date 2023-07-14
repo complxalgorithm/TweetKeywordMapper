@@ -1,0 +1,4 @@
+#!/bin/sh
+
+exec python3 -m tests.test_extract_place
+#exec python3 -m tests.test_threads.py

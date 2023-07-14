@@ -1,10 +1,12 @@
 __pycache__/
 setup.py
-tweet-test.py
-test*
 session*
 constants.py
 tweet_data.csv
 sample_tweets.*
 US_States*
 Tweet_Keyword_Mapper.qgz
+tweet-test.py
+test_coordinates.py
+test_insta.py
+test_threads.py
