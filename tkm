@@ -55,7 +55,7 @@ if [ $# -eq "0" ]; then
                 
                 # when there is 1 parameter
                 if [ $# -eq "1" ]; then
-                    # 
+                    # run search.py when parameter is set to "search"
                     if [ $1 = "search" ]; then
                         exec python3 tweetkeywordmapper -s
                     
@@ -67,7 +67,7 @@ if [ $# -eq "0" ]; then
                         elif [ $1 = "counts" ]; then
                             exec python3 tweetkeywordmapper -c
                     
-                        # elif
+                        # run create_file() when parameter is set to "create"
                         elif [ $1 = "create" ]; then
                             exec python3 tweetkeywordmapper -f
                         
