@@ -30,7 +30,7 @@ The program can be ran as the <em>tweetkeywordmapper</em> package, or by using t
 
 If you are installing Pandas manually, it is ideal to install all of its dependencies.
 ```
-pip3 install pandas[all]
+$ pip3 install pandas[all]
 ```
 
 In order to install ArcPy and ArcGIS Pro, you must have a Windows machine.
@@ -43,7 +43,7 @@ You can download the program in a couple ways. Download a zip file of this repos
 
 You can also use git to clone the repo by running the following in your terminal:
 ```
-git clone https://github.com/complxalgorithm/TweetKeywordMapper.git
+$ git clone https://github.com/complxalgorithm/TweetKeywordMapper.git
 ```
 Next, set the workspace of your project (i.e., your ArcGIS Pro project) within the <em>constants_TEMP.py</em> file. Your workspace can either be within the TweetKeywordMapper directory that you downloaded, or in a different directory.
 
@@ -52,9 +52,16 @@ You then need to set the name of the default CSV/XLSX file. This file should be 
 #### Install Requirements
 You can install all modules other than ArcPy by running the following command within the TweetKeywordMapper directory:
 ```
-pip3 install -r requirements.txt
+$ pip3 install -r requirements.txt
 ```
 You can then download ArcGIS Pro if you have a Windows machine, and that will automatically install the latest version of ArcPy.
+
+#### Configure Shell Scripts
+In order to run the <em>tkm</em> and <em>test</em> shell scripts, you will first need to make them executable. You can do this by running the following in the project directory:
+```
+$ python3 sh_exec_config.py
+```
+Most Bourne or C shell variants can run these scripts. They will not work if you use PowerShell, for instance.
 
 ### Using Twitter API
 1. Set up a Twitter Developer account [here](https://developer.twitter.com).
@@ -91,7 +98,7 @@ Once the program is downloaded onto your machine and all of the requirements are
 #### Python
 The program runs as the <em>tweetkeywordmapper</em> package. The program accepts up to two arguments with one of five options: search, read, counts, create, or help. If two arguments are used, create <em>must be</em> one of them.
 ```
-username ^ TweetKeywordMapper => python3 tweetkeywordmapper -h
+$ python3 tweetkeywordmapper -h
 usage: python3 tweetkeywordmapper [-s] [-r] [-c] [-f] [-h]
 
 Search/Import Tweet data from US states with a keyword, then map the count results.
@@ -107,15 +114,11 @@ optional arguments:
 ```
 
 #### Shell
-You can also use the <em>tkm</em> shell script to execute the program. This script acts as an execution wrapper for the <em>tweetkeywordmapper</em> package and executes the appropriate command depending on the parameter value.
+The <em>tkm</em> shell script can be used to execute the program. This script acts as an execution wrapper for the <em>tweetkeywordmapper</em> package and executes the appropriate command depending on the parameter value(s).
 
-Make the script executable by running the following command within the TweetKeywordMapper directory:
+You can run the script after making it executable. The script accepts up to two parameters with the same options and conditions as the Python execution.
 ```
-chmod +x tkm
-```
-After making the script executable, you can now run it. The script accepts up to two parameters with the same options and conditions as the Python execution.
-```
-username ^ TweetKeywordMapper => ./tkm help
+$ ./tkm help
 usage: ./tkm [search] [read] [counts] [create] [help]
 
 Search/Import Tweet data from US states with a keyword, then map the count results.
@@ -128,6 +131,24 @@ read:    import Tweet data from a CSV/XLSX file, then map results
 counts:  tally the count for each unique value of a specified field from a CSV/XLSX file
 create:  create a CSV or XLSX file to use for writing and importing Tweet data
 help:    display usage information
+```
+
+## Testing
+There are a few test scripts within the <em>tests</em> directory. You can use the <em>test</em> shell script to run them.
+```
+$ ./test help
+usage: ./test [extract] [contents] [help]
+
+Test tweetkeywordmapper functionality
+
+optional parameters:
+extract:         test coordinates and find state in value functions from extract_place module
+contents:        test get_file_contents_fields() function from data module
+help:            display usage information
+```
+You could also test them manually using Python3, such as:
+```
+$ python3 -m tweetkeywordmapper.tests.test_extract_place
 ```
 
 ## Disclaimers
