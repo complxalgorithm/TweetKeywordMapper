@@ -99,6 +99,7 @@ usage: python3 tweetkeywordmapper [-s] [-r] [-c] [-f] [-d] [-h]
 Search/Import Tweet data from US states with a keyword, then map the count results.
 - search and read will run mapper.py to map the results after state counts are totaled.
 - if you want to use two parameters, -f or -d must be one of them.
+- to use three parameters, both -f and -d must be used.
 
 optional arguments:
   -s, --search        search Twitter for Tweets containing a specific keyword, then map results
@@ -120,6 +121,7 @@ usage: ./tkm [search] [read] [counts] [create_file] [delete_terrs] [help]
 Search/Import Tweet data from US states with a keyword, then map the count results.
 - search and read will run mapper.py to map the results after state counts are totaled.
 - if you want to use two parameters, create_file or delete_terrs must be one of them.
+- to use three parameters, both -f and -d must be used.
 
 optional parameters:
 search:          search Twitter for Tweets containing a specific keyword, then map results
