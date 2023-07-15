@@ -57,6 +57,7 @@ def get_args() -> argparse.Namespace:
                                         Search/Import Tweet data from US states with a keyword, then map the count results.
                                         - search and read will run mapper.py to map the results after state counts are totaled.
                                         - if you want to use two parameters, -f or -d must be one of them.
+                                        - to use three parameters, both -f and -d must be used.
                                         '''),
                                      add_help=False)
     
@@ -130,16 +131,20 @@ def main():
         return
     
     # display an error if more than two additional arguments are entered after package name
-    elif num_args > 2:
+    elif num_args > 3:
         print('ERROR - Too many arguments. Use -h or --help for usage information.')
         
         return
     
-    # make sure createfile is one of the arguments if two arguments are entered after package name
-    elif num_args == 2 and (not args.create_file and not args.delete_terrs):
-        print('ERROR - f/create_file or d/delete_terrs flag must be used when using 2 arguments. Use -h or --help for usage information.')
+    # make sure create_file or delete_terrs is one of the arguments if two arguments are entered after package name
+    elif (num_args == 2) and (not args.create_file and not args.delete_terrs):
+        print('ERROR - f/create_file or d/delete_terrs must be used when using 2 arguments. Use -h or --help for usage information.')
         
         return
+    
+    # make sure both create_file and delete_terrs are arguments if three arguments are entered after package name
+    elif (num_args == 3) and ((args.search and args.read) or (args.search and args.counts) or (args.read and args.counts)):
+        print('ERROR - f/create_file and d/delete_terrs must be used when using 3 arguments. Use -h or --help for usage information.')
     
     # only 1 argument was entered
     else:
