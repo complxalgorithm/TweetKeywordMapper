@@ -54,7 +54,7 @@ You can then download ArcGIS Pro if you have a Windows machine, and that will au
 #### Configure Shell Scripts
 In order to run the <em>tkm</em> and <em>test</em> shell scripts, you will first need to make them executable. You can do this by running the following in the project directory:
 ```
-$ python3 -m tweetkeywordmapper.utils.sh_exec_config.py
+$ python3 -m tweetkeywordmapper.utils.sh_exec_config
 ```
 Bourne or C shell variants can run these scripts. They will not work if you use PowerShell, for instance.
 
