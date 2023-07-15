@@ -14,6 +14,7 @@
 ## Major
 - [ ] Allow user to search Tweets in other languages.
 - [ ] Allow user to search Tweets from different countries.
+- [ ] If adding support for other languages and/or countries, start storing language/country data in file.
 
 ## Minor
 - [ ] Ask user if they would like to set the name of the new field in the feature class and the name of the generated map.
