@@ -229,29 +229,6 @@ def TweetKeywordGeoPandas(ws, counts, keyword):
     # generate updated shapefile with new count field and respective count values
     states_df.to_file(shp_path)
     
-    # read updated US states shapefile
-    states_df = gpd.read_file(shp_path)
-    
-    # get list of all fields
-    fields_list = states_df.head()
-    
-    # display field options found in shapefile
-    print()
-    for f in fields_list:
-        print(f)
-    print()
-    
-    # ask user which field holds the Tweet count values
-    plot_field = input('Choose the Tweet count field that was generated to plot it: ')
-
-    # validate that user_field is in the field_names list
-    while plot_field not in fields_list:
-        # display an error
-        print(f'{plot_field} is not a field. Please try again.')
-
-        # ask user again to specify which field holds the Tweet count
-        plot_field = input('Which field has the abbreviations of the states? ')
-    
     """
     # generate map of the states shapefile using the plot_field as the column to plot
     # sets axes using layer from gpd naturalearth_lowres
@@ -274,7 +251,7 @@ def TweetKeywordGeoPandas(ws, counts, keyword):
     
     # plot states shapefiles using above axes and plot_field, setting color scheme to red
     # and including a legend	
-    states_df.plot(ax=ax, column=plot_field, cmap='OrRd', legend=True)
+    states_df.plot(ax=ax, column=new_field, cmap='OrRd', legend=True)
     
     # get min/max x and min/max y values from usa dataset
     minx, miny, maxx, maxy = usa.total_bounds
@@ -285,6 +262,11 @@ def TweetKeywordGeoPandas(ws, counts, keyword):
     
     # set title of plot using map_title value
     ax.set_title(map_title)
+    
+    # tell user map is being generated
+    print(f'Generating {map_title} using newly created field....')
+    
+    time.sleep(1)   # pause program for a second
     
     # try to show map in new window
     try:

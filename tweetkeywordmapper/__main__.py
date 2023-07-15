@@ -1,5 +1,5 @@
 """
-# import modules
+# import modules and ignore warnings
 """
 import argparse
 import os
@@ -14,6 +14,7 @@ try:
     from tweetkeywordmapper.scripts import search as tks
     from tweetkeywordmapper.scripts import read as tkr
     from tweetkeywordmapper.scripts import counts as cnts
+    from tweetkeywordmapper.utils.delete_us_territories import delete_us_territories
 except:
     from core.data import create_file
     from core import constants as cons
@@ -21,8 +22,8 @@ except:
     from scripts import search as tks
     from scripts import read as tkr
     from scripts import counts as cnts
-    
-# ignore all warnings that GeoPandas may output
+    from utils.delete_us_territories import delete_us_territories
+
 warn.filterwarnings('ignore')
 
 
@@ -55,7 +56,7 @@ def get_args() -> argparse.Namespace:
                                      description=textwrap.dedent('''\
                                         Search/Import Tweet data from US states with a keyword, then map the count results.
                                         - search and read will run mapper.py to map the results after state counts are totaled.
-                                        - if you want to use two parameters, -f must be one of them.
+                                        - if you want to use two parameters, -f or -d must be one of them.
                                         '''),
                                      add_help=False)
     
@@ -66,8 +67,10 @@ def get_args() -> argparse.Namespace:
                          help='import Tweet data from a CSV/XLSX file, then map results')
     parser.add_argument('-c', '--counts', action='store_true',
                          help='tally the count for each unique value of a specified field from a CSV/XLSX file')
-    parser.add_argument('-f', '--create', action='store_true',
+    parser.add_argument('-f', '--create_file', action='store_true',
                        help='create a CSV or XLSX file to use for writing and importing Tweet data')
+    parser.add_argument('-d', '--delete_terrs', action='store_true',
+                       help='delete US territories from US state boundaries shapefile')
     parser.add_argument('-h', '--help', action='help',
                        help='display usage information')
     
@@ -133,8 +136,8 @@ def main():
         return
     
     # make sure createfile is one of the arguments if two arguments are entered after package name
-    elif num_args == 2 and not args.create:
-        print('ERROR - f/create flag must be used when using 2 arguments. Use -h or --help for usage information.')
+    elif num_args == 2 and (not args.create_file and not args.delete_terrs):
+        print('ERROR - f/create_file or d/delete_terrs flag must be used when using 2 arguments. Use -h or --help for usage information.')
         
         return
     
@@ -145,14 +148,23 @@ def main():
         
         time.sleep(1)   # pause program for a second
 
-        # run create_file function if createfile is an argument
-        if args.create:
+        # run create_file function if create_file is an argument
+        if args.create_file:
             print('Create a CSV or XLSX File\n')
             
             time.sleep(0.5)   # pause program for half a second
             
             # create file
             create_file(DEFAULT_FILE, WS)
+        
+        # run remove_us_territories.py if remove_territories is an argument
+        if args.delete_terrs:
+            print('Remove US Territories from US States Shapefile')
+            
+            time.sleep(0.5)   # pause program for half a second
+            
+            # delete US territories from shapefile
+            delete_us_territories(WS)
 
         # run the search.py script if search is an argument
         if args.search:
