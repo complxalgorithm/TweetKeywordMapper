@@ -83,9 +83,9 @@ You can get a US states polygon shapefile from many places. Here are a few:
 2. [National Weather Service](https://www.weather.gov/gis/USStates)
 3. [Data.gov](https://catalog.data.gov/dataset/tiger-line-shapefile-2017-nation-u-s-current-state-and-equivalent-national)
 
-It is recommended that you remove all territories (including Puerto Rico) from the shapefile because only results from a US <em>state</em> will be counted.
+It is recommended that you remove all territories (including Puerto Rico) from the shapefile because only results from a US <em>state</em> will be counted. The program has functionality that allows you to do that very easily.
 
-This file can be anywhere within the workspace that you specified in the <em>constants</em> module. It can be directly within your root workspace directory or within a subdirectory of the workspace directory.
+This shapefile can be anywhere within the workspace that you specified in the <em>constants</em> module. It can be directly within your root workspace directory or within a subdirectory of the workspace directory.
 
 ### Run
 Once the program is downloaded onto your machine and all of the requirements are met, you can now run the program. Support is available to run the program as the <em>tweetkeywordmapper</em> Python package, or by using the <em>tkm</em> shell script. Both of these support four argument/parameter options.
@@ -94,18 +94,19 @@ Once the program is downloaded onto your machine and all of the requirements are
 The program runs as the <em>tweetkeywordmapper</em> package. The program accepts up to two arguments with one of five options: search, read, counts, create, or help. If two arguments are used, create <em>must be</em> one of them.
 ```
 $ python3 tweetkeywordmapper -h
-usage: python3 tweetkeywordmapper [-s] [-r] [-c] [-f] [-h]
+usage: python3 tweetkeywordmapper [-s] [-r] [-c] [-f] [-d] [-h]
 
 Search/Import Tweet data from US states with a keyword, then map the count results.
 - search and read will run mapper.py to map the results after state counts are totaled.
-- if you want to use two parameters, -f must be one of them.
+- if you want to use two parameters, -f or -d must be one of them.
 
 optional arguments:
-  -s, --search  search Twitter for Tweets containing a specific keyword, then map results
-  -r, --read    import Tweet data from a CSV/XLSX file, then map results
-  -c, --counts  tally the count for each unique value of a specified field from a CSV/XLSX file
-  -f, --create  create a CSV or XLSX file to use for writing and importing Tweet data
-  -h, --help    display usage information
+  -s, --search        search Twitter for Tweets containing a specific keyword, then map results
+  -r, --read          import Tweet data from a CSV/XLSX file, then map results
+  -c, --counts        tally the count for each unique value of a specified field from a CSV/XLSX file
+  -f, --create_file   create a CSV or XLSX file to use for writing and importing Tweet data
+  -d, --delete_terrs  delete US territories from US state boundaries shapefile
+  -h, --help          display usage information
 ```
 
 #### Shell
@@ -114,18 +115,19 @@ The <em>tkm</em> shell script can be used to execute the program. This script ac
 You can run the script after making it executable. The script accepts up to two parameters with the same options and conditions as the Python execution.
 ```
 $ ./tkm help
-usage: ./tkm [search] [read] [counts] [create] [help]
+usage: ./tkm [search] [read] [counts] [create_file] [delete_terrs] [help]
 
 Search/Import Tweet data from US states with a keyword, then map the count results.
 - search and read will run mapper.py to map the results after state counts are totaled.
-- if you want to use two parameters, create must be one of them.
+- if you want to use two parameters, create_file or delete_terrs must be one of them.
 
 optional parameters:
-search:  search Twitter for Tweets containing a specific keyword, then map results
-read:    import Tweet data from a CSV/XLSX file, then map results
-counts:  tally the count for each unique value of a specified field from a CSV/XLSX file
-create:  create a CSV or XLSX file to use for writing and importing Tweet data
-help:    display usage information
+search:          search Twitter for Tweets containing a specific keyword, then map results
+read:            import Tweet data from a CSV/XLSX file, then map results
+counts:          tally the count for each unique value of a specified field from a CSV/XLSX file
+create_file:     create a CSV or XLSX file to use for writing and importing Tweet data
+delete_terrs:    delete US territories from US state boundaries shapefile
+help:            display usage information
 ```
 
 ## Testing
