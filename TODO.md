@@ -12,6 +12,7 @@
 - [X] Account for full addresses so that a house number is not mistaken for an area code.
 
 ## Major
+- [ ] Allow delete_terrs to be used on feature classes within geodatabases.
 - [ ] Allow user to search Tweets in other languages.
 - [ ] Allow user to search Tweets from different countries.
 - [ ] If adding support for other languages and/or countries, start storing language/country data in file.

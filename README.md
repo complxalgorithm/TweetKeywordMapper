@@ -83,15 +83,15 @@ You can get a US states polygon shapefile from many places. Here are a few:
 2. [National Weather Service](https://www.weather.gov/gis/USStates)
 3. [Data.gov](https://catalog.data.gov/dataset/tiger-line-shapefile-2017-nation-u-s-current-state-and-equivalent-national)
 
-It is recommended that you remove all territories (including Puerto Rico) from the shapefile because only results from a US <em>state</em> will be counted. The program has functionality that allows you to do that very easily.
+It is recommended that you remove all territories (including Puerto Rico) from the shapefile because only results from a US <em>state</em> will be counted. The program has functionality that allows you to do that very easily (currently only available if you are using a shapefile).
 
 This shapefile can be anywhere within the workspace that you specified in the <em>constants</em> module. It can be directly within your root workspace directory or within a subdirectory of the workspace directory.
 
 ### Run
-Once the program is downloaded onto your machine and all of the requirements are met, you can now run the program. Support is available to run the program as the <em>tweetkeywordmapper</em> Python package, or by using the <em>tkm</em> shell script. Both of these support four argument/parameter options.
+Once the program is downloaded onto your machine and all of the requirements are met, you can now run the program. Support is available to run the program as the <em>tweetkeywordmapper</em> Python package, or by using the <em>tkm</em> shell script. Both of these support six argument/parameter options.
 
 #### Python
-The program runs as the <em>tweetkeywordmapper</em> package. The program accepts up to two arguments with one of five options: search, read, counts, create, or help. If two arguments are used, create <em>must be</em> one of them.
+The program runs as the <em>tweetkeywordmapper</em> package. The program accepts up to two arguments with one of six options: search, read, counts, create_file, delete_terrs, or help. If two arguments are used, create <em>must be</em> one of them.
 ```
 $ python3 tweetkeywordmapper -h
 usage: python3 tweetkeywordmapper [-s] [-r] [-c] [-f] [-d] [-h]
@@ -156,6 +156,8 @@ $ python3 -m tweetkeywordmapper.tests.test_file_contents_fields
 This program is not an official Twitter or Esri project. This is a project that I made for a college course and is not affiliated <em>in any way</em> with Twitter/X Corp. or Esri. If you represent either of these companies and have an issue with this project, feel free to reach out to me at any time. Regardless, please do not sue me.
 
 Sometimes, a Tweet will be missed that should have been counted. I tried to limit as many mistakes as possible. To me, it is better to exclude Tweets that should have been included than it is to include Tweets that should have been excluded. There still may be times where a Tweet is counted that should not have been. That is still rarer than Tweets not getting counted that should have been.
+
+Currently, the delete_terrs argument/parameter only works on shapefiles. The ability to use this functionality on feature classes within geodatabases will be added in the future.
 
 There may be times when you specify a higher number of expected results, but the program doesn't reach it. That is because Twitter has a set limit of 100 results for each search query. This program will only count Tweets from which it is able to extract a state of origin towards your specified number of search results.
 
