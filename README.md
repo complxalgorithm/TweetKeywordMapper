@@ -104,7 +104,7 @@ Search/Import Tweet data from US states with a keyword, then map the count resul
 optional arguments:
   -s, --search        search Twitter for Tweets containing a specific keyword, then map results
   -r, --read          import Tweet data from a CSV/XLSX file, then map results
-  -c, --counts        tally the count for each unique value of a specified field from a CSV/XLSX file
+  -c, --counts        tally the count for each unique value of a field from a CSV/XLSX file
   -f, --create_file   create a CSV or XLSX file to use for writing and importing Tweet data
   -d, --delete_terrs  delete US territories from US state boundaries shapefile
   -h, --help          display usage information
@@ -126,7 +126,7 @@ Search/Import Tweet data from US states with a keyword, then map the count resul
 optional parameters:
 search:          search Twitter for Tweets containing a specific keyword, then map results
 read:            import Tweet data from a CSV/XLSX file, then map results
-counts:          tally the count for each unique value of a specified field from a CSV/XLSX file
+counts:          tally the count for each unique value of a field from a CSV/XLSX file
 create_file:     create a CSV or XLSX file to use for writing and importing Tweet data
 delete_terrs:    delete US territories from US state boundaries shapefile
 help:            display usage information
