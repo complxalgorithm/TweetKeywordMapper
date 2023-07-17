@@ -67,7 +67,7 @@ def get_args() -> argparse.Namespace:
     parser.add_argument('-r', '--read', action='store_true',
                          help='import Tweet data from a CSV/XLSX file, then map results')
     parser.add_argument('-c', '--counts', action='store_true',
-                         help='tally the count for each unique value of a specified field from a CSV/XLSX file')
+                         help='tally the count for each unique value of a field from a CSV/XLSX file')
     parser.add_argument('-f', '--create_file', action='store_true',
                        help='create a CSV or XLSX file to use for writing and importing Tweet data')
     parser.add_argument('-d', '--delete_terrs', action='store_true',
