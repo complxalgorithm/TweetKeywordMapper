@@ -42,7 +42,7 @@ $ git clone https://github.com/complxalgorithm/TweetKeywordMapper.git
 ```
 Next, set the workspace of your project (i.e., your ArcGIS Pro project) within the <em>constants_TEMP.py</em> file. Your workspace can either be within the TweetKeywordMapper directory that you downloaded, or in a different directory.
 
-You then need to set the name of the default CSV/XLSX file. This file should be located within the TweetKeywordMapper directory. You can use either of the sample files that are included, just make sure to move the one you want to use into the root project directory.
+You then need to set the name of the default CSV/XLSX file. This file should be located within the TweetKeywordMapper directory, but it doesn't have to be. You can use either of the sample files that are included to get started.
 
 #### Install Requirements
 You can install all modules other than ArcPy by running the following command within the TweetKeywordMapper directory:
