@@ -134,25 +134,22 @@ def get_state(s, u, states, cities, areas):
     # depending on the type
     """
     
-    # remove dash from value in the event that it is a set of coordinates in the western hemisphere or south of the equator
-    temp_pl = re.sub('\-', '', pl)
+    # create list of elements using place value
+    if len(pl.split(', ')) > 1:
+        elements = pl.split(', ')
     
-    # create list of elements using this temp value
-    if len(temp_pl.split(', ')) > 1:
-        elements = temp_pl.split(', ')
+    elif len(pl.split(',')) > 1:
+        elements = pl.split(',')
     
-    elif len(temp_pl.split(',')) > 1:
-        elements = temp_pl.split(',')
-    
-    elif len(temp_pl.split(' ')) > 1:
-        elements = temp_pl.split(' ')
+    elif len(pl.split(' ')) > 1:
+        elements = pl.split(' ')
     
     else:
         elements = []
     
     # depending on what the place value is, try to determine state of origin
-    if (pl.find('ÜT: ') != -1 or pl.find('°') != -1) or (len(elements) == 2 and ('.' in elements[0] and elements[0].replace('.', '').isnumeric()) and ('.' in elements[1] and elements[1].replace('.', '').isnumeric())):
-        return determine_state_from_coordinates(pl, states)
+    if (pl.find('ÜT: ') != -1 or pl.find('°') != -1) or (len(elements) == 2 and ('.' in elements[0] and re.sub('\.|\-', '', elements[0]).isnumeric()) and ('.' in elements[1] and re.sub('\.|\-', '', elements[1]).isnumeric())):
+        return determine_state_from_coordinates(pl, states, elements)
     
     elif pl.find('via') != -1 or pl.find('from') != -1:
         return find_state_in_place_value(pl, states, cities, areas, word='via')
@@ -165,7 +162,7 @@ def get_state(s, u, states, cities, areas):
 # define determine_state_from_coordinates() function - will use potential coordinates from place value
 # to determine state of origin
 """
-def determine_state_from_coordinates(pl, states):
+def determine_state_from_coordinates(pl, states, elements):
     # intialize Nominatim API
     geolocator = Nominatim(user_agent='Tweet Keyword Mapper')
     
@@ -176,24 +173,6 @@ def determine_state_from_coordinates(pl, states):
         
         # get x,y coordinates from place value
         elements = pl.split(',')
-    
-    # run this in every other situation
-    else:
-        # try splitting value by a comma space
-        if (len(pl.split(', '))) > 1:
-            elements = pl.split(', ')
-        
-        # try splitting value by a comma
-        elif (len(pl.split(','))) > 1:
-            elements = pl.split(',')
-
-        # try splitting value by a space
-        elif (len(pl.split(' '))) > 1:
-            elements = pl.split(' ')
-
-        # return empty string if all fails
-        else:
-            return ''
         
     # create coordinates string
     coordinates = ' , '.join(elements)

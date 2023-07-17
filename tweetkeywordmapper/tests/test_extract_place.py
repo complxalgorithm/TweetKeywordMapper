@@ -14,22 +14,20 @@ for pl in pls:
 
     time.sleep(0.5)
     
-    temp_pl = re.sub('\-', '', pl)
+    if len(pl.split(', ')) > 1:
+        elements = pl.split(', ')
     
-    if len(temp_pl.split(', ')) > 1:
-        elements = temp_pl.split(', ')
+    elif len(pl.split(',')) > 1:
+        elements = pl.split(',')
     
-    elif len(temp_pl.split(',')) > 1:
-        elements = temp_pl.split(',')
-    
-    elif len(temp_pl.split(' ')) > 1:
-        elements = temp_pl.split(' ')
+    elif len(pl.split(' ')) > 1:
+        elements = pl.split(' ')
     
     else:
         elements = []
     
-    if (pl.find('ÜT: ') != -1 or pl.find('°') != -1) or (len(elements) == 2 and ('.' in elements[0] and elements[0].replace('.', '').isnumeric()) and ('.' in elements[1] and elements[1].replace('.', '').isnumeric())):
-        print('State:', ex.determine_state_from_coordinates(pl, states))
+    if (pl.find('ÜT: ') != -1 or pl.find('°') != -1) or (len(elements) == 2 and ('.' in elements[0] and re.sub('\.|\-', '', elements[0]).isnumeric()) and ('.' in elements[1] and re.sub('\.|\-', '', elements[1]).isnumeric())):
+        print('State:', ex.determine_state_from_coordinates(pl, states, elements))
     
     elif pl.find('via') != -1 or pl.find('from') != -1:
         print('State:', ex.find_state_in_place_value(pl, states, cities, areas, word='via'))
