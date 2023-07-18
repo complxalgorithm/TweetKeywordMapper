@@ -120,7 +120,6 @@ cities = {
     'LA Gulf Coast': 'Louisiana',
     'Minneapolis': 'Minnesota',
     'Omaha': 'Nebraska',
-    'Las Vegas': 'Nevada',
     'Vegas': 'Nevada',
     'LV': 'Nevada',
     'Sin City': 'Nevada',
