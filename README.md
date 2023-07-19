@@ -83,23 +83,25 @@ You can get a US states polygon shapefile from many places. Here are a few:
 2. [National Weather Service](https://www.weather.gov/gis/USStates)
 3. [Data.gov](https://catalog.data.gov/dataset/tiger-line-shapefile-2017-nation-u-s-current-state-and-equivalent-national)
 
+The program has functionality that allows you to download a US state boundaries shapefile from the US Census Bureau website. You can also download the shapefile manually.
+
 It is recommended that you remove all territories (including Puerto Rico) from the shapefile because only results from a US <em>state</em> will be counted. The program has functionality that allows you to do that very easily (currently only available if you are using a shapefile).
 
 This shapefile can be anywhere within the workspace that you specified in the <em>constants</em> module. It can be directly within your root workspace directory or within a subdirectory of the workspace directory.
 
 ### Run
-Once the program is downloaded onto your machine and all of the requirements are met, you can now run the program. Support is available to run the program as the <em>tweetkeywordmapper</em> Python package, or by using the <em>tkm</em> shell script. Both of these support six argument/parameter options.
+Once the program is downloaded onto your machine and all of the requirements are met, you can now run the program. Support is available to run the program as the <em>tweetkeywordmapper</em> Python package, or by using the <em>tkm</em> shell script. Both of these support seven argument/parameter options.
 
 #### Python
-The program runs as the <em>tweetkeywordmapper</em> package. The program accepts up to two arguments with one of six options: search, read, counts, create_file, delete_terrs, or help. If two arguments are used, create <em>must be</em> one of them.
+The program runs as the <em>tweetkeywordmapper</em> package. The program accepts up to three arguments with seven options: search, read, counts, create_file, delete_terrs, download_shp, or help.
 ```
 $ python3 tweetkeywordmapper -h
-usage: python3 tweetkeywordmapper [-s] [-r] [-c] [-f] [-d] [-h]
+usage: python3 tweetkeywordmapper [-s] [-r] [-c] [-f] [-d] [-p] [-h]
 
 Search/Import Tweet data from US states with a keyword, then map the count results.
 - search and read will run mapper.py to map the results after state counts are totaled.
-- if you want to use two parameters, -f or -d must be one of them.
-- to use three parameters, both -f and -d must be used.
+- if you want to use two parameters, -f, -d, or -p must be one of them.
+- to use three parameters, two of -f, -d, or -p must be used.
 
 optional arguments:
   -s, --search        search Twitter for Tweets containing a specific keyword, then map results
@@ -107,21 +109,22 @@ optional arguments:
   -c, --counts        tally the count for each unique value of a field from a CSV/XLSX file
   -f, --create_file   create a CSV or XLSX file to use for writing and importing Tweet data
   -d, --delete_terrs  delete US territories from US state boundaries shapefile
+  -p, --download_shp  download US State boundaries shapefile from US Census Bureau website
   -h, --help          display usage information
 ```
 
 #### Shell
 The <em>tkm</em> shell script can be used to execute the program. This script acts as an execution wrapper for the <em>tweetkeywordmapper</em> package and executes the appropriate command depending on the parameter value(s).
 
-You can run the script after making it executable. The script accepts up to two parameters with the same options and conditions as the Python execution.
+You can run the script after making it executable. The script accepts up to three parameters with the same options and conditions as the Python execution.
 ```
 $ ./tkm help
-usage: ./tkm [search] [read] [counts] [create_file] [delete_terrs] [help]
+usage: ./tkm [search] [read] [counts] [create_file] [delete_terrs] [download_shp] [help]
 
 Search/Import Tweet data from US states with a keyword, then map the count results.
 - search and read will run mapper.py to map the results after state counts are totaled.
-- if you want to use two parameters, create_file or delete_terrs must be one of them.
-- to use three parameters, both -f and -d must be used.
+- if you want to use two parameters, create_file, delete_terrs or download_shp must be one of them.
+- to use three parameters, two of create_file, delete_terrs, and download_shp must be used.
 
 optional parameters:
 search:          search Twitter for Tweets containing a specific keyword, then map results
@@ -129,6 +132,7 @@ read:            import Tweet data from a CSV/XLSX file, then map results
 counts:          tally the count for each unique value of a field from a CSV/XLSX file
 create_file:     create a CSV or XLSX file to use for writing and importing Tweet data
 delete_terrs:    delete US territories from US state boundaries shapefile
+download_shp:    download US State boundaries shapefile from US Census Bureau website
 help:            display usage information
 ```
 
