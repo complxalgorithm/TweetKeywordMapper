@@ -17,6 +17,7 @@ helpFunc()
     echo "counts:\t\t tally the count for each unique value of a field from a CSV/XLSX file"
     echo "create_file:\t create a CSV or XLSX file to use for writing and importing Tweet data"
     echo "delete_terrs:\t delete US territories from US state boundaries shapefile"
+    echo "download_shp:\t download US State boundaries shapefile from US Census Bureau website"
     echo "help:\t\t display usage information"
     exit 1
 }
@@ -40,21 +41,31 @@ if [ $# -eq "0" ]; then
                 helpFunc
             
             # display error and show usage info if create file is not a parameter 
-            elif [ $# -eq "2" ] && [[ $1 != "create_file" && $2 != "create_file" ]] && [[ $1 != "delete_terrs" && $2 != "delete_terrs" ]]; then
-                echo "ERROR - create_file and/or delete_terrs must be used when using 2 arguments.\n"
+            elif [ $# -eq "2" ] && [[ $1 != "create_file" && $2 != "create_file" ]] && [[ $1 != "delete_terrs" && $2 != "delete_terrs" ]] && [[ $1 != "download_shp" && $2 != "download_shp" ]]; then
+                echo "ERROR - create_file, delete_terrs, and/or download_shp must be used when using 2 arguments.\n"
                 helpFunc
             
             # run both create file and delete US territories functionalities if both "create_file" and "delete_terrs"
             # are passed as parameters
             elif [ $# -eq "2" ] && [[ $1 = "create_file" || $2 = "create_file" ]] && [[ $1 = "delete_terrs" || $2 = "delete_terrs" ]]; then
                 exec python3 tweetkeywordmapper -f -d
+            
+            # run both create file and download shp functionalities if both "create_file" and "download_shp"
+            # are passed as parameters
+            elif [ $# -eq "2" ] && [[ $1 = "create_file" || $2 = "create_file" ]] && [[ $1 = "download_shp" || $2 = "download_shp" ]]; then
+                exec python3 tweetkeywordmapper -f -p
+            
+            # run both delete US territories and download shp functionalities if both "delete_terrs" and "download_shp"
+            # are passed as parameters
+            elif [ $# -eq "2" ] && [[ $1 = "delete_terrs" || $2 = "delete_terrs" ]] && [[ $1 = "download_shp" || $2 = "download_shp" ]]; then
+                exec python3 tweetkeywordmapper -d -p
                 
             # run this in any other situation
             else
                 # go through each argument that was passed
                 for i in "$@"; do
                     # if any of the arguments are not valid, display an error and usage information
-                    if [[ $i != "search" && $i != "read" && $i != "counts" && $i != "create_file" && $i != "delete_terrs" && $i != "help" ]]; then
+                    if [[ $i != "search" && $i != "read" && $i != "counts" && $i != "create_file" && $i != "delete_terrs" && $i != "download_shp" && $i != "help" ]]; then
                         echo "ERROR - $i is an invalid parameter.\n"
                         helpFunc
                     fi
@@ -82,6 +93,10 @@ if [ $# -eq "0" ]; then
                         elif [ $1 = "delete_terrs" ]; then
                             exec python3 tweetkeywordmapper -d
                         
+                        # run download_shp() when parameter is set to "download_shp"
+                        elif [ $1 = "download_shp" ]; then
+                            exec python3 tweetkeywordmapper -p
+                        
                         # display usage information
                         else
                             helpFunc
@@ -90,7 +105,7 @@ if [ $# -eq "0" ]; then
                     # when there are 2 parameters
                     elif [ $# -eq "2" ]; then
                         # there are 2 parameters, and since no errors were returned,
-                        # it can be assumed that "create_file" or "delete_terrs" is one of the parameters
+                        # it can be assumed that "create_file," "delete_terrs," or "download_shp" is one of the parameters
                         # run the specified one along with whatever functionality the other parameter is
                         # attached to
                         
@@ -98,6 +113,9 @@ if [ $# -eq "0" ]; then
                         if [[ $1 = "search" || $2 = "search" ]]; then
                             if [[ $1 = "create_file" || $2 = "create_file" ]]; then
                                 exec python3 tweetkeywordmapper -s -f
+                                
+                                elif [[ $1 = "download_shp" || $2 = "download_shp" ]]; then
+                                    exec python3 tweetkeywordmapper -s -p
                                 
                                 else
                                     exec python3 tweetkeywordmapper -s -d
@@ -108,6 +126,9 @@ if [ $# -eq "0" ]; then
                                 if [[ $1 = "create_file" || $2 = "create_file" ]]; then
                                     exec python3 tweetkeywordmapper -r -f
                                     
+                                    elif [[ $1 = "download_shp" || $2 = "download_shp" ]]; then
+                                        exec python3 tweetkeywordmapper -r -p
+                                    
                                     else
                                         exec python3 tweetkeywordmapper -r -d
                                 fi
@@ -116,6 +137,9 @@ if [ $# -eq "0" ]; then
                             elif [[ $1 = "counts" || $2 = "counts" ]]; then
                                 if [[ $1 = "create_file" || $2 = "create_file" ]]; then
                                     exec python3 tweetkeywordmapper -c -f
+                                    
+                                    elif [[ $1 = "download_shp" || $2 = "download_shp" ]]; then
+                                        exec python3 tweetkeywordmapper -c -p
                                     
                                     else
                                         exec python3 tweetkeywordmapper -c -d
@@ -128,7 +152,7 @@ if [ $# -eq "0" ]; then
                         
                         # when there are 3 parameters
                         else
-                            # check to make sure that create_file and delete_terrs are parameters that were passed
+                            # check to make sure that create_file, delete_terrs, and/or download_shp are parameters that were passed
                             if [[ $1 = "create_file" || $2 = "create_file" || $3 = "create_file" ]] && [[ $1 = "delete_terrs" || $2 = "delete_terrs" || $3 = "delete_terrs" ]]; then
                                 # run search.py when parameter is set to "search" and both other functionalities
                                 if [[ $1 = "search" || $2 = "search" || $3 = "search" ]]; then
@@ -147,10 +171,46 @@ if [ $# -eq "0" ]; then
                                         helpFunc
                                 fi
                                 
+                                elif [[ $1 = "create_file" || $2 = "create_file" || $3 = "create_file" ]] && [[ $1 = "download_shp" || $2 = "download_shp" || $3 = "download_shp" ]]; then
+                                    # run search.py when parameter is set to "search" and both other functionalities
+                                    if [[ $1 = "search" || $2 = "search" || $3 = "search" ]]; then
+                                    exec python3 tweetkeywordmapper -s -f -p
+
+                                        # run read.py when parameter is set to "read" and both other functionalities
+                                        elif [[ $1 = "read" || $2 = "read" || $3 = "read" ]]; then
+                                            exec python3 tweetkeywordmapper -r -f -p
+
+                                        # run counts.py when parameter is set to "counts" and both other functionalities
+                                        elif [[ $1 = "counts" || $2 = "counts" || $3 = "counts" ]]; then
+                                            exec python3 tweetkeywordmapper -c -f -p
+
+                                        # display usage information
+                                        else
+                                            helpFunc
+                                    fi
+                                
+                                elif [[ $1 = "delete_terrs" || $2 = "delete_terrs" || $3 = "delete_terrs" ]] && [[ $1 = "download_shp" || $2 = "download_shp" || $3 = "download_shp" ]]; then
+                                    # run search.py when parameter is set to "search" and both other functionalities
+                                    if [[ $1 = "search" || $2 = "search" || $3 = "search" ]]; then
+                                    exec python3 tweetkeywordmapper -s -d -p
+
+                                        # run read.py when parameter is set to "read" and both other functionalities
+                                        elif [[ $1 = "read" || $2 = "read" || $3 = "read" ]]; then
+                                            exec python3 tweetkeywordmapper -r -d -p
+
+                                        # run counts.py when parameter is set to "counts" and both other functionalities
+                                        elif [[ $1 = "counts" || $2 = "counts" || $3 = "counts" ]]; then
+                                            exec python3 tweetkeywordmapper -c -d -p
+
+                                        # display usage information
+                                        else
+                                            helpFunc
+                                    fi
+                                
                                 # display error and usage information when create_file and delete_terrs both are not parameters
                                 # when three valid parameters are entered
                                 else
-                                    echo "ERROR - create_file and delete_terrs must be used when using 3 arguments.\n"
+                                    echo "ERROR - create_file, delete_terrs, and/or download_shp must be used when using 3 arguments.\n"
                                     helpFunc
                             fi
                 fi

@@ -15,6 +15,7 @@ try:
     from tweetkeywordmapper.scripts import read as tkr
     from tweetkeywordmapper.scripts import counts as cnts
     from tweetkeywordmapper.utils.delete_us_territories import delete_us_territories
+    from tweetkeywordmapper.utils.download_shp import download_shp
 except:
     from core.data import create_file
     from core import constants as cons
@@ -23,6 +24,7 @@ except:
     from scripts import read as tkr
     from scripts import counts as cnts
     from utils.delete_us_territories import delete_us_territories
+    from utils.download_shp import download_shp
 
 warn.filterwarnings('ignore')
 
@@ -72,6 +74,8 @@ def get_args() -> argparse.Namespace:
                        help='create a CSV or XLSX file to use for writing and importing Tweet data')
     parser.add_argument('-d', '--delete_terrs', action='store_true',
                        help='delete US territories from US state boundaries shapefile')
+    parser.add_argument('-p', '--download_shp', action='store_true',
+                       help='download US State boundaries shapefile from US Census Bureau website')
     parser.add_argument('-h', '--help', action='help',
                        help='display usage information')
     
@@ -137,14 +141,14 @@ def main():
         return
     
     # make sure create_file or delete_terrs is one of the arguments if two arguments are entered after package name
-    elif (num_args == 2) and (not args.create_file and not args.delete_terrs):
-        print('ERROR - f/create_file or d/delete_terrs must be used when using 2 arguments. Use -h or --help for usage information.')
+    elif (num_args == 2) and (not args.create_file and not args.delete_terrs and not args.download_shp):
+        print('ERROR - f/create_file, d/delete_terrs, and/or p/download_shp must be used when using 2 arguments.\nUse -h or --help for usage information.')
         
         return
     
     # make sure both create_file and delete_terrs are arguments if three arguments are entered after package name
     elif (num_args == 3) and ((args.search and args.read) or (args.search and args.counts) or (args.read and args.counts)):
-        print('ERROR - f/create_file and d/delete_terrs must be used when using 3 arguments. Use -h or --help for usage information.')
+        print('ERROR - f/create_file, d/delete_terrs, and/or p/download_shp must be used when using 3 arguments.\nUse -h or --help for usage information.')
     
     # only 1 argument was entered
     else:
@@ -161,6 +165,15 @@ def main():
             
             # create file
             create_file(DEFAULT_FILE, WS)
+        
+        # run download_shapefile function if download_shp is an argument
+        if args.download_shp:
+            print('Download US State boundaries shapefile from US Census Bureau Website\n')
+            
+            time.sleep(0.5)   # pause program for half a second
+            
+            # download US states shapefile from US Census Bureau website
+            download_shp(WS)
         
         # run remove_us_territories.py if remove_territories is an argument
         if args.delete_terrs:
