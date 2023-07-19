@@ -1,4 +1,3 @@
-
 """
 # define download_shp() function - download US State boundaries shapefile from US Census Bureau website
 """
