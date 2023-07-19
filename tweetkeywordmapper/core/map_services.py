@@ -177,7 +177,7 @@ def TweetKeywordGeoPandas(ws, counts, keyword):
     import pandas as pd
     import matplotlib.pyplot as plt
     
-    # try to install geopandas
+    # try to import geopandas
     try:
         import geopandas as gpd
         
