@@ -6,11 +6,11 @@
 # display help information for program
 helpFunc()
 {
-    echo "usage: ./tkm [search] [read] [counts] [create_file] [delete_terrs] [help]\n"
+    echo "usage: ./tkm [search] [read] [counts] [create_file] [delete_terrs] [download_shp] [help]\n"
     echo "Search/Import Tweet data from US states with a keyword, then map the count results."
     echo "- search and read will run mapper.py to map the results after state counts are totaled."
-    echo "- if you want to use two parameters, create_file or delete_terrs must be one of them."
-    echo "- to use three parameters, both -f and -d must be used.\n"
+    echo "- if you want to use two parameters, create_file, delete_terrs or download_shp must be one of them."
+    echo "- to use three parameters, two of create_file, delete_terrs, and download_shp must be used.\n"
     echo "optional parameters:"
     echo "search:\t\t search Twitter for Tweets containing a specific keyword, then map results"
     echo "read:\t\t import Tweet data from a CSV/XLSX file, then map results"

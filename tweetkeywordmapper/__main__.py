@@ -58,8 +58,8 @@ def get_args() -> argparse.Namespace:
                                      description=textwrap.dedent('''\
                                         Search/Import Tweet data from US states with a keyword, then map the count results.
                                         - search and read will run mapper.py to map the results after state counts are totaled.
-                                        - if you want to use two parameters, -f or -d must be one of them.
-                                        - to use three parameters, both -f and -d must be used.
+                                        - if you want to use two parameters, -f, -d, or -p must be one of them.
+                                        - to use three parameters, two of -f, -d, or -p must be used.
                                         '''),
                                      add_help=False)
     
