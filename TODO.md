@@ -12,12 +12,14 @@
 - [X] Account for full addresses so that a house number is not mistaken for an area code.
 
 ## Major
+- [ ] Allow user to use mapping functionality on preexisting result fields in shapefile (using GeoPandas).
 - [ ] Allow delete_terrs to be used on feature classes within geodatabases.
 - [ ] Allow user to search Tweets in other languages.
 - [ ] Allow user to search Tweets from different countries.
 - [ ] If adding support for other languages and/or countries, start storing language/country data in file.
 
 ## Minor
+- [ ] If directory created to store US states shapefile already exists, ask user for name of directory to be created.
 - [ ] Ask user if they would like to set the name of the new field in the feature class and the name of the generated map.
 - [ ] Extract time and date from Tweet and store this data in file.
 - [ ] Allow user to save generated plot as a PNG before showing it.
