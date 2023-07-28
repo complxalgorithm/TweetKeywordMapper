@@ -21,7 +21,7 @@ def download_shp(ws):
     # set path to new directory
     shp_path = os.path.join(ws, shp_dir)
     
-    # validate that there is no space in shp_dir value, and that shp_path does not exist
+    # validate that there is no space in shp_dir value, and that shp_path does not already exist
     while ' ' in shp_dir or os.path.exists(shp_path):
         if ' ' in shp_dir:
             print('\nERROR - There is a space in that value.')
