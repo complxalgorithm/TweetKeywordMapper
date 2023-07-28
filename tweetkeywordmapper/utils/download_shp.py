@@ -9,36 +9,43 @@ def download_shp(ws):
     from urllib.request import urlopen
     from zipfile import ZipFile
     
+    # set link to shapefile from US Census Bureau website
+    shp_url = 'https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_state_5m.zip'
+    
+    ##get shapefile name from shp_url
+    ##file_name = os.path.splitext(os.path.basename(shp_url))[0]
+    
     # ask user for name of US states shp directory
     shp_dir = input('Enter directory name to put shapefile in: ')
-    
-    # validate that there is no space in shp_dir value
-    while ' ' in shp_dir:
-        print('ERROR - There is a space in that value.')
-        
-        # ask user again for name of US states shp directory
-        shp_dir = input('Enter directory name to put shapefile in: ')
     
     # set path to new directory
     shp_path = os.path.join(ws, shp_dir)
     
-    # set link to shapefile from US Census Bureau website
-    shp_url = 'https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_state_5m.zip'
-    
-    # get shapefile name from shp_url
-    file_name = os.path.splitext(os.path.basename(shp_url))[0]
+    # validate that there is no space in shp_dir value, and that shp_path does not exist
+    while ' ' in shp_dir or os.path.exists(shp_path):
+        if ' ' in shp_dir:
+            print('\nERROR - There is a space in that value.')
+        
+        else:
+            print(f'\nERROR - {shp_path} already exists.')
+        
+        # ask user again for name of US states shp directory
+        shp_dir = input('\nEnter directory name to put shapefile in: ')
+        
+        # set new path to new directory
+        shp_path = os.path.join(ws, shp_dir)
     
     # try to make the new directory
     try:
         os.mkdir(shp_path)
     
     except Exception:
-        print(f'{shp_path} already exists.\n')
+        print(f'\nSomething went wrong when attempting to create {shp_path}.\n')
     
     else:
-        print(f'{shp_path} created successfully.\n')
+        print(f'\n{shp_path} created successfully.\n')
     
-    time.sleep(0.5)     # pause program for half a second
+    time.sleep(1)     # pause program for a second
     
     # try to download shapefile zip and extract files
     try:
