@@ -12,17 +12,14 @@ Display a count and percentage of the total for all unique field values within a
 
 [![asciicast](https://asciinema.org/a/599645.svg)](https://asciinema.org/a/599645)
 
-Map previously accumulated Tweet count results from a preexisting field in your US State boundaries shapefile using GeoPandas.
-
-[![asciicast](https://asciinema.org/a/599640.svg)](https://asciinema.org/a/599640)
-
 ## Other Features
-- Count results can be appended to shapefiles (ArcGIS Pro & GeoPandas) or feature classes within geodatabases (ArcGIS Pro).
+- Map previously accumulated Tweet count results from a preexisting field in your US State boundaries shapefile using GeoPandas.
 - Create a file using default field <em>Tweet_ID</em>, <em>Keyword</em>, and <em>State</em>.
     - This includes if your default file does not already exist, or if you just want to create another file.
     - It is best to create a file (at least one that will be used by this program) in this manner.
 - Download a US State boundaries shapefile from the US Census Bureau website to be used when running the program.
 - Easily remove US territories from your US State boundaries shapefile.
+- Count results can be appended to shapefiles (ArcGIS Pro & GeoPandas) or feature classes within geodatabases (ArcGIS Pro).
 
 <b>The program can be ran as the <em>tweetkeywordmapper</em> package, or by using the <em>tkm</em> shell script.</b>
 
