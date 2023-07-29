@@ -2,27 +2,29 @@
 
 Search Twitter for Tweets containing a particular keyword from the command line, then write results to a CSV or XLSX file and/or map the results using ArcGIS Pro or GeoPandas.
 
-[![asciicast](https://asciinema.org/a/lueHvB8fK4EX5wpFPOzvHHzDS.svg)](https://asciinema.org/a/lueHvB8fK4EX5wpFPOzvHHzDS)
+[![asciicast](https://asciinema.org/a/599643.svg)](https://asciinema.org/a/599643)
 
-Tweet data can be imported from a CSV or XLSX file, which will then be used for counting the number of Tweets from each state. You can pull data for multiple keywords from the file.
+Imported Tweet data from a CSV or XLSX file, which will then be used for counting the number of Tweets from each state. You can pull data for multiple keywords from the file.
 
-[![asciicast](https://asciinema.org/a/592490.svg)](https://asciinema.org/a/592490)
+[![asciicast](https://asciinema.org/a/599644.svg)](https://asciinema.org/a/599644)
 
 Display a count and percentage of the total for all unique field values within a CSV or XLSX file. An example use is displaying the aforementioned statistics for all unique keywords that are present within a CSV or XLSX file.
 
-[![asciicast](https://asciinema.org/a/RK8sRi71azh9PniNo73hD83C4.svg)](https://asciinema.org/a/RK8sRi71azh9PniNo73hD83C4)
+[![asciicast](https://asciinema.org/a/599645.svg)](https://asciinema.org/a/599645)
 
-Count results can be appended to shapefiles (ArcGIS Pro & GeoPandas) or feature classes within geodatabases (ArcGIS Pro).
+Map previously accumulated Tweet count results from a preexisting field in your US State boundaries shapefile using GeoPandas.
 
-Map previously accumulated Tweet count results from a preexisting field from your US State boundaries shapefile using GeoPandas.
+[![asciicast](https://asciinema.org/a/599640.svg)](https://asciinema.org/a/599640)
 
-The program has an option that allows you to create a file for you using <em>Tweet_ID</em>, <em>Keyword</em>, and <em>State</em> as default field names. This includes if your default file does not already exist, or if you just want to create another file. It is best to create a file (at least one that will be used by this program) in this manner.
+## Other Features
+- Count results can be appended to shapefiles (ArcGIS Pro & GeoPandas) or feature classes within geodatabases (ArcGIS Pro).
+- Create a file using default field <em>Tweet_ID</em>, <em>Keyword</em>, and <em>State</em>.
+    - This includes if your default file does not already exist, or if you just want to create another file.
+    - It is best to create a file (at least one that will be used by this program) in this manner.
+- Download a US State boundaries shapefile from the US Census Bureau website to be used when running the program.
+- Easily remove US territories from your US State boundaries shapefile.
 
-You can download a US State boundaries shapefile from the US Census Bureau to be used when running the program.
-
-There is also an option that allows you to easily remove US territories from your US State boundaries shapefile.
-
-The program can be ran as the <em>tweetkeywordmapper</em> package, or by using the <em>tkm</em> shell script.
+<b>The program can be ran as the <em>tweetkeywordmapper</em> package, or by using the <em>tkm</em> shell script.</b>
 
 ## Requirements
 1. python3
