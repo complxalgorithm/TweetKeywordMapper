@@ -1,10 +1,10 @@
 <h1 align="center">Tweet Keyword Mapper</h1>
 
-Search Twitter for Tweets containing a particular keyword from the command line, then write results to a CSV or XLSX file and/or map the results using ArcGIS Pro or GeoPandas.
+Search Twitter for Tweets containing a particular keyword from the command line, then write results to a CSV or XLSX file and/or map the count results using ArcGIS Pro or GeoPandas.
 
 [![asciicast](https://asciinema.org/a/599643.svg)](https://asciinema.org/a/599643)
 
-Imported Tweet data from a CSV or XLSX file, which will then be used for counting the number of Tweets from each state. You can pull data for multiple keywords from the file.
+Import Tweet data from a CSV or XLSX file. Pull all data or data for one or more keyword from the file, then map the count results.
 
 [![asciicast](https://asciinema.org/a/599644.svg)](https://asciinema.org/a/599644)
 
@@ -13,15 +13,15 @@ Display a count and percentage of the total for all unique field values within a
 [![asciicast](https://asciinema.org/a/599645.svg)](https://asciinema.org/a/599645)
 
 ## Other Features
-- Map previously accumulated Tweet count results from a preexisting field in your US State boundaries shapefile using GeoPandas.
-- Create a file using default field <em>Tweet_ID</em>, <em>Keyword</em>, and <em>State</em>.
-    - This includes if your default file does not already exist, or if you just want to create another file.
-    - It is best to create a file (at least one that will be used by this program) in this manner.
-- Download a US State boundaries shapefile from the US Census Bureau website to be used when running the program.
-- Easily remove US territories from your US State boundaries shapefile.
-- Count results can be appended to shapefiles (ArcGIS Pro & GeoPandas) or feature classes within geodatabases (ArcGIS Pro).
+- Map previously accumulated Tweet count results from respective preexisting field in US State boundaries shapefile using GeoPandas.
+- Create a file using default fields <em>Tweet_ID</em>, <em>Keyword</em>, and <em>State</em>.
+    - Includes if your default file does not already exist, or if you just want to create another file.
+    - It is best to create a file used by this program in this manner.
+- Download a US State boundaries shapefile from the [US Census Bureau](https://www.census.gov) website to be used when running the program.
+- Easily remove US territories from US State boundaries shapefile.
+- Count results can be appended to shapefiles (ArcPy & GeoPandas) or feature classes within geodatabases (ArcPy).
 
-<b>The program can be ran as the <em>tweetkeywordmapper</em> package, or by using the <em>tkm</em> shell script.</b>
+<b>The program can be ran as the <em>tweetkeywordmapper</em> Python3 package, or by using the <em>tkm</em> shell script.</b>
 
 ## Requirements
 1. python3
@@ -33,7 +33,7 @@ Display a count and percentage of the total for all unique field values within a
 7. numpy
 8. arcpy
 
-In order to install ArcPy and ArcGIS Pro, you must have a Windows machine. <b>You can still run the program without ArcPy installed</b>, you will just have GeoPandas as your only mapping service option.
+In order to install ArcPy and ArcGIS Pro, you must have a Windows machine. <b>You can still run the program without ArcPy installed</b>, you will just have to map your results using GeoPandas.
 
 ## Set Up & Run
 In order to run this program to its fullest extent, you will first need to download the repository onto your machine and install the requirements. You will then need to add appropriate constants values within the <em>constants_TEMP.py</em> file, and then remove "_TEMP" from the file name. Using the Tweepy library requires setting up a Twitter Developer account, and then creating a new project. Using ArcGIS Pro requires the Windows operating system and a paid license to use.
