@@ -171,8 +171,10 @@ def TweetKeywordArcPro(ws, counts, keyword):
     
 """
 # define TweetKeywordGeoPandas.py function - maps the state counts using the GeoPandas library
+# optional parameters:
+#   - function  -> default to main  :  values -> main, map_field
 """
-def TweetKeywordGeoPandas(ws, counts, keyword):
+def TweetKeywordGeoPandas(ws, counts, keyword, function='main'):
     # import modules
     import pandas as pd
     import matplotlib.pyplot as plt
@@ -187,58 +189,86 @@ def TweetKeywordGeoPandas(ws, counts, keyword):
     
     # get US states shapefile
     states_shp, shp_dir = data.get_shapefile(ws)
-    
+
     # read shapefile
     states_df = gpd.read_file(states_shp)
     
-    # get list of all fields
-    fields_list = states_df.head()
-    
-    # display field options found in shapefile
-    print()
-    for f in fields_list:
-        print(f)
-    print()
-    
-    # ask user which field holds the abbreviations of the states
-    user_field = input('Which field has the abbreviations of the states? ')
+    # run this when using search or read functionality and Tweet count results were accumulated
+    if function == 'main':
+        # get list of all fields
+        fields_list = states_df.head()
 
-    # validate that user_field is in the field_names list
-    while user_field not in fields_list:
-        # display an error
-        print(f'{user_field} is not a field. Please try again.')
-
-        # ask user again to specify the state abbreviations field
-        user_field = input('Which field has the abbreviations of the states? ')
-    
-    # set name of the field to be created in states feature class
-    new_field = set_new_field(keyword)
-	
-    # go through each value in the states abbreviations field in the states shapefile
-    for num, state in states_df[user_field].items():
-        # iterate through each state and count value in counts dict
-        for st, count in counts.items():
-            # when it reaches the current state, add counts value for the current state
-            # as its new_field value
-            if st == state:
-                states_df.loc[states_df[user_field] == state, new_field] = int(count)
+        # display field options found in shapefile
+        print()
+        for f in fields_list:
+            print(f)
+        print()
         
-    # join shp_dir with states_shp name in order to generate new shapefile
-    shp_path = os.path.join(shp_dir, states_shp)
+        # ask user which field holds the abbreviations of the states
+        user_field = input('Which field has the abbreviations of the states? ')
+
+        # validate that user_field is in the field_names list
+        while user_field not in fields_list:
+            # display an error
+            print(f'{user_field} is not a field. Please try again.')
+
+            # ask user again to specify the state abbreviations field
+            user_field = input('Which field has the abbreviations of the states? ')
+
+        # set name of the field to be created in states feature class
+        map_field = set_new_field(keyword)
+
+        # go through each value in the states abbreviations field in the states shapefile
+        for num, state in states_df[user_field].items():
+            # iterate through each state and count value in counts dict
+            for st, count in counts.items():
+                # when it reaches the current state, add counts value for the current state
+                # as its new_field value
+                if st == state:
+                    states_df.loc[states_df[user_field] == state, new_field] = int(count)
+
+        # join shp_dir with states_shp name in order to generate new shapefile
+        shp_path = os.path.join(shp_dir, states_shp)
+
+        # generate updated shapefile with new count field and respective count values
+        states_df.to_file(shp_path)
+
+        # set title of map using the keyword
+        if keyword == '':
+            map_title = 'Tweet Count'
+        else:
+            map_title = f'{keyword} Tweet Count'
     
-    # generate updated shapefile with new count field and respective count values
-    states_df.to_file(shp_path)
+    # run when user wants to map preexisting results field from shapefile
+    else:
+        # get list of all fields
+        fields_list = states_df.head()
+
+        # display result field options found in shapefile
+        print()
+        for f in fields_list:
+            if not f.isupper() and f != 'geometry':
+                print(f)
+        print()
+        
+        # ask user which field holds the abbreviations of the states
+        map_field = input('Which field would you like to map? ')
+
+        # validate that user_field is in the field_names list
+        while map_field not in fields_list:
+            # display an error
+            print(f'{user_field} is not a field. Please try again.')
+
+            # ask user again to specify the state abbreviations field
+            map_field = input('Which field would you like to map? ')
+        
+        # set title of map using the field
+        map_title = f'{map_field} Tweet Count'
     
     """
     # generate map of the states shapefile using the plot_field as the column to plot
     # sets axes using layer from gpd naturalearth_lowres
     """
-    
-    # set title of map using the keyword
-    if keyword == '':
-        map_title = 'Tweet Count'
-    else:
-        map_title = f'{keyword} Tweet Count'
     
     # get low resolution map of world from datasets
     world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
@@ -251,7 +281,7 @@ def TweetKeywordGeoPandas(ws, counts, keyword):
     
     # plot states shapefiles using above axes and plot_field, setting color scheme to red
     # and including a legend	
-    states_df.plot(ax=ax, column=new_field, cmap='OrRd', legend=True)
+    states_df.plot(ax=ax, column=map_field, cmap='OrRd', legend=True)
     
     # get min/max x and min/max y values from usa dataset
     minx, miny, maxx, maxy = usa.total_bounds
@@ -264,17 +294,19 @@ def TweetKeywordGeoPandas(ws, counts, keyword):
     ax.set_title(map_title)
     
     # tell user map is being generated
-    print(f'Generating {map_title} using newly created field....')
+    print(f'Generating {map_title} using {map_field} field.....')
     
-    time.sleep(1)   # pause program for a second
+    time.sleep(1.5)   # pause program for a second and a half
     
     # try to show map in new window
     try:
         plt.show()
+    
     except:
         print('\nERROR - Something went wrong when trying to map the data.')
+    
     else:
-        print(f'\nSuccessfully created {map_title} map.')
+        print(f'\nSuccessfully created map entitled {map_title}.')
     
     # return to parent function
     return

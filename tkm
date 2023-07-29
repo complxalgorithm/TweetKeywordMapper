@@ -1,12 +1,12 @@
 #!/bin/sh
 # Name: tkm (tweetkeywordmapper)
 # Author: Stephen C. Sanders <https://stephensanders.me>
-# Description: wrapper for running tweetkeywordmapper python package
+# Description: shell execution wrapper for running tweetkeywordmapper python package
 
 # display help information for program
 helpFunc()
 {
-    echo "usage: ./tkm [search] [read] [counts] [create_file] [delete_terrs] [download_shp] [help]\n"
+    echo "usage: ./tkm [search] [read] [counts] [map_field] [create_file] [delete_terrs] [download_shp] [help]\n"
     echo "Search/Import Tweet data from US states with a keyword, then map the count results."
     echo "- search and read will run mapper.py to map the results after state counts are totaled."
     echo "- if you want to use two parameters, create_file, delete_terrs or download_shp must be one of them."
@@ -15,14 +15,13 @@ helpFunc()
     echo "search:\t\t search Twitter for Tweets containing a specific keyword, then map results"
     echo "read:\t\t import Tweet data from a CSV/XLSX file, then map results"
     echo "counts:\t\t tally the count for each unique value of a field from a CSV/XLSX file"
+    echo "map_field:\t map preexisting results field from shapefile using GeoPandas"
     echo "create_file:\t create a CSV or XLSX file to use for writing and importing Tweet data"
     echo "delete_terrs:\t delete US territories from US state boundaries shapefile"
     echo "download_shp:\t download US State boundaries shapefile from US Census Bureau website"
     echo "help:\t\t display usage information"
     exit 1
 }
-
-# handle parameter
 
 # lack of parameter triggers the displaying of an error and the help info
 if [ $# -eq "0" ]; then
@@ -65,7 +64,7 @@ if [ $# -eq "0" ]; then
                 # go through each argument that was passed
                 for i in "$@"; do
                     # if any of the arguments are not valid, display an error and usage information
-                    if [[ $i != "search" && $i != "read" && $i != "counts" && $i != "create_file" && $i != "delete_terrs" && $i != "download_shp" && $i != "help" ]]; then
+                    if [[ $i != "search" && $i != "read" && $i != "counts" && $i != "map_field" && $i != "create_file" && $i != "delete_terrs" && $i != "download_shp" && $i != "help" ]]; then
                         echo "ERROR - $i is an invalid parameter.\n"
                         helpFunc
                     fi
@@ -85,6 +84,10 @@ if [ $# -eq "0" ]; then
                         elif [ $1 = "counts" ]; then
                             exec python3 tweetkeywordmapper -c
                     
+                        # run map_field functionality of TweetKeywordGeoPandas() when parameter is set to "map_field"
+                        elif [ $1 = "map_field" ]; then
+                            exec python3 tweetkeywordmapper -m
+                        
                         # run create_file() when parameter is set to "create_file"
                         elif [ $1 = "create_file" ]; then
                             exec python3 tweetkeywordmapper -f
@@ -144,6 +147,19 @@ if [ $# -eq "0" ]; then
                                     else
                                         exec python3 tweetkeywordmapper -c -d
                                 fi
+                            
+                            # run map_field functionality of TweetKeywordGeoPandas() when parameter is set to "map_field"
+                            # and relevant second functionality
+                            elif [[ $1 = "map_field" || $2 = "map_field" ]]; then
+                                if [[ $1 = "create_file" || $2 = "create_file" ]]; then
+                                    exec python3 tweetkeywordmapper -m -f
+                                    
+                                    elif [[ $1 = "download_shp" || $2 = "download_shp" ]]; then
+                                        exec python3 tweetkeywordmapper -m -p
+                                    
+                                    else
+                                        exec python3 tweetkeywordmapper -m -d
+                                fi
 
                             # display usage information
                             else
@@ -165,6 +181,11 @@ if [ $# -eq "0" ]; then
                                     # run counts.py when parameter is set to "counts" and both other functionalities
                                     elif [[ $1 = "counts" || $2 = "counts" || $3 = "counts" ]]; then
                                         exec python3 tweetkeywordmapper -c -f -d
+                                    
+                                    # run map_field functionality of TweetKeywordGeoPandas() when parameter is set to "map_field"
+                                    # and both other functionalities
+                                    elif [[ $1 = "map_field" || $2 = "map_field" || $3 = "map_field" ]]; then
+                                        exec python3 tweetkeywordmapper -m -f -d
 
                                     # display usage information
                                     else
@@ -184,6 +205,11 @@ if [ $# -eq "0" ]; then
                                         elif [[ $1 = "counts" || $2 = "counts" || $3 = "counts" ]]; then
                                             exec python3 tweetkeywordmapper -c -f -p
 
+                                        # run map_field functionality of TweetKeywordGeoPandas() when parameter is set to "map_field"
+                                        # and both other functionalities
+                                        elif [[ $1 = "map_field" || $2 = "map_field" || $3 = "map_field" ]]; then
+                                            exec python3 tweetkeywordmapper -m -f -p
+                                        
                                         # display usage information
                                         else
                                             helpFunc
@@ -202,6 +228,11 @@ if [ $# -eq "0" ]; then
                                         elif [[ $1 = "counts" || $2 = "counts" || $3 = "counts" ]]; then
                                             exec python3 tweetkeywordmapper -c -d -p
 
+                                        # run map_field functionality of TweetKeywordGeoPandas() when parameter is set to "map_field"
+                                        # and both other functionalities
+                                        elif [[ $1 = "map_field" || $2 = "map_field" || $3 = "map_field" ]]; then
+                                            exec python3 tweetkeywordmapper -m -d -p
+                                        
                                         # display usage information
                                         else
                                             helpFunc
@@ -210,7 +241,7 @@ if [ $# -eq "0" ]; then
                                 # display error and usage information when create_file and delete_terrs both are not parameters
                                 # when three valid parameters are entered
                                 else
-                                    echo "ERROR - create_file, delete_terrs, and/or download_shp must be used when using 3 arguments.\n"
+                                    echo "ERROR - Two of create_file, delete_terrs, and/or download_shp must be used when using 3 arguments.\n"
                                     helpFunc
                             fi
                 fi

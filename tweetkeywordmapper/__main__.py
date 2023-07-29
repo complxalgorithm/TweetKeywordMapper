@@ -65,19 +65,21 @@ def get_args() -> argparse.Namespace:
     
     # add argument options to parser
     parser.add_argument('-s', '--search', action='store_true',
-                         help='search Twitter for Tweets containing a specific keyword, then map results')
+                        help='search Twitter for Tweets containing a specific keyword, then map results')
     parser.add_argument('-r', '--read', action='store_true',
-                         help='import Tweet data from a CSV/XLSX file, then map results')
+                        help='import Tweet data from a CSV/XLSX file, then map results')
     parser.add_argument('-c', '--counts', action='store_true',
-                         help='tally the count for each unique value of a field from a CSV/XLSX file')
+                        help='tally the count for each unique value of a field from a CSV/XLSX file')
+    parser.add_argument('-m', '--map_field', action='store_true',
+                        help='map preexisting results field from shapefile using GeoPandas')
     parser.add_argument('-f', '--create_file', action='store_true',
-                       help='create a CSV or XLSX file to use for writing and importing Tweet data')
+                        help='create a CSV or XLSX file to use for writing and importing Tweet data')
     parser.add_argument('-d', '--delete_terrs', action='store_true',
-                       help='delete US territories from US state boundaries shapefile')
+                        help='delete US territories from US state boundaries shapefile')
     parser.add_argument('-p', '--download_shp', action='store_true',
-                       help='download US State boundaries shapefile from US Census Bureau website')
+                        help='download US State boundaries shapefile from US Census Bureau website')
     parser.add_argument('-h', '--help', action='help',
-                       help='display usage information')
+                        help='display usage information')
     
     # return parser
     return parser.parse_args()
@@ -126,7 +128,7 @@ def main():
     """
     
     # display an error if no additional arguments are entered after package name, then quit program
-    # NOTES: usage information will be displayed by default if more than 1 additional argument is entered
+    # NOTES: usage information will be displayed by default if more than 3 arguments are entered
     #        a default error will be displayed if an invalid argument is entered
     #        if help is used along with another argument, the program will only display usage information
     if num_args == 0:
@@ -147,10 +149,10 @@ def main():
         return
     
     # make sure both create_file and delete_terrs are arguments if three arguments are entered after package name
-    elif (num_args == 3) and ((args.search and args.read) or (args.search and args.counts) or (args.read and args.counts)):
-        print('ERROR - f/create_file, d/delete_terrs, and/or p/download_shp must be used when using 3 arguments.\nUse -h or --help for usage information.')
+    elif (num_args == 3) and ((args.search and args.read) or (args.search and args.counts) or (args.read and args.counts) or (args.search and args.map_field) or (args.read and args.map_field) or (args.counts and args.map_field)):
+        print('ERROR - Two of f/create_file, d/delete_terrs, and/or p/download_shp must be used when using 3 arguments.\nUse -h or --help for usage information.')
     
-    # only 1 argument was entered
+    # valid argument or argument combination
     else:
         # display welcome message
         print('Welcome to Tweet Keyword Mapper!\n')
@@ -207,6 +209,21 @@ def main():
             time.sleep(0.5)   # pause program for half a second
             
             cnts.TweetKeywordCount(WS, DEFAULT_FILE, STATES)
+        
+        # run map_field function of TweetKeywordGeoPandas() method if map_field is an argument
+        elif args.map_field:
+            # import TweetKeywordGeoPandas method
+            try:
+                from tweetkeywordmapper.core.map_services import TweetKeywordGeoPandas
+            except:
+                from core.map_services import TweetKeywordGeoPandas
+            
+            print('Map Preexisting Results from Shapefile Field Using GeoPandas')
+            
+            time.sleep(0.5)   # pause program for half a second
+            
+            # run map_field functionality
+            TweetKeywordGeoPandas(WS, {}, '', function='map_field')
 
         # run this code if search or import were an argument
         if args.search or args.read:

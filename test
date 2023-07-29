@@ -11,11 +11,10 @@ helpFunc()
     echo "optional parameters:"
     echo "extract:\t test coordinates and find state in value functions from extract_place module"
     echo "contents:\t test get_file_contents_fields() function from data module"
+    echo "map_field:\t test map_field functionality of TweetKeywordGeoPandas() method"
     echo "help:\t\t display usage information"
     exit 1
 }
-
-# handle parameter
 
 # lack of parameter triggers the displaying of an error and the help info
 if [ $# -eq "0" ]; then
@@ -31,14 +30,18 @@ if [ $# -eq "0" ]; then
             
             else
                 # run test of extract_place module
-                if [ $1 = extract ]; then
+                if [ $1 = "extract" ]; then
                     exec python3 -m tweetkeywordmapper.tests.test_extract_place
                     
                     # run test of get_file_contents_fields function
-                    elif [ $1 = contents ]; then
+                    elif [ $1 = "contents" ]; then
                         exec python3 -m tweetkeywordmapper.tests.test_file_contents_fields
                     
-                    # how usage information
+                    # run test of map_field functionality of TweetKeywordGeoPandas() method
+                    elif [ $1 = "map_field" ]; then
+                        exec python3 -m tweetkeywordmapper.tests.test_map_field
+                    
+                    # display usage information
                     elif [ $1 = help ]; then
                         helpFunc
                     
