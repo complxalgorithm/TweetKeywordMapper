@@ -15,7 +15,7 @@ Display a count and percentage of the total for all unique field values within a
 ## Other Features
 - Map previously accumulated Tweet count results from respective preexisting field in US State boundaries shapefile using GeoPandas.
 - Create a file using default fields <em>Tweet_ID</em>, <em>Keyword</em>, and <em>State</em>.
-    - Includes if your default file does not already exist, or if you just want to create another file.
+    - Used if your default file does not already exist, or if you just want to create another file.
     - It is best to create a file used by this program in this manner.
 - Download a US State boundaries shapefile from the [US Census Bureau](https://www.census.gov) website to be used when running the program.
 - Easily remove US territories from US State boundaries shapefile.
