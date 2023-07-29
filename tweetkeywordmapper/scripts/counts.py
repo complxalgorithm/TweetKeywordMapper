@@ -39,10 +39,19 @@ def TweetKeywordCount(ws, default_file, states):
     # get percents dictionary
     percents = stats.get_count_percentages(counts, len(contents), states, function='counts')
     
+    # number of unique values
+    num_values = len(values)
+    
+    # total count/number of instances
+    count_total = sum(list(counts.values()))
+    
     time.sleep(1.5)     # pause program for a second and a half
     
-    # display the count and percent of all data for each keyword in descending order
+    # display the count and percent of total for each value in descending order
     print('{:<25s}{:<10s}{:<6s}'.format('VALUE', 'COUNT', 'PERCENT'))
     print('------------------------------------------')
     for value, count in counts.items():
         print('{:<25s}{:<10}{:<6}'.format(value, count, percents[value]))
+    print('==========================================')
+    # display number of unique values and total count/number of instances
+    print('{:<25s}{:<10s}'.format(f'{num_values} unique values', f'{count_total} total'))

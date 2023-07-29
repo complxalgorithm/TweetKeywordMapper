@@ -89,6 +89,12 @@ def get_args() -> argparse.Namespace:
 # define display_results() function - displays results of the search or import
 """
 def display_results(count_percents, state_counts, places, ids, keyword, states):
+    # get number of states that Tweets came from
+    num_states = len(set(count_percents.keys()))
+    
+    # number of results
+    num_results = len(ids)
+    
     # display keyword(s), and tweet ids and places lists if any were found
     print(f'\nKeywords: {keyword}\n')
     time.sleep(1.5)                 # pause program for a second and a half
@@ -108,8 +114,9 @@ def display_results(count_percents, state_counts, places, ids, keyword, states):
 
         # display result for state
         print('{:<30s} {:<6} {:<6}'.format(state + ':', count, percent))
-
-    # new line
+    print('=============================================')
+    # display number of states of origin and number of results
+    print('{:<30s} {:<6}'.format(f'{num_states} states', f'{num_results} results'))
     print()
     
 
