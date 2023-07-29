@@ -225,7 +225,7 @@ def TweetKeywordGeoPandas(ws, counts, keyword, function='main'):
                 # when it reaches the current state, add counts value for the current state
                 # as its new_field value
                 if st == state:
-                    states_df.loc[states_df[user_field] == state, new_field] = int(count)
+                    states_df.loc[states_df[user_field] == state, map_field] = int(count)
 
         # join shp_dir with states_shp name in order to generate new shapefile
         shp_path = os.path.join(shp_dir, states_shp)
@@ -294,7 +294,7 @@ def TweetKeywordGeoPandas(ws, counts, keyword, function='main'):
     ax.set_title(map_title)
     
     # tell user map is being generated
-    print(f'Generating {map_title} using {map_field} field.....')
+    print(f'Generating {map_title} using field.....')
     
     time.sleep(1.5)   # pause program for a second and a half
     
@@ -306,7 +306,7 @@ def TweetKeywordGeoPandas(ws, counts, keyword, function='main'):
         print('\nERROR - Something went wrong when trying to map the data.')
     
     else:
-        print(f'\nSuccessfully created map entitled {map_title}.')
+        print(f'\nSuccessfully created map entitled \'{map_title}\'.')
     
     # return to parent function
     return
