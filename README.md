@@ -8,11 +8,11 @@ Tweet data can be imported from a CSV or XLSX file, which will then be used for 
 
 [![asciicast](https://asciinema.org/a/592490.svg)](https://asciinema.org/a/592490)
 
-Count results can be appended to shapefiles (ArcGIS Pro & GeoPandas) or feature classes within geodatabases (ArcGIS Pro).
-
 Display a count and percentage of the total for all unique field values within a CSV or XLSX file. An example use is displaying the aforementioned statistics for all unique keywords that are present within a CSV or XLSX file.
 
 [![asciicast](https://asciinema.org/a/RK8sRi71azh9PniNo73hD83C4.svg)](https://asciinema.org/a/RK8sRi71azh9PniNo73hD83C4)
+
+Count results can be appended to shapefiles (ArcGIS Pro & GeoPandas) or feature classes within geodatabases (ArcGIS Pro).
 
 Map previously accumulated Tweet count results from a preexisting field from your US State boundaries shapefile using GeoPandas.
 
@@ -148,7 +148,7 @@ help:            display usage information
 There are a few test scripts within the <em>tests</em> directory. You can use the <em>test</em> shell script to run them.
 ```
 $ ./test help
-usage: ./test [extract] [contents] [help]
+usage: ./test [extract] [contents] [map_field] [help]
 
 Test tweetkeywordmapper functionality
 
