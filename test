@@ -6,7 +6,7 @@
 # display help information for program
 helpFunc()
 {
-    echo "usage: ./test [extract] [contents] [help]\n"
+    echo "usage: ./test [extract] [contents] [map_field] [help]\n"
     echo "Test tweetkeywordmapper functionality\n"
     echo "optional parameters:"
     echo "extract:\t test coordinates and find state in value functions from extract_place module"
