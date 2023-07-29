@@ -50,7 +50,7 @@ def delete_us_territories(ws):
     dropped_territories = []
     
     # iterate through each row of the us states shapefile
-    for num, state in states_df[user_field].items():
+    for _, state in states_df[user_field].items():
         # if the abbreviation is in the territories list, remove it from the dataframe
         # and add it to the dropped_territories list
         if state in territories:
@@ -70,9 +70,9 @@ def delete_us_territories(ws):
     if len(dropped_territories) > 0:
         dropped = ', '.join(dropped_territories)
         
-        print(f'{dropped} were removed from {shp_file}\n')
+        print(f'\n{dropped} were removed from {shp_file}\n')
     
     else:
-        print(f'No territories were in {shp_file}\n')
+        print(f'\nNo territories were in {shp_file}\n')
     
     time.sleep(0.5) # pause program for half a second

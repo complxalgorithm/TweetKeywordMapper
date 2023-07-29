@@ -39,8 +39,11 @@ def download_shp(ws):
     try:
         os.mkdir(shp_path)
     
+    # return if there is an error creating the new directory
     except Exception:
         print(f'\nSomething went wrong when attempting to create {shp_path}.\n')
+        
+        return
     
     else:
         print(f'\n{shp_path} created successfully.\n')
