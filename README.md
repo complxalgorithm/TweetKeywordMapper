@@ -17,7 +17,7 @@ Display a count and percentage of the total for all unique field values within a
 - Create a file using default fields <em>Tweet_ID</em>, <em>Keyword</em>, and <em>State</em>.
     - Used if your default file does not already exist, or if you just want to create another file.
     - It is best to create a file used by this program in this manner.
-- Download a US State boundaries shapefile from the [US Census Bureau](https://www.census.gov) website to be used when running the program.
+- Download a US State boundaries shapefile from the [US Census Bureau](https://www.census.gov) website.
 - Easily remove US territories from US State boundaries shapefile.
 - Count results can be appended to shapefiles (ArcPy & GeoPandas) or feature classes within geodatabases (ArcPy).
 
