@@ -10,9 +10,9 @@
 - [X] Add support for mapping using GeoPandas.
 - [X] If place value from a Tweet is a set of X,Y coordinates, use those to determine state.
 - [X] Account for full addresses so that a house number is not mistaken for an area code.
+- [X] Allow user to use mapping functionality on preexisting result fields in shapefile (using GeoPandas).
 
 ## Major
-- [ ] Allow user to use mapping functionality on preexisting result fields in shapefile (using GeoPandas).
 - [ ] Allow delete_terrs to be used on feature classes within geodatabases.
 - [ ] Allow user to search Tweets in other languages.
 - [ ] Allow user to search Tweets from different countries.

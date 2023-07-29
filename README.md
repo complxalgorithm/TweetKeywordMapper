@@ -8,13 +8,19 @@ Tweet data can be imported from a CSV or XLSX file, which will then be used for 
 
 [![asciicast](https://asciinema.org/a/592490.svg)](https://asciinema.org/a/592490)
 
-It is also possible to display a count and percentage of the total for all unique field values within a CSV or XLSX file. An example use is displaying the aforementioned statistics for all unique keywords that are present within a CSV or XLSX file.
+Count results can be appended to shapefiles (ArcGIS Pro & GeoPandas) or feature classes within geodatabases (ArcGIS Pro).
+
+Display a count and percentage of the total for all unique field values within a CSV or XLSX file. An example use is displaying the aforementioned statistics for all unique keywords that are present within a CSV or XLSX file.
 
 [![asciicast](https://asciinema.org/a/RK8sRi71azh9PniNo73hD83C4.svg)](https://asciinema.org/a/RK8sRi71azh9PniNo73hD83C4)
 
-Count results can be appended to shapefiles (ArcGIS Pro & GeoPandas) or feature classes within geodatabases (ArcGIS Pro).
+Map previously accumulated Tweet count results from a preexisting field from your US State boundaries shapefile using GeoPandas.
 
 The program has an option that allows you to create a file for you using <em>Tweet_ID</em>, <em>Keyword</em>, and <em>State</em> as default field names. This includes if your default file does not already exist, or if you just want to create another file. It is best to create a file (at least one that will be used by this program) in this manner.
+
+You can download a US State boundaries shapefile from the US Census Bureau to be used when running the program.
+
+There is also an option that allows you to easily remove US territories from your US State boundaries shapefile.
 
 The program can be ran as the <em>tweetkeywordmapper</em> package, or by using the <em>tkm</em> shell script.
 
@@ -93,10 +99,10 @@ This shapefile can be anywhere within the workspace that you specified in the <e
 Once the program is downloaded onto your machine and all of the requirements are met, you can now run the program. Support is available to run the program as the <em>tweetkeywordmapper</em> Python package, or by using the <em>tkm</em> shell script. Both of these support seven argument/parameter options.
 
 #### Python
-The program runs as the <em>tweetkeywordmapper</em> package. The program accepts up to three arguments with seven options: search, read, counts, create_file, delete_terrs, download_shp, or help.
+The program runs as the <em>tweetkeywordmapper</em> package. The program accepts up to three arguments with eight options: search, read, counts, map_field, create_file, delete_terrs, download_shp, or help.
 ```
 $ python3 tweetkeywordmapper -h
-usage: python3 tweetkeywordmapper [-s] [-r] [-c] [-f] [-d] [-p] [-h]
+usage: python3 tweetkeywordmapper [-s] [-r] [-c] [-m] [-f] [-d] [-p] [-h]
 
 Search/Import Tweet data from US states with a keyword, then map the count results.
 - search and read will run mapper.py to map the results after state counts are totaled.
@@ -107,6 +113,7 @@ optional arguments:
   -s, --search        search Twitter for Tweets containing a specific keyword, then map results
   -r, --read          import Tweet data from a CSV/XLSX file, then map results
   -c, --counts        tally the count for each unique value of a field from a CSV/XLSX file
+  -m, --map_field     map preexisting results field from shapefile using GeoPandas
   -f, --create_file   create a CSV or XLSX file to use for writing and importing Tweet data
   -d, --delete_terrs  delete US territories from US state boundaries shapefile
   -p, --download_shp  download US State boundaries shapefile from US Census Bureau website
@@ -119,7 +126,7 @@ The <em>tkm</em> shell script can be used to execute the program. This script ac
 You can run the script after making it executable. The script accepts up to three parameters with the same options and conditions as the Python execution.
 ```
 $ ./tkm help
-usage: ./tkm [search] [read] [counts] [create_file] [delete_terrs] [download_shp] [help]
+usage: ./tkm [search] [read] [counts] [map_field] [create_file] [delete_terrs] [download_shp] [help]
 
 Search/Import Tweet data from US states with a keyword, then map the count results.
 - search and read will run mapper.py to map the results after state counts are totaled.
@@ -130,6 +137,7 @@ optional parameters:
 search:          search Twitter for Tweets containing a specific keyword, then map results
 read:            import Tweet data from a CSV/XLSX file, then map results
 counts:          tally the count for each unique value of a field from a CSV/XLSX file
+map_field:       map preexisting results field from shapefile using GeoPandas
 create_file:     create a CSV or XLSX file to use for writing and importing Tweet data
 delete_terrs:    delete US territories from US state boundaries shapefile
 download_shp:    download US State boundaries shapefile from US Census Bureau website
@@ -147,6 +155,7 @@ Test tweetkeywordmapper functionality
 optional parameters:
 extract:         test coordinates and find state in value functions from extract_place module
 contents:        test get_file_contents_fields() function from data module
+map_field:       test map_field functionality of TweetKeywordGeoPandas() method
 help:            display usage information
 ```
 You could also test them manually using Python3:
@@ -154,6 +163,8 @@ You could also test them manually using Python3:
 $ python3 -m tweetkeywordmapper.tests.test_extract_place
 
 $ python3 -m tweetkeywordmapper.tests.test_file_contents_fields
+
+$ python3 -m tweetkeywordmapper.tests.test_map_field
 ```
 
 ## Disclaimers
