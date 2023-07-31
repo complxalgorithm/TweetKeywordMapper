@@ -71,7 +71,7 @@ def get_args() -> argparse.Namespace:
     parser.add_argument('-c', '--counts', action='store_true',
                         help='tally the count for each unique value of a field from a CSV/XLSX file')
     parser.add_argument('-m', '--map_field', action='store_true',
-                        help='map preexisting results field from shapefile using GeoPandas')
+                        help='map previous results field from shapefile using GeoPandas')
     parser.add_argument('-f', '--create_file', action='store_true',
                         help='create a CSV or XLSX file to use for writing and importing Tweet data')
     parser.add_argument('-d', '--delete_terrs', action='store_true',
@@ -225,7 +225,7 @@ def main():
             except:
                 from core.map_services import TweetKeywordGeoPandas
             
-            print('Map Preexisting Results from Shapefile Field Using GeoPandas')
+            print('Map Previous Results from Shapefile Field Using GeoPandas')
             
             time.sleep(0.5)   # pause program for half a second
             

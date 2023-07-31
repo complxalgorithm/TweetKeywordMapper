@@ -303,7 +303,7 @@ def TweetKeywordGeoPandas(ws, counts, keyword, function='main'):
     try:
         plt.show()
     
-    except:
+    except Exception:
         print('\nERROR - Something went wrong when trying to map the data.')
     
     else:
