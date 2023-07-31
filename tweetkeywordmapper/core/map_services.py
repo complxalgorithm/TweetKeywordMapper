@@ -193,11 +193,11 @@ def TweetKeywordGeoPandas(ws, counts, keyword, function='main'):
     # read shapefile
     states_df = gpd.read_file(states_shp)
     
+    # get list of all fields
+    fields_list = list(states_df.head())
+    
     # run this when using search or read functionality and Tweet count results were accumulated
     if function == 'main':
-        # get list of all fields
-        fields_list = states_df.head()
-
         # display field options found in shapefile
         print()
         for f in fields_list:
@@ -241,14 +241,15 @@ def TweetKeywordGeoPandas(ws, counts, keyword, function='main'):
     
     # run when user wants to map preexisting results field from shapefile
     else:
-        # get list of all fields
-        fields_list = states_df.head()
-
         # display result field options found in shapefile
         print()
         for f in fields_list:
+            # display result fields
             if not f.isupper() and f != 'geometry':
                 print(f)
+            # remove all other fields from fields_list
+            else:
+                fields_list.remove(f)
         print()
         
         # ask user which field holds the abbreviations of the states
@@ -257,7 +258,7 @@ def TweetKeywordGeoPandas(ws, counts, keyword, function='main'):
         # validate that user_field is in the field_names list
         while map_field not in fields_list:
             # display an error
-            print(f'{user_field} is not a field. Please try again.')
+            print(f'{map_field} is not a field. Please try again.')
 
             # ask user again to specify the state abbreviations field
             map_field = input('Which field would you like to map? ')
@@ -294,7 +295,7 @@ def TweetKeywordGeoPandas(ws, counts, keyword, function='main'):
     ax.set_title(map_title)
     
     # tell user map is being generated
-    print(f'Generating {map_title} using field.....')
+    print(f'\nGenerating {map_title} using field.....')
     
     time.sleep(1.5)   # pause program for a second and a half
     
