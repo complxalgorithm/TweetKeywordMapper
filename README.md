@@ -13,7 +13,7 @@ Display a count and percentage of the total for all unique field values within a
 [![asciicast](https://asciinema.org/a/599645.svg)](https://asciinema.org/a/599645)
 
 ## Other Features
-- Map previously accumulated Tweet count results from respective preexisting field in US State boundaries shapefile using GeoPandas.
+- Map previous Tweet count results field in US State boundaries shapefile using GeoPandas.
 - Create a file using default fields <em>Tweet_ID</em>, <em>Keyword</em>, and <em>State</em>.
     - Used if your default file does not already exist, or if you just want to create another file.
     - It is best to create a file used by this program in this manner.
@@ -112,7 +112,7 @@ optional arguments:
   -s, --search        search Twitter for Tweets containing a specific keyword, then map results
   -r, --read          import Tweet data from a CSV/XLSX file, then map results
   -c, --counts        tally the count for each unique value of a field from a CSV/XLSX file
-  -m, --map_field     map preexisting results field from shapefile using GeoPandas
+  -m, --map_field     map previous results field from shapefile using GeoPandas
   -f, --create_file   create a CSV or XLSX file to use for writing and importing Tweet data
   -d, --delete_terrs  delete US territories from US state boundaries shapefile
   -p, --download_shp  download US State boundaries shapefile from US Census Bureau website
@@ -136,7 +136,7 @@ optional parameters:
 search:          search Twitter for Tweets containing a specific keyword, then map results
 read:            import Tweet data from a CSV/XLSX file, then map results
 counts:          tally the count for each unique value of a field from a CSV/XLSX file
-map_field:       map preexisting results field from shapefile using GeoPandas
+map_field:       map previous results field from shapefile using GeoPandas
 create_file:     create a CSV or XLSX file to use for writing and importing Tweet data
 delete_terrs:    delete US territories from US state boundaries shapefile
 download_shp:    download US State boundaries shapefile from US Census Bureau website
