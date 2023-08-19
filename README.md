@@ -75,6 +75,8 @@ Bourne or C shell variants can run these scripts. They will not work if you use 
 6. Add each key, token, and secret to its respective variable in the <em>constants_TEMP.py</em> file.
 7. Change the above file name to <em>constants.py</em>.
 
+<b>This application now requires paid API access to use the Search functionality. Prepare to spend at least $100 per month if you would like to pull Tweet data.</b>
+
 ### Using ArcGIS Pro
 1. Assuming you are on Windows, purchase a use license [here](https://www.esri.com/en-us/arcgis/products/arcgis-pro/buy#for-individuals).
 2. Follow the instructions that are on Esri's website on how to successfully install the software.
