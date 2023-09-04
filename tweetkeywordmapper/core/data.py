@@ -49,7 +49,8 @@ def get_user_file(default_file, ws, arg=False):
             # get extension of input file
             file_ext = user_file.split('.')[-1]
 
-        # return file to 
+        # return file and its extension to parent function
+        return user_file, file_ext
     
     # run this in every other situation
     else:
@@ -82,8 +83,8 @@ def get_user_file(default_file, ws, arg=False):
             # set path to file
             file_path = os.path.join(ws, user_file)
     
-    # return the file and file extension to the parent function
-    return file_path, file_ext
+        # return the file path and the file's extension to the parent function
+        return file_path, file_ext
 
 
 """
@@ -93,18 +94,21 @@ def get_user_file(default_file, ws, arg=False):
 def create_file(default_file, ws):
     # set default field names to be added as first row to new file
     default_fields = ['Tweet_ID', 'Keyword', 'State']
+
+    # set path to default file
+    default_path = os.path.join(ws, default_file)
     
     # create default file if it doesn't already exist
-    if not os.path.exists(default_file):
+    if not os.path.exists(default_path):
         # get extension of default file
         file_type = default_file.split('.')[-1]
         
         # create default file if it's a CSV or XLSX file
         if file_type == 'csv' or file_type == 'xlsx':
-            file_interact(default_fields, default_file, file_type, ws)
+            file_interact(default_fields, default_path, file_type, ws)
 
             # display that default file was successfully created, then return to parent function
-            print(f'Default file created called: {default_file}')
+            print(f'Default file created called {default_file} in {ws}')
             
             return
         
@@ -119,7 +123,7 @@ def create_file(default_file, ws):
     
     # tell user default file exists
     else:
-        print(f'{default_file} is your set default file, and it exists.\n')
+        print(f'{default_file} is your set default file, and it exists in {ws}\n')
         
         time.sleep(0.5)     # pause program for half a second
         
