@@ -127,13 +127,13 @@ def TweetKeywordSearch(ws, default_file, states, cities, area_codes):
         # run this if user signaled that they want to write results to file
         if if_write.capitalize() == 'Yes' or if_write.upper() == 'Y':
             # get file and its type to write to from user
-            user_file, file_type = data.get_user_file(default_file)
+            user_file_path, file_type = data.get_user_file(default_file)
             
             # get locations of data Tweet IDs, states, and keywords in the file using their indexes
             # in the user's file, and as well as a dictionary of Tweet data comprising the ids and places
             # also get a list of Tweet IDs that are already in the user's file
             # data parameter populated with ids and places lists
-            tweets, tweet_data, state_index, id_index, keyword_index = data.file_interact([ids, places, ''], user_file, file_type,
+            tweets, tweet_data, state_index, id_index, keyword_index = data.file_interact([ids, places, ''], user_file_path, file_type,
                                                                                              ws, mode='r', function='search')
                 
             # new line
@@ -155,14 +155,14 @@ def TweetKeywordSearch(ws, default_file, states, cities, area_codes):
                     written_data[keyword_index] = keyword
 
                     # append this data to file
-                    data.file_interact(written_data, user_file, file_type, ws)
+                    data.file_interact(written_data, user_file_path, file_type, ws)
 
                     # tell user data was successfully written to file
-                    print(f'{written_data} was added to {user_file}')
+                    print(f'{written_data} was added to {os.path.basename(user_file_path)}')
 
                 # inform user when data for a Tweet is already within the file
                 else:
-                    print(f'Data for {tweet_id} is already in {user_file}.')
+                    print(f'Data for {tweet_id} is already in {os.path.basename(user_file_path)}.')
     
     # return places, ids, state_counts, keyword, and num_results to parent function
     return places, ids, state_counts, keyword, num_results

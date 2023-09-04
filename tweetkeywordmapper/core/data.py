@@ -27,9 +27,9 @@ pd.set_option('display.float_format', lambda x: f'%.{0 if x.is_integer() else 1}
 # define get_user_file() function - get a file from the user from which to read data,
 # then return valid file and its file extension
 # optional parameter:
-#   - arg -> default to False
+#  - arg       -> default to False
 """
-def get_user_file(default_file, arg=False):
+def get_user_file(default_file, ws, arg=False):
     # run this if function is being called using an argument
     if arg == True:
         # ask user to enter their file
@@ -48,6 +48,8 @@ def get_user_file(default_file, arg=False):
     
             # get extension of input file
             file_ext = user_file.split('.')[-1]
+
+        # return file to 
     
     # run this in every other situation
     else:
@@ -57,11 +59,14 @@ def get_user_file(default_file, arg=False):
         # get extension of input file
         file_ext = user_file.split('.')[-1]
 
+        # set path to file
+        file_path = os.path.join(ws, user_file)
+
         # validate that file exists and that the file is a CSV or XLSX file
-        while not os.path.exists(user_file) or (file_ext != 'csv' and file_ext != 'xlsx'):
+        while not os.path.exists(file_path) or (file_ext != 'csv' and file_ext != 'xlsx'):
             # display error if input doesn't exist
             if not os.path.exists(user_file):
-                print(f'ERROR - {user_file} does not exist in your current directory.')
+                print(f'ERROR - {user_file} does not exist in {workspace}.')
 
             # display error if input is not a CSV or Excel file
             else:
@@ -73,9 +78,12 @@ def get_user_file(default_file, arg=False):
 
             # get extension of new input file
             file_ext = user_file.split('.')[-1]
+
+            # set path to file
+            file_path = os.path.join(ws, user_file)
     
     # return the file and file extension to the parent function
-    return user_file, file_ext
+    return file_path, file_ext
 
 
 """
@@ -128,13 +136,13 @@ def create_file(default_file, ws):
     
     # get user's file, then create it, if the user signals they would like to 
     if ifCreate.upper() == 'Y' or ifCreate.title() == 'Yes':
-        user_file, file_type = get_user_file(default_file, arg=True)
+        user_file_path, file_type = get_user_file(default_file, ws, arg=True)
             
-        file_interact(default_fields, user_file, file_type, ws)
+        file_interact(default_fields, user_file_path, file_type, ws)
         
         time.sleep(0.5)     # pause program for half a second
         
-        print(f'\n{user_file} created successfully.')
+        print(f'\n{user_file_path} created successfully.')
         
     # tell user that no file was created if they said they didn't want to
     else:

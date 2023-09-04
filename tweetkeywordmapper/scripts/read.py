@@ -8,6 +8,7 @@
 """
 
 # import module
+import os
 import time
 
 try:
@@ -24,10 +25,10 @@ except:
 """
 def TweetKeywordRead(ws, default_file, states):
     # ask user for file, and use default file if input is left blank
-    user_file, file_type = data.get_user_file(default_file)
+    user_file_path, file_type = data.get_user_file(default_file, ws)
     
     # extract states, tweet ids, and filtered keywords from file
-    places, ids, keywords = data.file_interact([], user_file, file_type, ws, mode='r', checkKeyword=True, function='')
+    places, ids, keywords = data.file_interact([], user_file_path, file_type, ws, mode='r', checkKeyword=True, function='')
 
     # get Tweet counts for each state using data
     state_counts = stats.get_counts(places, states=states)
@@ -40,13 +41,13 @@ def TweetKeywordRead(ws, default_file, states):
     
     # display how many search results were returned
     if num_results == 0:
-        print(f'Reading from {user_file} returned no results.\n')
+        print(f'Reading from {os.path.basename(user_file_path)} returned no results.\n')
         
         time.sleep(1) # pause program for a second
 
     # display results if any were found
     else:
-        print(f'Reading from {user_file} returned {num_results} results.\n')
+        print(f'Reading from {os.path.basename(user_file_path)} returned {num_results} results.\n')
 
         time.sleep(1) # pause program for a second
     
