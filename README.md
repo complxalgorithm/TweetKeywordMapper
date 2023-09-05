@@ -145,8 +145,8 @@ download_shp:    download US State boundaries shapefile from US Census Bureau we
 help:            display usage information
 ```
 
-#### Set Alias
-If you would like to run the program without having to be in the TweetKeywordMapper directory, you can set an alias pointing to the <em>tweetkeywordmapper</em> Python package or the <em>tkm</em> shell script in your shell's config file (e.g., .zshrc):
+#### Optional: Set Alias
+If you would like to run the program without having to be in the TweetKeywordMapper directory, you can set an alias pointing to the <em>tweetkeywordmapper</em> Python package or the <em>tkm</em> shell script by adding one of the following to your shell's config file (e.g., .zshrc):
 ```
 alias tkm="python3 /path/to/TweetKeywordMapper/tweetkeywordmapper"
 
