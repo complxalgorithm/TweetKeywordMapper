@@ -11,6 +11,7 @@
 # import modules
 import tweepy
 from tweepy import OAuthHandler
+import os
 import time
 
 try:
