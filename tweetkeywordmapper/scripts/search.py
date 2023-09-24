@@ -102,8 +102,16 @@ def TweetKeywordSearch(ws, default_file, states, cities, area_codes):
     # get 100 search results using query
     search_results = tweepy.Cursor(api.search_tweets, q=query, count=100).items()
             
-    # get lists of places and tweet ids from search results
-    places, ids = ex.get_states_ids_from_results(search_results, api, states, cities, area_codes, num_res)
+    # attempt to iterate over search results object
+    try:
+        # get lists of places and tweet ids from search results
+        places, ids = ex.get_states_ids_from_results(search_results, api, states, cities, area_codes, num_res)
+    # catch an exception, most likely a 403 Forbidden error, and return empty variables
+    except Exception as e:
+        print('You may not have the necessary API permissions. Please visit https://developer.twitter.com/en/docs/twitter-api to learn more.')
+        time.sleep(0.5)
+
+        return [], [], {}, '', 0
             
     # get dictionary of counts for each state
     state_counts = stats.get_counts(places, states=states)
