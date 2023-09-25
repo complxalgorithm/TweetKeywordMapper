@@ -29,7 +29,7 @@ def set_new_field(keyword):
     if keyword == '':
         new_field = 'Tweet_Count'
     
-    # name fi results were filtered using a keyword
+    # name if results were filtered using a keyword
     else:
         # split the keyword using a space
         words = keyword.split(' ')
