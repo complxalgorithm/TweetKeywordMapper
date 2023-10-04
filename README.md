@@ -31,7 +31,8 @@ Display a count and percentage of the total for all unique field values within a
 5. geopy
 6. matplotlib 
 7. numpy
-8. arcpy
+8. openpyxl
+9. arcpy
 
 In order to install ArcPy and ArcGIS Pro, you must have a Windows machine. <b>You can still run the program without ArcPy installed</b>, you will just have to map your results using GeoPandas.
 
