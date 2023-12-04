@@ -12,6 +12,9 @@ Display a count and percentage of the total for all unique field values within a
 
 [![asciicast](https://asciinema.org/a/599645.svg)](https://asciinema.org/a/599645)
 
+Mapping can be done on count results from the same session through searching Twitter or reading from a CSV/XLSX file, or on count results that were mapped in a previous session. Below is an example map that was generated using GeoPandas:
+<img src="./sample/sample_map.png" alt="sample geopandas map showing results Tweets that contained either of 4 keywords" />
+
 ## Other Features
 - Map previous Tweet count results field in US State boundaries shapefile using GeoPandas.
 - Create a file using default fields <em>Tweet_ID</em>, <em>Keyword</em>, and <em>State</em>.
