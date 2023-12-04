@@ -14,7 +14,7 @@ Display a count and percentage of the total for all unique field values within a
 
 Mapping can be done on count results from the same session through searching Twitter or reading from a CSV/XLSX file, or on count results that were mapped in a previous session. Below is an example map that was generated using GeoPandas:
 
-<center><img src="./sample/sample_map.png" alt="sample geopandas map showing results Tweets that contained either of 4 keywords" /></center>
+<img src="./sample/sample_map.png" alt="sample geopandas map showing results Tweets that contained either of 4 keywords" />
 
 ## Other Features
 - Map previous Tweet count results field in US State boundaries shapefile using GeoPandas.
